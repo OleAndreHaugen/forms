@@ -1,0 +1,16 @@
+const forms = modeloPageDetail.oData.setup;
+const context = oEvent.getSource().getBindingContext();
+const formIndex = Number(context.sPath.split("/")[2]);
+const targetIndex = formIndex + 1;
+
+if (formIndex === forms.length - 1) {
+    return;
+}
+
+const formAtCurrentIndex = forms[formIndex];
+const formAtTargetIndex = forms[targetIndex];
+
+forms[formIndex] = formAtTargetIndex;
+forms[targetIndex] = formAtCurrentIndex;
+
+modeloPageDetail.refresh();

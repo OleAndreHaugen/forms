@@ -1,0 +1,10 @@
+const context = oEvent.oSource.getBindingContext();
+const data = context.getObject();
+
+data.items.push({
+    id: ModelData.genID(),
+    title: "Option " + (data.items.length + 1),
+    key: "key" + (data.items.length + 1),
+});
+
+modeloPageDetail.refresh();

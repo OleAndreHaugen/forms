@@ -1,0 +1,14 @@
+const context = oEvent.oSource.getBindingContext();
+const newRec = JSON.parse(JSON.stringify(context.getObject()));
+
+newRec.id = ModelData.genID();
+newRec.title = newRec.title + " (COPY)";
+
+if (newRec.items) {
+    newRec.items.forEach(function (item) {
+        item.id = ModelData.genID();
+    });
+}
+
+ModelData.Add(modeloPageDetail.oData.setup, newRec);
+modeloPageDetail.refresh();

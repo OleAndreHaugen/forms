@@ -1,0 +1,3 @@
+const context = oEvent.oSource.getBindingContext();
+controller.currentIndex = context.sPath.split("/")[2];
+popElements.openBy(this);

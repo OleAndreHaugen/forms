@@ -1,0 +1,18 @@
+tabData.clearSelection();
+oApp.back();
+
+// let processFunction = function () {
+
+//     tabData.clearSelection();
+//     oApp.back();
+
+//     // Cockpit Action
+//     // sap.n.Planet9.setToolbarButton(false);
+// };
+
+// // Check for changes
+// if (dataSaved !== modeloPageDetail.getJSON()) {
+//     // TODO
+// } else {
+//     processFunction();
+// }

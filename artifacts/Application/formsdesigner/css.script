@@ -1,0 +1,28 @@
+*:focus {
+    outline: none !important;
+}
+
+.nepFormInput {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.formElementButton {
+    margin-left: 12px !important;
+    margin-right: 10px !important;
+}
+
+.formBorder {
+    border: 1px solid #ced4da;
+}
+
+.formToolbar.sapMTB.sapMTBStandard {
+    border-radius: 6px;
+    background: #f8f9fa;
+    border: 1px solid #ced4da;
+}
+
+.form-control {
+    border-radius: 8px;
+}

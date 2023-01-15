@@ -1,0 +1,9 @@
+const forms = await entities.forms_design.find({
+    select: ["name", "description", "id", "updatedAt", "updatedBy"],
+    order: {
+        name: "ASC"
+    }
+});
+
+result.data = forms;
+complete();

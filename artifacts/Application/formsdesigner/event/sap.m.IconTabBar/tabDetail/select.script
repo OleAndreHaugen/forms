@@ -1,0 +1,5 @@
+let selected = oEvent.getParameter("selectedKey");
+
+if (selected === "preview") {
+    controller.preview();
+}

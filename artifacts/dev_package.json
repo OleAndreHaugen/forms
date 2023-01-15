@@ -5,23 +5,82 @@
 	"git": {
 		"remote": "https://github.com/OleAndreHaugen/forms.git"
 	},
-	"name": "com.neptune-software.com",
-	"description": null,
-	"ver": "23.1.10.1711",
+	"name": "neptunesoftware-forms",
+	"description": "Neptune FORMS Solution",
+	"ver": "23.1.13.73",
 	"enableCICD": true,
-	"apps": [],
-	"api": [],
+	"apps": [
+		{
+			"id": "98b64f81-1c34-4221-9746-71750cd376ef",
+			"application": "neptune_forms_build",
+			"title": "",
+			"description": ""
+		},
+		{
+			"id": "74bff3f5-b8ae-4250-aed3-6ebfe904b23e",
+			"application": "formsdesigner",
+			"title": "Neptune FORMS",
+			"description": "Neptune FORMS"
+		}
+	],
+	"api": [
+		{
+			"id": "d5bc31e5-8726-409e-8987-65088dc3a2d1",
+			"name": "FormsClient",
+			"description": "Neptune FORMS",
+			"apiGroup": "d3596a74-a10f-46d9-9d3d-f5462c65031a"
+		}
+	],
 	"odataSource": [],
 	"odataMock": [],
-	"dictionary": [],
-	"jsclass": [],
-	"jsscript_group": [],
+	"dictionary": [
+		{
+			"id": "29f811fe-1310-4769-a00f-c27cd73d7f21",
+			"name": "forms_design",
+			"description": "FORMS: Design"
+		}
+	],
+	"jsclass": [
+		{
+			"id": "ad295417-bab7-49c6-afa6-2a1a8ffa4539",
+			"name": "formGet",
+			"description": null
+		},
+		{
+			"id": "abaf7108-29fa-424f-ab1f-61c698a599b4",
+			"name": "formDelete",
+			"description": null
+		},
+		{
+			"id": "8451fdc0-46ea-4f35-bcf9-e3ebcdd0c79b",
+			"name": "formList",
+			"description": null
+		},
+		{
+			"id": "7341be77-5379-4c38-a6c5-01b4cb553199",
+			"name": "formSave",
+			"description": null
+		}
+	],
+	"jsscript_group": [
+		{
+			"id": "7eaba72b-740a-4676-aaa6-1c43a35732b3",
+			"name": "Forms",
+			"description": null
+		}
+	],
 	"theme": [],
 	"pdf": [],
 	"rulesengine": [],
 	"reports": [],
 	"api_authentication": [],
-	"api_group": [],
+	"api_group": [
+		{
+			"id": "d3596a74-a10f-46d9-9d3d-f5462c65031a",
+			"name": "Forms",
+			"description": "Neptune FORMS"
+		}
+	],
 	"tile": [],
 	"category": [],
 	"launchpad": [],

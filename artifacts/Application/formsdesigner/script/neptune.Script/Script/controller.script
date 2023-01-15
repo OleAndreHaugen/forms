@@ -1,0 +1,160 @@
+const controller = {
+    currentIndex: null,
+    elementTypes: [
+        { icon: "sap-icon://form", text: "Form", type: "Form" },
+        { icon: "sap-icon://calendar", text: "Date Picker", type: "DatePicker" },
+        { icon: "sap-icon://date-time", text: "Date Time Picker", type: "DateTimePicker" },
+        { icon: "sap-icon://fa-regular/check-square", text: "CheckBox", type: "CheckBox" },
+        { icon: "sap-icon://header", text: "Form Title", type: "FormTitle" },
+        { icon: "sap-icon://document-text", text: "Text Area", type: "TextArea" },
+        { icon: "sap-icon://request", text: "Input", type: "Input" },
+        { icon: "sap-icon://fa-solid/image", text: "Image", type: "Image" },
+        { icon: "sap-icon://number-sign", text: "Step Input", type: "StepInput" },
+        { icon: "sap-icon://switch-views", text: "Switch", type: "Switch" },
+        { icon: "sap-icon://fa-regular/circle", text: "Single Select", type: "SingleSelect" },
+        { icon: "sap-icon://fa-regular/circle", text: "Single Choice", type: "SingleChoice" },
+        { icon: "sap-icon://multi-select", text: "Multiple Select", type: "MultipleSelect" },
+        { icon: "sap-icon://multi-select", text: "Multiple Choice", type: "MultipleChoice" },
+    ],
+
+    init: function () {
+        jQuery.sap.require("sap.m.MessageBox");
+        modellistElementTypes.setData(this.elementTypes);
+        this.list();
+    },
+
+    list: function () {
+        apiList();
+    },
+
+    get: function (id) {
+        apiGet({
+            parameters: {
+                id: id,
+            },
+        }).then(function (req) {
+            tabDetail.setSelectedItem(tabDetailInfo);
+            modeloPageDetail.setData(req);
+            oApp.to(oPageDetail);
+        });
+    },
+
+    save: function () {
+        apiSave({
+            data: modeloPageDetail.oData,
+        }).then(function (req) {
+            sap.m.MessageToast.show("Form Saved");
+            modeloPageDetail.setData(req);
+            controller.list();
+        });
+    },
+
+    delete: function () {
+        apiDelete({
+            parameters: { id: modeloPageDetail.oData.id },
+        }).then(function (req) {
+            sap.m.MessageToast.show("Form Deleted");
+            controller.list();
+            oApp.back();
+        });
+    },
+
+    newForm: function () {
+        modeloPageDetail.setData({
+            name: "",
+            description: "",
+            setup: [],
+            editable: true,
+        });
+        tabDetail.setSelectedItem(tabDetailInfo);
+        oApp.to(oPageDetail);
+    },
+
+    preview: function () {
+        FORMS.build(panPreview, {
+            id: modeloPageDetail.oData.id,
+            data: null,
+            config: modeloPageDetail.oData,
+        });
+    },
+
+    addElement: function (elementData) {
+        let newElement = {
+            id: ModelData.genID(),
+            type: elementData.type,
+            enableDescription: false,
+            enablePlaceholder: false,
+            enableLabel: true,
+            placeholder: "",
+            title: elementData.type,
+            description: "",
+
+            required: false,
+            _expanded: true,
+        };
+
+        switch (elementData.type) {
+            case "Image":
+                newElement.text = "Upload";
+                newElement.buttonType = "Emphasized";
+                break;
+
+            case "FormTitle":
+                newElement.enableLabel = false;
+                break;
+
+            case "Form":
+                newElement.enableLabel = false;
+                newElement.expanded = true;
+                newElement.expandable = true;
+                newElement.layout = "ResponsiveGridLayout";
+                break;
+
+            case "SingleChoice":
+                newElement.items = [
+                    { id: ModelData.genID(), title: "Option 1", key: "key1" },
+                    { id: ModelData.genID(), title: "Option 2", key: "key2" },
+                    { id: ModelData.genID(), title: "Option 3", key: "key3" },
+                ];
+                newElement.horizontal = false;
+                break;
+
+            case "SingleSelect":
+                newElement.items = [
+                    { id: ModelData.genID(), title: "Option 1", key: "key1" },
+                    { id: ModelData.genID(), title: "Option 2", key: "key2" },
+                    { id: ModelData.genID(), title: "Option 3", key: "key3" },
+                ];
+                break;
+
+            case "MultipleChoice":
+                newElement.items = [
+                    { id: ModelData.genID(), title: "Option 1", key: "key1" },
+                    { id: ModelData.genID(), title: "Option 2", key: "key2" },
+                    { id: ModelData.genID(), title: "Option 3", key: "key3" },
+                ];
+                newElement.validationType = "noLimit";
+                newElement.horizontal = false;
+                break;
+
+            case "MultipleSelect":
+                newElement.items = [
+                    { id: ModelData.genID(), title: "Option 1", key: "key1" },
+                    { id: ModelData.genID(), title: "Option 2", key: "key2" },
+                    { id: ModelData.genID(), title: "Option 3", key: "key3" },
+                ];
+                newElement.validationType = "noLimit";
+                break;
+        }
+
+        if (controller.currentIndex) {
+            modeloPageDetail.oData.setup.splice(controller.currentIndex, 0, newElement);
+        } else {
+            modeloPageDetail.oData.setup.push(newElement);
+        }
+
+        modeloPageDetail.refresh();
+    },
+};
+
+controller.init();
