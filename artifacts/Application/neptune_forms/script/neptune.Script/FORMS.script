@@ -347,8 +347,19 @@ const FORMS = {
                 new sap.m.CheckBox({
                     width: element.width,
                     text: item.title,
-                    selected: "{/" + item.id + "}",
-                })
+                    select: function (oEvent) {
+                        const formModel = FORMS.formParent.getModel();
+                        if (!formModel.oData[element.id]) formModel.oData[element.id] = [];
+
+                        if (this.getSelected()) {
+                            formModel.oData[element.id].push(item.key);
+                        } else {
+                            const index = formModel.oData[element.id].indexOf(item.key);
+                            if (index > -1) formModel.oData[element.id].splice(index, 1);
+                        }
+                        formModel.refresh(true);
+                    },
+                }).addStyleClass("sapUiTinyMarginBegin")
             );
         });
 
@@ -428,7 +439,7 @@ const FORMS = {
 
         // Items
         element.items.forEach(function (item, index) {
-            const itemCheckList = new sap.m.ColumnListItem("item" + item.id);
+            const itemCheckList = new sap.m.ColumnListItem("field" + item.id);
 
             itemCheckList.addCell(
                 new sap.m.Label({
@@ -441,26 +452,26 @@ const FORMS = {
 
             switch (item.type) {
                 case "Input":
-                    itemAnswer = new sap.m.Input(FORMS.buildElementFieldID(item), {
+                    itemAnswer = new sap.m.Input({
                         value: "{/" + item.id + "}",
                     });
                     break;
 
                 case "AcceptReject":
-                    itemAnswer = new sap.m.Switch(FORMS.buildElementFieldID(item), {
+                    itemAnswer = new sap.m.Switch({
                         state: "{/" + item.id + "}",
                         type: "AcceptReject",
                     });
                     break;
 
                 case "CheckBox":
-                    itemAnswer = new sap.m.CheckBox(FORMS.buildElementFieldID(item), {
+                    itemAnswer = new sap.m.CheckBox({
                         selected: "{/" + item.id + "}",
                     });
                     break;
 
                 default:
-                    itemAnswer = new sap.m.Switch(FORMS.buildElementFieldID(item), {
+                    itemAnswer = new sap.m.Switch({
                         state: "{/" + item.id + "}",
                     });
                     break;
@@ -516,6 +527,24 @@ const FORMS = {
                             }
                         }
                     }
+                }
+
+                // CheckList
+                if (element.type === "CheckList") {
+                    element.items.forEach(function (item, i) {
+                        if (item.required) {
+                            const field = sap.ui.getCore().byId("field" + item.id);
+
+                            if (field) {
+                                if (!formModel.oData[item.id]) {
+                                    validForm = false;
+                                    if (field.setHighlight) field.setHighlight("Error");
+                                } else {
+                                    if (field.setHighlight) field.setHighlight();
+                                }
+                            }
+                        }
+                    });
                 }
             });
         });

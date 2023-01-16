@@ -1,3 +1,15 @@
+.sapUiTheme-sap_horizon_dark .notValid {
+    border-left: 4px solid #fa6161;
+}
+
+.sapUiTheme-sap_fiori_3 .notValid {
+    border-left: 4px solid #b00;
+}
+
+.sapUiTheme-sap_fiori_3_dark .notValid {
+    border-left: 4px solid #f88;
+}
+
 .notValid {
     border-left: 4px solid #f53232;
 }

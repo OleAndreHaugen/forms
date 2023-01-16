@@ -10637,7 +10637,7 @@
 																																				{
 																																					"attribute": "width",
 																																					"grouping": "Properties",
-																																					"value": "150px",
+																																					"value": "200px",
 																																					"script": "",
 																																					"translation": []
 																																				}
@@ -12007,7 +12007,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.1.16.2051",
+	"ver": "23.1.16.2113",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
