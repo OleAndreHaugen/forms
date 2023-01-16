@@ -15,9 +15,16 @@ const Utils = {
         arr.splice(toPos, 0, arr.splice(fromPos, 1)[0]);
     },
 
-    buildValParamSelect: (select, length) => {
+    buildValParamSelect: (select, i) => {
         select.destroyItems();
-        let i = length;
+
+        select.addItem(
+            new sap.ui.core.ListItem({
+                key: "",
+                text: "",
+            })
+        );
+
         while (i > 0) {
             select.addItem(
                 new sap.ui.core.ListItem({

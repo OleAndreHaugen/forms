@@ -330,7 +330,6 @@ const FORMS = {
     },
 
     buildElementMultipleChoice: function (element) {
-
         let newField;
 
         if (element.horizontal) {
@@ -353,7 +352,6 @@ const FORMS = {
             );
         });
 
-        
         return newField;
     },
 
@@ -494,30 +492,32 @@ const FORMS = {
 
     validate: function () {
         let validForm = true;
+        const formModel = FORMS.formParent.getModel();
 
-        FORMS.config.setup.forEach(function (element, i) {
-            const formModel = FORMS.formParent.getModel();
+        FORMS.config.setup.forEach(function (section, i) {
+            // Items
+            section.elements.forEach(function (element, i) {
+                if (element.required) {
+                    const field = sap.ui.getCore().byId("field" + element.id);
 
-            if (element.required) {
-                const field = sap.ui.getCore().byId("field" + element.id);
+                    if (field && field.getVisible()) {
+                        if (!formModel.oData[element.id]) {
+                            validForm = false;
+                            if (field.setValueState) field.setValueState("Error");
 
-                if (field && field.getVisible()) {
-                    if (!formModel.oData[element.id]) {
-                        validForm = false;
-                        if (field.setValueState) field.setValueState("Error");
+                            if (!field.setValueState) {
+                                field.addStyleClass("notValid");
+                            }
+                        } else {
+                            if (field.setValueState) field.setValueState();
 
-                        if (!field.setValueState) {
-                            field.addStyleClass("notValid");
-                        }
-                    } else {
-                        if (field.setValueState) field.setValueState();
-
-                        if (!field.setValueState) {
-                            field.removeStyleClass("notValid");
+                            if (!field.setValueState) {
+                                field.removeStyleClass("notValid");
+                            }
                         }
                     }
                 }
-            }
+            });
         });
 
         return validForm;
