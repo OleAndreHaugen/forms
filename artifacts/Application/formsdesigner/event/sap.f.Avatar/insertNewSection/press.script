@@ -1,0 +1,2 @@
+const context = oEvent.oSource.getBindingContext();
+controller.addSection(context.sPath.split("/")[2]);

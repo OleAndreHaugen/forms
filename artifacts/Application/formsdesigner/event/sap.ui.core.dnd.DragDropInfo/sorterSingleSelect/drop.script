@@ -1,5 +1,5 @@
-let oDraggedControl = oEvent.getParameter('draggedControl');
-let oDroppedControl = oEvent.getParameter('droppedControl');
+let oDraggedControl = oEvent.getParameter("draggedControl");
+let oDroppedControl = oEvent.getParameter("droppedControl");
 
 let oDraggedContext = oDraggedControl.getBindingContext();
 let oDroppedContext = oDroppedControl.getBindingContext();
@@ -14,14 +14,13 @@ let indexDrop = 0;
 
 let elementIndex = oDraggedContext.sPath.split("/")[2];
 
-if (modeloPageDetail.oData.setup[elementIndex]) {
-
-    modeloPageDetail.oData.setup[elementIndex].items.forEach(function (data, i) {
+if (modeloPageElements.oData.elements[elementIndex]) {
+    modeloPageElements.oData.elements[elementIndex].items.forEach(function (data, i) {
         if (data.id === oDraggedData.id) indexDrag = i;
         if (data.id === oDroppedData.id) indexDrop = i;
     });
 
-    Utils.arrayMove(modeloPageDetail.oData.setup[elementIndex].items, indexDrag, indexDrop);
+    Utils.arrayMove(modeloPageElements.oData.elements[elementIndex].items, indexDrag, indexDrop);
 }
 
-modeloPageDetail.refresh();
+modeloPageElements.refresh();

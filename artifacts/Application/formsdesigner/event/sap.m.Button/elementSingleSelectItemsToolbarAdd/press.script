@@ -7,7 +7,4 @@ data.items.push({
     key: "key" + (data.items.length + 1),
 });
 
-modeloPageDetail.refresh();
-
-// const table = oEvent.getSource().getParent().getParent().getItems()[0];
-// table.fireEvent("change");
+modeloPageElements.refresh();

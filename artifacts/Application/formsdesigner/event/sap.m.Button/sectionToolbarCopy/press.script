@@ -6,11 +6,9 @@ const elementIndex = parseInt(context.sPath.split("/")[2]) + 1;
 newElement.id = ModelData.genID();
 newElement.title = newElement.title + " (COPY)";
 
-if (newElement.items) {
-    newElement.items.forEach(function (items) {
-        items.id = ModelData.genID();
-    });
-}
+newElement.elements.forEach(function (element) {
+    element.id = ModelData.genID();
+});
 
-modeloPageElements.oData.elements.splice(elementIndex, 0, newElement);
-modeloPageElements.refresh();
+modeloPageDetail.oData.setup.splice(elementIndex, 0, newElement);
+modeloPageDetail.refresh();

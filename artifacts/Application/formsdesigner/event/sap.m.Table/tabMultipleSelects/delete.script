@@ -3,7 +3,5 @@ const context = deleteItem.getBindingContext();
 const data = context.getObject();
 
 let elementIndex = context.sPath.split("/")[2];
-ModelData.Delete(modeloPageDetail.oData.setup[elementIndex].items, "id", data.id);
-modeloPageDetail.refresh();
-
-// deleteItem?.getParent()?.fireEvent("change");
+ModelData.Delete(modeloPageElements.oData.elements[elementIndex].items, "id", data.id);
+modeloPageElements.refresh();

@@ -12,10 +12,10 @@ let oDroppedData = oDroppedContext.getObject();
 let indexDrag = 0;
 let indexDrop = 0;
 
-modeloPageElements.oData.elements.forEach(function (data, i) {
+modeloPageDetail.oData.setup.forEach(function (data, i) {
     if (data.id === oDraggedData.id) indexDrag = i;
     if (data.id === oDroppedData.id) indexDrop = i;
 });
 
-Utils.arrayMove(modeloPageElements.oData.elements, indexDrag, indexDrop);
-modeloPageElements.refresh();
+Utils.arrayMove(modeloPageDetail.oData.setup, indexDrag, indexDrop);
+modeloPageDetail.refresh();

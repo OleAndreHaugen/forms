@@ -1,21 +1,5 @@
-if (!!tabElements.getBinding("items")) {
-    tabElements.getBinding("items").attachEventOnce("change", null, () => {
-        const forms = tabElements.getItems();
-        forms.forEach((form, i) => {
-            const upButton = form
-                ?.getCells()[0]
-                .getItems()[1]
-                .getHeaderToolbar()
-                .getContent()
-                .filter((item) => item.sId.split("-")[0] === "elementToolbarUp")[0];
-            const downButton = form
-                ?.getCells()[0]
-                .getItems()[1]
-                .getHeaderToolbar()
-                .getContent()
-                .filter((item) => item.sId.split("-")[0] === "elementToolbarDown")[0];
-            upButton.setVisible(i !== 0);
-            downButton.setVisible(i !== forms.length - 1);
-        });
-    });
-}
+let binding = this.getBinding('items');
+modeloPageElements.oData.countElements = binding.getLength();
+modeloPageElements.refresh();
+modeloPageDetail.refresh();
+

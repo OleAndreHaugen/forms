@@ -1,7 +1,7 @@
 const controller = {
     currentIndex: null,
     elementTypes: [
-        { icon: "sap-icon://form", text: "Form", type: "Form" },
+        // { icon: "sap-icon://form", text: "Form", type: "Form" },
         { icon: "sap-icon://header", text: "Form Title", type: "FormTitle" },
         { icon: "sap-icon://calendar", text: "Date Picker", type: "DatePicker" },
         { icon: "sap-icon://date-time", text: "Date Time Picker", type: "DateTimePicker" },
@@ -23,14 +23,14 @@ const controller = {
 
         modellistElementTypes.setData(this.elementTypes);
 
-        controller.elementTypes.forEach(function (element) {
-            elementToolbarType.addItem(
-                new sap.ui.core.ListItem({
-                    key: element.type,
-                    text: element.text,
-                })
-            );
-        });
+        // controller.elementTypes.forEach(function (element) {
+        //     elementToolbarType.addItem(
+        //         new sap.ui.core.ListItem({
+        //             key: element.type,
+        //             text: element.text,
+        //         })
+        //     );
+        // });
 
         this.list();
     },
@@ -100,7 +100,6 @@ const controller = {
             placeholder: "",
             title: elementData.type,
             description: "",
-
             required: false,
             _expanded: true,
         };
@@ -111,13 +110,6 @@ const controller = {
                 newElement.buttonType = "Emphasized";
                 break;
 
-            case "Form":
-                newElement.enableLabel = false;
-                newElement.expanded = true;
-                newElement.expandable = true;
-                newElement.layout = "ResponsiveGridLayout";
-                break;
-
             case "CheckList":
                 newElement.questionTitle = "Question";
                 newElement.answerTitle = "Answer";
@@ -125,24 +117,9 @@ const controller = {
                 newElement.expandable = true;
 
                 newElement.items = [
-                    {
-                        id: ModelData.genID(),
-                        question: "Question 1",
-                        type: "Switch",
-                        answer: false,
-                    },
-                    {
-                        id: ModelData.genID(),
-                        question: "Question 2",
-                        type: "Switch",
-                        answer: false,
-                    },
-                    {
-                        id: ModelData.genID(),
-                        question: "Question 3",
-                        type: "Switch",
-                        answer: false,
-                    },
+                    { id: ModelData.genID(), question: "Question 1", type: "Switch" },
+                    { id: ModelData.genID(), question: "Question 2", type: "Switch" },
+                    { id: ModelData.genID(), question: "Question 3", type: "Switch" },
                 ];
                 break;
 
@@ -184,7 +161,30 @@ const controller = {
         }
 
         if (controller.currentIndex) {
-            modeloPageDetail.oData.setup.splice(controller.currentIndex, 0, newElement);
+            modeloPageElements.oData.elements.splice(controller.currentIndex, 0, newElement);
+        } else {
+            modeloPageElements.oData.elements.push(newElement);
+        }
+
+        modeloPageElements.refresh();
+    },
+
+    addSection: function (currentIndex) {
+        let newElement = {
+            id: ModelData.genID(),
+            title: "New Form",
+            expanded: false,
+            expandable: false,
+            required: false,
+            type: "Form",
+            elements: [],
+            countElements: 0,
+            layout: "ResponsiveGridLayout",
+            _expanded: true,
+        };
+
+        if (currentIndex) {
+            modeloPageDetail.oData.setup.splice(currentIndex, 0, newElement);
         } else {
             modeloPageDetail.oData.setup.push(newElement);
         }

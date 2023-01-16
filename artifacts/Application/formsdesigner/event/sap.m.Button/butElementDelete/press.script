@@ -1,0 +1,5 @@
+const context = oEvent.oSource.getBindingContext();
+const data = context.getObject();
+
+ModelData.Delete(modeloPageElements.oData.elements, "id", data.id);
+modeloPageElements.refresh();

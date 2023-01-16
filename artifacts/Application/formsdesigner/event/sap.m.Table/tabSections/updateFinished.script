@@ -1,0 +1,2 @@
+let binding = this.getBinding('items');
+headerSectionsTitle.setText("Sections (" + binding.getLength() + ")");

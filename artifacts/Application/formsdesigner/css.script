@@ -2,22 +2,32 @@
     outline: none !important;
 }
 
-*,
-::after,
-::before {
-    box-sizing: content-box;
+.splitDesigner .sapUiFormContainerTitle>.sapUiFormTitleH1,
+.splitDesigner .sapUiFormContainerTitle>.sapUiFormTitleH2,
+.splitDesigner .sapUiFormContainerTitle>.sapUiFormTitleH3,
+.splitDesigner .sapUiFormContainerTitle>.sapUiFormTitleH4,
+.splitDesigner .sapUiFormContainerTitle>.sapUiFormTitleH5,
+.splitDesigner .sapUiFormContainerTitle>.sapUiFormTitleH6 {
+    font-size: 1.2rem;
 }
 
-.nbsInput .form-control,
-::after,
-::before {
-    box-sizing: border-box;
+.formNoPadding .sapMListTblHighlightCol+.sapMListTblHeaderCell,
+.formNoPadding .sapMListTblHighlightCell+.sapMListTblCell {
+    padding: 0
 }
 
 .nepFormInput {
     max-width: 1280px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.formGeneral .sapUiFormResGrid>div {
+    padding-bottom: 10px !important;
+}
+
+.formSettings .sapUiFormResGrid>div {
+    padding-top: 0 !important;
 }
 
 .formPreviewMobile {
@@ -57,10 +67,6 @@
     border-radius: 6px;
     background: #f8f9fa;
     border: 1px solid #ced4da;
-}
-
-.form-control {
-    border-radius: 8px;
 }
 
 .sapMColumnHeaderContent {
