@@ -330,18 +330,21 @@ const FORMS = {
     },
 
     buildElementMultipleChoice: function (element) {
+
+        let newField;
+
         if (element.horizontal) {
-            elementField = new sap.m.HBox(FORMS.buildElementFieldID(element), {
+            newField = new sap.m.HBox(FORMS.buildElementFieldID(element), {
                 wrap: "Wrap",
             });
         } else {
-            elementField = new sap.m.VBox(FORMS.buildElementFieldID(element), {
+            newField = new sap.m.VBox(FORMS.buildElementFieldID(element), {
                 wrap: "Wrap",
             });
         }
 
         element.items.forEach(function (item, i) {
-            elementField.addItem(
+            newField.addItem(
                 new sap.m.CheckBox({
                     width: element.width,
                     text: item.title,
@@ -349,6 +352,9 @@ const FORMS = {
                 })
             );
         });
+
+        
+        return newField;
     },
 
     buildElementDatePicker: function (element) {
@@ -432,8 +438,6 @@ const FORMS = {
                     required: item.required,
                 })
             );
-
-            console.log("{/" + item.id + "}")
 
             let itemAnswer;
 
