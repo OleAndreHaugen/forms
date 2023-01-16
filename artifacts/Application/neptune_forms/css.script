@@ -1,0 +1,3 @@
+.notValid {
+    border-left: 4px solid #f53232;
+}
