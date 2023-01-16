@@ -2,8 +2,44 @@
     outline: none !important;
 }
 
+*,
+::after,
+::before {
+    box-sizing: content-box;
+}
+
+.nbsInput .form-control,
+::after,
+::before {
+    box-sizing: border-box;
+}
+
 .nepFormInput {
     max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.formPreviewMobile {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.formPreviewTablet {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.formPreviewDesktop {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.formPreviewFull {
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -25,4 +61,8 @@
 
 .form-control {
     border-radius: 8px;
+}
+
+.sapMColumnHeaderContent {
+    width: 100%;
 }

@@ -2,10 +2,11 @@ const controller = {
     currentIndex: null,
     elementTypes: [
         { icon: "sap-icon://form", text: "Form", type: "Form" },
+        { icon: "sap-icon://header", text: "Form Title", type: "FormTitle" },
         { icon: "sap-icon://calendar", text: "Date Picker", type: "DatePicker" },
         { icon: "sap-icon://date-time", text: "Date Time Picker", type: "DateTimePicker" },
-        { icon: "sap-icon://fa-regular/check-square", text: "CheckBox", type: "CheckBox" },
-        { icon: "sap-icon://header", text: "Form Title", type: "FormTitle" },
+        { icon: "sap-icon://fa-regular/check-square", text: "Check Box", type: "CheckBox" },
+        { icon: "sap-icon://checklist", text: "Check List", type: "CheckList" },
         { icon: "sap-icon://document-text", text: "Text Area", type: "TextArea" },
         { icon: "sap-icon://request", text: "Input", type: "Input" },
         { icon: "sap-icon://fa-solid/image", text: "Image", type: "Image" },
@@ -19,7 +20,18 @@ const controller = {
 
     init: function () {
         jQuery.sap.require("sap.m.MessageBox");
+
         modellistElementTypes.setData(this.elementTypes);
+
+        controller.elementTypes.forEach(function (element) {
+            elementToolbarType.addItem(
+                new sap.ui.core.ListItem({
+                    key: element.type,
+                    text: element.text,
+                })
+            );
+        });
+
         this.list();
     },
 
@@ -99,15 +111,39 @@ const controller = {
                 newElement.buttonType = "Emphasized";
                 break;
 
-            case "FormTitle":
-                newElement.enableLabel = false;
-                break;
-
             case "Form":
                 newElement.enableLabel = false;
                 newElement.expanded = true;
                 newElement.expandable = true;
                 newElement.layout = "ResponsiveGridLayout";
+                break;
+
+            case "CheckList":
+                newElement.questionTitle = "Question";
+                newElement.answerTitle = "Answer";
+                newElement.expanded = true;
+                newElement.expandable = true;
+
+                newElement.items = [
+                    {
+                        id: ModelData.genID(),
+                        question: "Question 1",
+                        type: "Switch",
+                        answer: false,
+                    },
+                    {
+                        id: ModelData.genID(),
+                        question: "Question 2",
+                        type: "Switch",
+                        answer: false,
+                    },
+                    {
+                        id: ModelData.genID(),
+                        question: "Question 3",
+                        type: "Switch",
+                        answer: false,
+                    },
+                ];
                 break;
 
             case "SingleChoice":

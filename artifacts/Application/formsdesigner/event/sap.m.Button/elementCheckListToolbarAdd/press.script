@@ -1,0 +1,11 @@
+const context = oEvent.oSource.getBindingContext();
+const data = context.getObject();
+
+data.items.push({
+    id: ModelData.genID(),
+    question: "Question " + (data.items.length + 1),
+    type: "Switch",
+    answer: false,
+});
+
+modeloPageDetail.refresh();

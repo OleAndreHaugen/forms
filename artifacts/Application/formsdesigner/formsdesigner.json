@@ -2290,6 +2290,13 @@
 																									"script": "file://event/sap.f.Avatar/insertNew/press.script",
 																									"language": "javascript",
 																									"translation": []
+																								},
+																								{
+																									"attribute": "backgroundColor",
+																									"grouping": "Properties",
+																									"value": "Accent7",
+																									"script": "",
+																									"translation": []
 																								}
 																							],
 																							"data": []
@@ -2346,6 +2353,13 @@
 																							"request": [],
 																							"response": [],
 																							"attributes": [
+																								{
+																									"attribute": "enableCompactMode",
+																									"grouping": "Properties",
+																									"value": "true",
+																									"script": "",
+																									"translation": []
+																								},
 																								{
 																									"attribute": "position",
 																									"grouping": "Parent",
@@ -2538,33 +2552,26 @@
 																									"data": []
 																								},
 																								{
-																									"fieldNo": "aacf6261-d917-4612-c980-a522ff9507fb",
+																									"fieldNo": "df646a3f-496c-41fd-88c7-0474944da612",
 																									"fieldName": "elementToolbarType",
 																									"fieldParent": "baecf3dc-f617-4da5-f73f-f9f31c560845",
-																									"fieldType": "sap.m.Label",
+																									"fieldType": "sap.m.Select",
 																									"script": "",
 																									"customComponent": false,
 																									"request": [],
 																									"response": [],
 																									"attributes": [
 																										{
-																											"attribute": "width",
-																											"grouping": "Properties",
-																											"value": "120px",
-																											"script": "",
-																											"translation": []
-																										},
-																										{
-																											"attribute": "text",
+																											"attribute": "selectedKey",
 																											"grouping": "Properties",
 																											"value": "{type}",
 																											"script": "",
 																											"translation": []
 																										},
 																										{
-																											"attribute": "design",
+																											"attribute": "enableCompactMode",
 																											"grouping": "Properties",
-																											"value": "Bold",
+																											"value": "true",
 																											"script": "",
 																											"translation": []
 																										}
@@ -5330,6 +5337,142 @@
 																							]
 																						},
 																						{
+																							"fieldNo": "7a06f29c-4001-44a2-860a-8af0dbbdf2e0",
+																							"fieldName": "contElementFormTitle",
+																							"fieldParent": "b5680927-eb06-4f8e-8f0a-d6bb8e27eb3e",
+																							"fieldType": "sap.m.VBox",
+																							"script": "",
+																							"customComponent": false,
+																							"request": [],
+																							"response": [],
+																							"attributes": [
+																								{
+																									"attribute": "visible",
+																									"grouping": "Properties",
+																									"value": "{= ${type} === 'FormTitle' ? true:false }",
+																									"script": "",
+																									"translation": []
+																								},
+																								{
+																									"attribute": "styleClass",
+																									"grouping": "Properties",
+																									"value": "sapUiContentPadding",
+																									"script": "",
+																									"translation": []
+																								}
+																							],
+																							"data": [
+																								{
+																									"fieldNo": "aded2a98-df86-4319-b46d-ccc3a4f62b87",
+																									"fieldName": "elementFormTitleToolbar",
+																									"fieldParent": "7a06f29c-4001-44a2-860a-8af0dbbdf2e0",
+																									"fieldType": "sap.m.Toolbar",
+																									"script": "",
+																									"customComponent": false,
+																									"request": [],
+																									"response": [],
+																									"attributes": [
+																										{
+																											"attribute": "width",
+																											"grouping": "Properties",
+																											"value": "100%",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "styleClassMargin",
+																											"grouping": "Properties",
+																											"value": "sapUiSmallMarginTop",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "styleClass",
+																											"grouping": "Properties",
+																											"value": "formToolbar",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "enableCompactMode",
+																											"grouping": "Properties",
+																											"value": "true",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "design",
+																											"grouping": "Properties",
+																											"value": "Transparent",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "position",
+																											"grouping": "Parent",
+																											"value": "HeaderToolbar",
+																											"script": "",
+																											"translation": []
+																										}
+																									],
+																									"data": [
+																										{
+																											"fieldNo": "e621467c-2e7d-4869-e5e9-c81772504af3",
+																											"fieldName": "elementFormTitleToolbarSpacer",
+																											"fieldParent": "aded2a98-df86-4319-b46d-ccc3a4f62b87",
+																											"fieldType": "sap.m.ToolbarSpacer",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [],
+																											"data": []
+																										},
+																										{
+																											"fieldNo": "ef825615-89ba-4fb2-e538-2bcaa152c883",
+																											"fieldName": "elementFormTitleToolbarExpanded",
+																											"fieldParent": "aded2a98-df86-4319-b46d-ccc3a4f62b87",
+																											"fieldType": "sap.m.Switch",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "state",
+																													"grouping": "Properties",
+																													"value": "{enableLabel}",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": []
+																										},
+																										{
+																											"fieldNo": "8382d61b-a00e-4a19-efba-838086effde9",
+																											"fieldName": "elementFormTitleToolbarExpandedLabel",
+																											"fieldParent": "aded2a98-df86-4319-b46d-ccc3a4f62b87",
+																											"fieldType": "sap.m.Label",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "text",
+																													"grouping": "Properties",
+																													"value": "Show Title",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": []
+																										}
+																									]
+																								}
+																							]
+																						},
+																						{
 																							"fieldNo": "4450f78a-ff07-4129-f5c6-afb5a944ea67",
 																							"fieldName": "contElementInput",
 																							"fieldParent": "b5680927-eb06-4f8e-8f0a-d6bb8e27eb3e",
@@ -5931,33 +6074,6 @@
 																									]
 																								}
 																							]
-																						},
-																						{
-																							"fieldNo": "7a06f29c-4001-44a2-860a-8af0dbbdf2e0",
-																							"fieldName": "contElementFormTitle",
-																							"fieldParent": "b5680927-eb06-4f8e-8f0a-d6bb8e27eb3e",
-																							"fieldType": "sap.m.VBox",
-																							"script": "",
-																							"customComponent": false,
-																							"request": [],
-																							"response": [],
-																							"attributes": [
-																								{
-																									"attribute": "visible",
-																									"grouping": "Properties",
-																									"value": "{= ${type} === 'FormTitle' ? true:false }",
-																									"script": "",
-																									"translation": []
-																								},
-																								{
-																									"attribute": "styleClass",
-																									"grouping": "Properties",
-																									"value": "sapUiContentPadding",
-																									"script": "",
-																									"translation": []
-																								}
-																							],
-																							"data": []
 																						},
 																						{
 																							"fieldNo": "cdcd040b-bda8-41b8-cfba-c84d982469c2",
@@ -7851,6 +7967,144 @@
 																							],
 																							"data": [
 																								{
+																									"fieldNo": "44e24c42-1b58-4a40-d4e3-ce10b77eaeab",
+																									"fieldName": "elementPanelSingleSelect",
+																									"fieldParent": "ab589d03-f2f4-4a02-9c5d-3ae827682463",
+																									"fieldType": "sap.m.Panel",
+																									"script": "",
+																									"customComponent": false,
+																									"request": [],
+																									"response": [],
+																									"attributes": [
+																										{
+																											"attribute": "visible",
+																											"grouping": "Properties",
+																											"value": "{= ${type} === 'SingleChoice' ? true:false }",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "styleClassPadding",
+																											"grouping": "Properties",
+																											"value": "sapUiNoContentPadding",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "styleClass",
+																											"grouping": "Properties",
+																											"value": "formBorder",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "backgroundDesign",
+																											"grouping": "Properties",
+																											"value": "Solid",
+																											"script": "",
+																											"translation": []
+																										}
+																									],
+																									"data": [
+																										{
+																											"fieldNo": "b9edbcd6-436b-4c8f-802b-ddecbf97c93f",
+																											"fieldName": "elementFormSingleSelect",
+																											"fieldParent": "44e24c42-1b58-4a40-d4e3-ce10b77eaeab",
+																											"fieldType": "sap.ui.layout.form.SimpleForm",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "maxContainerCols",
+																													"grouping": "Properties",
+																													"value": "3",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "layout",
+																													"grouping": "Properties",
+																													"value": "ColumnLayout",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "labelSpanM",
+																													"grouping": "Properties",
+																													"value": "12",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "labelSpanL",
+																													"grouping": "Properties",
+																													"value": "12",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "true",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "columnsM",
+																													"grouping": "Properties",
+																													"value": "2",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": [
+																												{
+																													"fieldNo": "09ee1451-68fe-481f-8871-59eb5d10c01f",
+																													"fieldName": "lblElementFormSingleSelectWidth",
+																													"fieldParent": "b9edbcd6-436b-4c8f-802b-ddecbf97c93f",
+																													"fieldType": "sap.m.Label",
+																													"script": "",
+																													"customComponent": false,
+																													"request": [],
+																													"response": [],
+																													"attributes": [
+																														{
+																															"attribute": "text",
+																															"grouping": "Properties",
+																															"value": "Item Width",
+																															"script": "",
+																															"translation": []
+																														}
+																													],
+																													"data": []
+																												},
+																												{
+																													"fieldNo": "0da21ff2-73cf-4f36-d136-c6607ff5885d",
+																													"fieldName": "inElementFormSingleSelectWidth",
+																													"fieldParent": "b9edbcd6-436b-4c8f-802b-ddecbf97c93f",
+																													"fieldType": "sap.m.Input",
+																													"script": "",
+																													"customComponent": false,
+																													"request": [],
+																													"response": [],
+																													"attributes": [
+																														{
+																															"attribute": "value",
+																															"grouping": "Properties",
+																															"value": "{width}",
+																															"script": "",
+																															"translation": []
+																														}
+																													],
+																													"data": []
+																												}
+																											]
+																										}
+																									]
+																								},
+																								{
 																									"fieldNo": "0f0ded16-ad18-46db-b505-a6f82640150e",
 																									"fieldName": "tabSingleSelects",
 																									"fieldParent": "ab589d03-f2f4-4a02-9c5d-3ae827682463",
@@ -8107,7 +8361,7 @@
 																								},
 																								{
 																									"fieldNo": "5bad70fc-5c82-43f5-d5f9-1c601457d9cd",
-																									"fieldName": "questionSingleSelectToolbar",
+																									"fieldName": "elementSingleSelectToolbar",
 																									"fieldParent": "ab589d03-f2f4-4a02-9c5d-3ae827682463",
 																									"fieldType": "sap.m.Toolbar",
 																									"script": "",
@@ -8161,7 +8415,7 @@
 																									"data": [
 																										{
 																											"fieldNo": "27c60502-6b4f-4f84-d580-6aabc3d8a880",
-																											"fieldName": "questionSingleSelectToolbarAdd",
+																											"fieldName": "elementSingleSelectToolbarAdd",
 																											"fieldParent": "5bad70fc-5c82-43f5-d5f9-1c601457d9cd",
 																											"fieldType": "sap.m.Button",
 																											"script": "",
@@ -8187,7 +8441,7 @@
 																													"attribute": "press",
 																													"grouping": "Events",
 																													"value": "Anonymous Function",
-																													"script": "file://event/sap.m.Button/questionSingleSelectToolbarAdd/press.script",
+																													"script": "file://event/sap.m.Button/elementSingleSelectToolbarAdd/press.script",
 																													"translation": []
 																												}
 																											],
@@ -8195,7 +8449,7 @@
 																										},
 																										{
 																											"fieldNo": "c3b28003-da5f-4017-e9f7-f1568677acb4",
-																											"fieldName": "questionSingleSelectToolbarSpacer",
+																											"fieldName": "elementSingleSelectToolbarSpacer",
 																											"fieldParent": "5bad70fc-5c82-43f5-d5f9-1c601457d9cd",
 																											"fieldType": "sap.m.ToolbarSpacer",
 																											"script": "",
@@ -8301,7 +8555,7 @@
 																										},
 																										{
 																											"fieldNo": "2621ee36-5986-41b2-c11d-72022530508d",
-																											"fieldName": "questionSingleSelectToolbarRequired",
+																											"fieldName": "elementSingleSelectToolbarRequired",
 																											"fieldParent": "5bad70fc-5c82-43f5-d5f9-1c601457d9cd",
 																											"fieldType": "sap.m.Switch",
 																											"script": "",
@@ -8321,7 +8575,7 @@
 																										},
 																										{
 																											"fieldNo": "9e20a45f-1089-44dd-89d9-9019d674fc56",
-																											"fieldName": "questionSingleSelectToolbarRequiredLabel",
+																											"fieldName": "elementSingleSelectToolbarRequiredLabel",
 																											"fieldParent": "5bad70fc-5c82-43f5-d5f9-1c601457d9cd",
 																											"fieldType": "sap.m.Label",
 																											"script": "",
@@ -8385,7 +8639,7 @@
 																						},
 																						{
 																							"fieldNo": "ac708dbc-040b-44a7-e82d-de89166cc828",
-																							"fieldName": "contQuestionsMultipleSelect",
+																							"fieldName": "contElementMultipleSelect",
 																							"fieldParent": "b5680927-eb06-4f8e-8f0a-d6bb8e27eb3e",
 																							"fieldType": "sap.m.VBox",
 																							"script": "",
@@ -8409,6 +8663,144 @@
 																								}
 																							],
 																							"data": [
+																								{
+																									"fieldNo": "f807a3e2-ee70-4d9c-b88b-823addbe9f22",
+																									"fieldName": "elementPanelMultipleSelect",
+																									"fieldParent": "ac708dbc-040b-44a7-e82d-de89166cc828",
+																									"fieldType": "sap.m.Panel",
+																									"script": "",
+																									"customComponent": false,
+																									"request": [],
+																									"response": [],
+																									"attributes": [
+																										{
+																											"attribute": "visible",
+																											"grouping": "Properties",
+																											"value": "{= ${type} === 'MultipleChoice' ? true:false }",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "styleClassPadding",
+																											"grouping": "Properties",
+																											"value": "sapUiNoContentPadding",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "styleClass",
+																											"grouping": "Properties",
+																											"value": "formBorder",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "backgroundDesign",
+																											"grouping": "Properties",
+																											"value": "Solid",
+																											"script": "",
+																											"translation": []
+																										}
+																									],
+																									"data": [
+																										{
+																											"fieldNo": "e136d9f9-342f-4423-cf7b-443f6e7008bd",
+																											"fieldName": "elementFormMultipleSelect",
+																											"fieldParent": "f807a3e2-ee70-4d9c-b88b-823addbe9f22",
+																											"fieldType": "sap.ui.layout.form.SimpleForm",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "maxContainerCols",
+																													"grouping": "Properties",
+																													"value": "3",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "layout",
+																													"grouping": "Properties",
+																													"value": "ColumnLayout",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "labelSpanM",
+																													"grouping": "Properties",
+																													"value": "12",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "labelSpanL",
+																													"grouping": "Properties",
+																													"value": "12",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "true",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "columnsM",
+																													"grouping": "Properties",
+																													"value": "2",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": [
+																												{
+																													"fieldNo": "2be56bcb-6131-4790-a824-71f3f0de0407",
+																													"fieldName": "lblElementFormMultipleSelectWidth",
+																													"fieldParent": "e136d9f9-342f-4423-cf7b-443f6e7008bd",
+																													"fieldType": "sap.m.Label",
+																													"script": "",
+																													"customComponent": false,
+																													"request": [],
+																													"response": [],
+																													"attributes": [
+																														{
+																															"attribute": "text",
+																															"grouping": "Properties",
+																															"value": "Item Width",
+																															"script": "",
+																															"translation": []
+																														}
+																													],
+																													"data": []
+																												},
+																												{
+																													"fieldNo": "77b72a69-f0ae-4328-f656-e4935124c16d",
+																													"fieldName": "inElementFormMultipleSelectWidth",
+																													"fieldParent": "e136d9f9-342f-4423-cf7b-443f6e7008bd",
+																													"fieldType": "sap.m.Input",
+																													"script": "",
+																													"customComponent": false,
+																													"request": [],
+																													"response": [],
+																													"attributes": [
+																														{
+																															"attribute": "value",
+																															"grouping": "Properties",
+																															"value": "{width}",
+																															"script": "",
+																															"translation": []
+																														}
+																													],
+																													"data": []
+																												}
+																											]
+																										}
+																									]
+																								},
 																								{
 																									"fieldNo": "847d4e8b-4108-4189-a88b-dbb886ba7d52",
 																									"fieldName": "tabMultipleSelects",
@@ -8688,7 +9080,7 @@
 																								},
 																								{
 																									"fieldNo": "79c7e7f2-49de-45ab-859b-6a683d12322d",
-																									"fieldName": "questionMultipleSelectToolbar",
+																									"fieldName": "elementMultipleSelectToolbar",
 																									"fieldParent": "ac708dbc-040b-44a7-e82d-de89166cc828",
 																									"fieldType": "sap.m.Toolbar",
 																									"script": "",
@@ -8742,7 +9134,7 @@
 																									"data": [
 																										{
 																											"fieldNo": "3bffe904-9a3d-4bfe-8edf-87bb3577fcaa",
-																											"fieldName": "questionMultipleSelectToolbarAdd",
+																											"fieldName": "elementMultipleSelectToolbarAdd",
 																											"fieldParent": "79c7e7f2-49de-45ab-859b-6a683d12322d",
 																											"fieldType": "sap.m.Button",
 																											"script": "",
@@ -8768,7 +9160,7 @@
 																													"attribute": "press",
 																													"grouping": "Events",
 																													"value": "Anonymous Function",
-																													"script": "file://event/sap.m.Button/questionMultipleSelectToolbarAdd/press.script",
+																													"script": "file://event/sap.m.Button/elementMultipleSelectToolbarAdd/press.script",
 																													"translation": []
 																												}
 																											],
@@ -8776,7 +9168,7 @@
 																										},
 																										{
 																											"fieldNo": "bf555ab1-67b7-41ef-9d7b-e37c3bdb1db1",
-																											"fieldName": "questionMultipleSelectToolbarSpacer1",
+																											"fieldName": "elementMultipleSelectToolbarSpacer1",
 																											"fieldParent": "79c7e7f2-49de-45ab-859b-6a683d12322d",
 																											"fieldType": "sap.m.ToolbarSpacer",
 																											"script": "",
@@ -9007,7 +9399,7 @@
 																										},
 																										{
 																											"fieldNo": "84772dc9-7e5f-41e3-bda9-7279c99638ec",
-																											"fieldName": "oToolbarSeparator",
+																											"fieldName": "elementMultipleSelectToolbarSep",
 																											"fieldParent": "79c7e7f2-49de-45ab-859b-6a683d12322d",
 																											"fieldType": "sap.m.ToolbarSeparator",
 																											"script": "",
@@ -9113,7 +9505,7 @@
 																										},
 																										{
 																											"fieldNo": "219abf5b-510e-431b-d9de-d8425dbe5934",
-																											"fieldName": "questionMultipleSelectToolbarRequired",
+																											"fieldName": "elementMultipleSelectToolbarRequired",
 																											"fieldParent": "79c7e7f2-49de-45ab-859b-6a683d12322d",
 																											"fieldType": "sap.m.Switch",
 																											"script": "",
@@ -9132,7 +9524,7 @@
 																													"attribute": "change",
 																													"grouping": "Events",
 																													"value": "Anonymous Function",
-																													"script": "file://event/sap.m.Switch/questionMultipleSelectToolbarRequired/change.script",
+																													"script": "file://event/sap.m.Switch/elementMultipleSelectToolbarRequired/change.script",
 																													"language": "javascript",
 																													"translation": []
 																												}
@@ -9141,7 +9533,7 @@
 																										},
 																										{
 																											"fieldNo": "df736fe3-eae7-415b-e4ce-4f8dcf44a5b2",
-																											"fieldName": "questionMultipleSelectToolbarRequiredLabel",
+																											"fieldName": "elementMultipleSelectToolbarRequiredLabel",
 																											"fieldParent": "79c7e7f2-49de-45ab-859b-6a683d12322d",
 																											"fieldType": "sap.m.Label",
 																											"script": "",
@@ -9183,6 +9575,892 @@
 																											"fieldNo": "cdc8c311-b363-47a5-a931-8d714f93cc6a",
 																											"fieldName": "elementMultipleSelectToolbarDescriptionLabel",
 																											"fieldParent": "79c7e7f2-49de-45ab-859b-6a683d12322d",
+																											"fieldType": "sap.m.Label",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "text",
+																													"grouping": "Properties",
+																													"value": "Description",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": []
+																										}
+																									]
+																								}
+																							]
+																						},
+																						{
+																							"fieldNo": "1c85d758-4450-460b-b2cb-9f851d2364c7",
+																							"fieldName": "contelementsCheckList",
+																							"fieldParent": "b5680927-eb06-4f8e-8f0a-d6bb8e27eb3e",
+																							"fieldType": "sap.m.VBox",
+																							"script": "",
+																							"customComponent": false,
+																							"request": [],
+																							"response": [],
+																							"attributes": [
+																								{
+																									"attribute": "visible",
+																									"grouping": "Properties",
+																									"value": "{= ${type} === 'CheckList' ? true:false }",
+																									"script": "",
+																									"translation": []
+																								},
+																								{
+																									"attribute": "styleClass",
+																									"grouping": "Properties",
+																									"value": "sapUiContentPadding",
+																									"script": "",
+																									"translation": []
+																								}
+																							],
+																							"data": [
+																								{
+																									"fieldNo": "03990a3d-45d4-4fe7-84de-8a31e1846bb4",
+																									"fieldName": "tabCheckList",
+																									"fieldParent": "1c85d758-4450-460b-b2cb-9f851d2364c7",
+																									"fieldType": "sap.m.Table",
+																									"script": "",
+																									"customComponent": false,
+																									"bindingType": "h",
+																									"modelPath": "items",
+																									"request": [],
+																									"response": [],
+																									"attributes": [
+																										{
+																											"attribute": "showSeparators",
+																											"grouping": "Properties",
+																											"value": "None",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "mode",
+																											"grouping": "Properties",
+																											"value": "Delete",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "backgroundDesign",
+																											"grouping": "Properties",
+																											"value": "Transparent",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "delete",
+																											"grouping": "Events",
+																											"value": "Anonymous Function",
+																											"script": "file://event/sap.m.Table/tabCheckList/delete.script",
+																											"language": "javascript",
+																											"translation": []
+																										}
+																									],
+																									"data": [
+																										{
+																											"fieldNo": "44ba1516-6ab5-44b9-819d-97f8a50e5eee",
+																											"fieldName": "sorterCheckList",
+																											"fieldParent": "03990a3d-45d4-4fe7-84de-8a31e1846bb4",
+																											"fieldType": "sap.ui.core.dnd.DragDropInfo",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "dropPosition",
+																													"grouping": "Properties",
+																													"value": "Between",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "targetAggregation",
+																													"grouping": "Properties",
+																													"value": "items",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "drop",
+																													"grouping": "Events",
+																													"value": "Anonymous Function",
+																													"script": "file://event/sap.ui.core.dnd.DragDropInfo/sorterCheckList/drop.script",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "sourceAggregation",
+																													"grouping": "Properties",
+																													"value": "items",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": []
+																										},
+																										{
+																											"fieldNo": "2e59adcc-73f4-497e-ff7c-c05ef6e43f82",
+																											"fieldName": "colCheckListDnD",
+																											"fieldParent": "03990a3d-45d4-4fe7-84de-8a31e1846bb4",
+																											"fieldType": "sap.m.Column",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "width",
+																													"grouping": "Properties",
+																													"value": "20px",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "hAlign",
+																													"grouping": "Properties",
+																													"value": "Center",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": []
+																										},
+																										{
+																											"fieldNo": "5bc725ab-dd2a-4368-c77e-b2331c32298c",
+																											"fieldName": "colCheckListQuestion",
+																											"fieldParent": "03990a3d-45d4-4fe7-84de-8a31e1846bb4",
+																											"fieldType": "sap.m.Column",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [],
+																											"data": [
+																												{
+																													"fieldNo": "ee28dd8f-b8ac-4fd6-ac9d-4cbccf3cf12b",
+																													"fieldName": "colCheckListQuestionLabel",
+																													"fieldParent": "5bc725ab-dd2a-4368-c77e-b2331c32298c",
+																													"fieldType": "nep.bootstrap.Input",
+																													"script": "",
+																													"customComponent": false,
+																													"request": [],
+																													"response": [],
+																													"attributes": [
+																														{
+																															"attribute": "value",
+																															"grouping": "Properties",
+																															"value": "{questionTitle}",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
+																															"attribute": "width",
+																															"grouping": "Properties",
+																															"value": "100%",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
+																															"attribute": "backgroundColor",
+																															"grouping": "Properties",
+																															"value": "Light",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
+																															"attribute": "required",
+																															"grouping": "Properties",
+																															"value": "true",
+																															"script": "",
+																															"translation": []
+																														}
+																													],
+																													"data": []
+																												}
+																											]
+																										},
+																										{
+																											"fieldNo": "25eae547-103c-46ff-d411-202975e148bc",
+																											"fieldName": "colCheckListAnswerType",
+																											"fieldParent": "03990a3d-45d4-4fe7-84de-8a31e1846bb4",
+																											"fieldType": "sap.m.Column",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "width",
+																													"grouping": "Properties",
+																													"value": "200px",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": [
+																												{
+																													"fieldNo": "e11f7a24-fc44-45e7-a047-0dddd9fbbb75",
+																													"fieldName": "colCheckListAnswerTypeLabel",
+																													"fieldParent": "25eae547-103c-46ff-d411-202975e148bc",
+																													"fieldType": "nep.bootstrap.Input",
+																													"script": "",
+																													"customComponent": false,
+																													"request": [],
+																													"response": [],
+																													"attributes": [
+																														{
+																															"attribute": "value",
+																															"grouping": "Properties",
+																															"value": "Type",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
+																															"attribute": "editable",
+																															"grouping": "Properties",
+																															"value": "false",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
+																															"attribute": "width",
+																															"grouping": "Properties",
+																															"value": "100%",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
+																															"attribute": "backgroundColor",
+																															"grouping": "Properties",
+																															"value": "Light",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
+																															"attribute": "required",
+																															"grouping": "Properties",
+																															"value": "true",
+																															"script": "",
+																															"translation": []
+																														}
+																													],
+																													"data": []
+																												}
+																											]
+																										},
+																										{
+																											"fieldNo": "1200852e-0b35-49e1-b021-f2e59885c07b",
+																											"fieldName": "colCheckListAnswer",
+																											"fieldParent": "03990a3d-45d4-4fe7-84de-8a31e1846bb4",
+																											"fieldType": "sap.m.Column",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "width",
+																													"grouping": "Properties",
+																													"value": "200px",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "hAlign",
+																													"grouping": "Properties",
+																													"value": "Center",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": [
+																												{
+																													"fieldNo": "545bbf92-0536-4080-a74f-b7d8b55b8a36",
+																													"fieldName": "colCheckListAnswerLabel",
+																													"fieldParent": "1200852e-0b35-49e1-b021-f2e59885c07b",
+																													"fieldType": "nep.bootstrap.Input",
+																													"script": "",
+																													"customComponent": false,
+																													"request": [],
+																													"response": [],
+																													"attributes": [
+																														{
+																															"attribute": "value",
+																															"grouping": "Properties",
+																															"value": "{answerTitle}",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
+																															"attribute": "width",
+																															"grouping": "Properties",
+																															"value": "100%",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
+																															"attribute": "backgroundColor",
+																															"grouping": "Properties",
+																															"value": "Light",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
+																															"attribute": "required",
+																															"grouping": "Properties",
+																															"value": "true",
+																															"script": "",
+																															"translation": []
+																														}
+																													],
+																													"data": []
+																												}
+																											]
+																										},
+																										{
+																											"fieldNo": "0bd10fff-0d89-477e-db58-961623ad3fd9",
+																											"fieldName": "itemCheckList",
+																											"fieldParent": "03990a3d-45d4-4fe7-84de-8a31e1846bb4",
+																											"fieldType": "sap.m.ColumnListItem",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [],
+																											"data": [
+																												{
+																													"fieldNo": "cd8d5cdb-6490-4b09-a22a-866b1e2b7813",
+																													"fieldName": "itemCheckListDnD",
+																													"fieldParent": "0bd10fff-0d89-477e-db58-961623ad3fd9",
+																													"fieldType": "sap.ui.core.Icon",
+																													"script": "",
+																													"customComponent": false,
+																													"request": [],
+																													"response": [],
+																													"attributes": [
+																														{
+																															"attribute": "src",
+																															"grouping": "Properties",
+																															"value": "sap-icon://menu2",
+																															"script": "",
+																															"translation": []
+																														}
+																													],
+																													"data": []
+																												},
+																												{
+																													"fieldNo": "b200b679-9165-488e-b893-9765e13f7509",
+																													"fieldName": "itemCheckListQuestion",
+																													"fieldParent": "0bd10fff-0d89-477e-db58-961623ad3fd9",
+																													"fieldType": "nep.bootstrap.Input",
+																													"script": "",
+																													"customComponent": false,
+																													"request": [],
+																													"response": [],
+																													"attributes": [
+																														{
+																															"attribute": "value",
+																															"grouping": "Properties",
+																															"value": "{question}",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
+																															"attribute": "backgroundColor",
+																															"grouping": "Properties",
+																															"value": "Light",
+																															"script": "",
+																															"translation": []
+																														}
+																													],
+																													"data": []
+																												},
+																												{
+																													"fieldNo": "9c69f596-36d2-4417-8965-0adbaa89b668",
+																													"fieldName": "itemCheckListAnswerType",
+																													"fieldParent": "0bd10fff-0d89-477e-db58-961623ad3fd9",
+																													"fieldType": "sap.m.Select",
+																													"script": "",
+																													"customComponent": false,
+																													"request": [],
+																													"response": [],
+																													"attributes": [
+																														{
+																															"attribute": "width",
+																															"grouping": "Properties",
+																															"value": "100%",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
+																															"attribute": "selectedKey",
+																															"grouping": "Properties",
+																															"value": "{type}",
+																															"script": "",
+																															"translation": []
+																														}
+																													],
+																													"data": [
+																														{
+																															"fieldNo": "1f695b29-0ef9-48b8-9cfb-f50a886d31d7",
+																															"fieldName": "itemCheckListAnswerTypeAcceptReject",
+																															"fieldParent": "9c69f596-36d2-4417-8965-0adbaa89b668",
+																															"fieldType": "sap.ui.core.Item",
+																															"script": "",
+																															"customComponent": false,
+																															"request": [],
+																															"response": [],
+																															"attributes": [
+																																{
+																																	"attribute": "text",
+																																	"grouping": "Properties",
+																																	"value": "AcceptReject",
+																																	"script": "",
+																																	"translation": []
+																																},
+																																{
+																																	"attribute": "key",
+																																	"grouping": "Properties",
+																																	"value": "AcceptReject",
+																																	"script": "",
+																																	"translation": []
+																																}
+																															],
+																															"data": []
+																														},
+																														{
+																															"fieldNo": "f1e7bc50-4ca3-474e-fd92-3388e0ca9585",
+																															"fieldName": "itemCheckListAnswerTypeCheckBox",
+																															"fieldParent": "9c69f596-36d2-4417-8965-0adbaa89b668",
+																															"fieldType": "sap.ui.core.Item",
+																															"script": "",
+																															"customComponent": false,
+																															"request": [],
+																															"response": [],
+																															"attributes": [
+																																{
+																																	"attribute": "text",
+																																	"grouping": "Properties",
+																																	"value": "CheckBox",
+																																	"script": "",
+																																	"translation": []
+																																},
+																																{
+																																	"attribute": "key",
+																																	"grouping": "Properties",
+																																	"value": "CheckBox",
+																																	"script": "",
+																																	"translation": []
+																																}
+																															],
+																															"data": []
+																														},
+																														{
+																															"fieldNo": "dbf2d72d-86e7-47c0-9722-54778e408bc5",
+																															"fieldName": "itemCheckListAnswerTypeInput",
+																															"fieldParent": "9c69f596-36d2-4417-8965-0adbaa89b668",
+																															"fieldType": "sap.ui.core.Item",
+																															"script": "",
+																															"customComponent": false,
+																															"request": [],
+																															"response": [],
+																															"attributes": [
+																																{
+																																	"attribute": "text",
+																																	"grouping": "Properties",
+																																	"value": "Input",
+																																	"script": "",
+																																	"translation": []
+																																},
+																																{
+																																	"attribute": "key",
+																																	"grouping": "Properties",
+																																	"value": "Input",
+																																	"script": "",
+																																	"translation": []
+																																}
+																															],
+																															"data": []
+																														},
+																														{
+																															"fieldNo": "bc595971-a4af-446c-dfc3-787bcfc2067b",
+																															"fieldName": "itemCheckListAnswerTypeSwitch",
+																															"fieldParent": "9c69f596-36d2-4417-8965-0adbaa89b668",
+																															"fieldType": "sap.ui.core.Item",
+																															"script": "",
+																															"customComponent": false,
+																															"request": [],
+																															"response": [],
+																															"attributes": [
+																																{
+																																	"attribute": "text",
+																																	"grouping": "Properties",
+																																	"value": "Switch",
+																																	"script": "",
+																																	"translation": []
+																																},
+																																{
+																																	"attribute": "key",
+																																	"grouping": "Properties",
+																																	"value": "Switch",
+																																	"script": "",
+																																	"translation": []
+																																}
+																															],
+																															"data": []
+																														}
+																													]
+																												},
+																												{
+																													"fieldNo": "2bda2bd1-734b-4856-e30b-4702ac5bc60a",
+																													"fieldName": "itemCheckListAnswerBox",
+																													"fieldParent": "0bd10fff-0d89-477e-db58-961623ad3fd9",
+																													"fieldType": "sap.m.VBox",
+																													"script": "",
+																													"customComponent": false,
+																													"request": [],
+																													"response": [],
+																													"attributes": [],
+																													"data": [
+																														{
+																															"fieldNo": "9605df94-ceb9-45f6-d5fe-5ea89239f2bb",
+																															"fieldName": "itemCheckListAnswerSwitch",
+																															"fieldParent": "2bda2bd1-734b-4856-e30b-4702ac5bc60a",
+																															"fieldType": "sap.m.Switch",
+																															"script": "",
+																															"customComponent": false,
+																															"request": [],
+																															"response": [],
+																															"attributes": [
+																																{
+																																	"attribute": "visible",
+																																	"grouping": "Properties",
+																																	"value": "{= ${type} === 'Switch' ? true:false }",
+																																	"script": "",
+																																	"translation": []
+																																},
+																																{
+																																	"attribute": "state",
+																																	"grouping": "Properties",
+																																	"value": "{answer}",
+																																	"script": "",
+																																	"translation": []
+																																}
+																															],
+																															"data": []
+																														},
+																														{
+																															"fieldNo": "7a49cd44-9836-4f40-cd82-b72125a77234",
+																															"fieldName": "itemCheckListAnswerAcceptReject",
+																															"fieldParent": "2bda2bd1-734b-4856-e30b-4702ac5bc60a",
+																															"fieldType": "sap.m.Switch",
+																															"script": "",
+																															"customComponent": false,
+																															"request": [],
+																															"response": [],
+																															"attributes": [
+																																{
+																																	"attribute": "visible",
+																																	"grouping": "Properties",
+																																	"value": "{= ${type} === 'AcceptReject' ? true:false }",
+																																	"script": "",
+																																	"translation": []
+																																},
+																																{
+																																	"attribute": "type",
+																																	"grouping": "Properties",
+																																	"value": "AcceptReject",
+																																	"script": "",
+																																	"translation": []
+																																},
+																																{
+																																	"attribute": "state",
+																																	"grouping": "Properties",
+																																	"value": "{answer}",
+																																	"script": "",
+																																	"translation": []
+																																}
+																															],
+																															"data": []
+																														},
+																														{
+																															"fieldNo": "8743f83a-9ed5-4024-b731-7f3f4ec792f8",
+																															"fieldName": "itemCheckListAnswerCheckBox",
+																															"fieldParent": "2bda2bd1-734b-4856-e30b-4702ac5bc60a",
+																															"fieldType": "sap.m.CheckBox",
+																															"script": "",
+																															"customComponent": false,
+																															"request": [],
+																															"response": [],
+																															"attributes": [
+																																{
+																																	"attribute": "visible",
+																																	"grouping": "Properties",
+																																	"value": "{= ${type} === 'CheckBox' ? true:false }",
+																																	"script": "",
+																																	"translation": []
+																																},
+																																{
+																																	"attribute": "selected",
+																																	"grouping": "Properties",
+																																	"value": "{answer}",
+																																	"script": "",
+																																	"translation": []
+																																}
+																															],
+																															"data": []
+																														},
+																														{
+																															"fieldNo": "8df0ea2d-1d18-4a40-b4ce-66d53120c82a",
+																															"fieldName": "itemCheckListAnswerInput",
+																															"fieldParent": "2bda2bd1-734b-4856-e30b-4702ac5bc60a",
+																															"fieldType": "nep.bootstrap.Input",
+																															"script": "",
+																															"customComponent": false,
+																															"request": [],
+																															"response": [],
+																															"attributes": [
+																																{
+																																	"attribute": "visible",
+																																	"grouping": "Properties",
+																																	"value": "{= ${type} === 'Input' ? true:false }",
+																																	"script": "",
+																																	"translation": []
+																																},
+																																{
+																																	"attribute": "value",
+																																	"grouping": "Properties",
+																																	"value": "{answer}",
+																																	"script": "",
+																																	"translation": []
+																																},
+																																{
+																																	"attribute": "backgroundColor",
+																																	"grouping": "Properties",
+																																	"value": "Light",
+																																	"script": "",
+																																	"translation": []
+																																}
+																															],
+																															"data": []
+																														}
+																													]
+																												}
+																											]
+																										}
+																									]
+																								},
+																								{
+																									"fieldNo": "6d6aac18-81ef-4568-d546-02842ab4da1c",
+																									"fieldName": "elementCheckListToolbar",
+																									"fieldParent": "1c85d758-4450-460b-b2cb-9f851d2364c7",
+																									"fieldType": "sap.m.Toolbar",
+																									"script": "",
+																									"customComponent": false,
+																									"request": [],
+																									"response": [],
+																									"attributes": [
+																										{
+																											"attribute": "width",
+																											"grouping": "Properties",
+																											"value": "100%",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "styleClassMargin",
+																											"grouping": "Properties",
+																											"value": "sapUiSmallMarginTop",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "styleClass",
+																											"grouping": "Properties",
+																											"value": "formToolbar",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "enableCompactMode",
+																											"grouping": "Properties",
+																											"value": "true",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "design",
+																											"grouping": "Properties",
+																											"value": "Transparent",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "position",
+																											"grouping": "Parent",
+																											"value": "HeaderToolbar",
+																											"script": "",
+																											"translation": []
+																										}
+																									],
+																									"data": [
+																										{
+																											"fieldNo": "6455e6fe-604a-4e50-e0db-a5148d941880",
+																											"fieldName": "elementCheckListToolbarAdd",
+																											"fieldParent": "6d6aac18-81ef-4568-d546-02842ab4da1c",
+																											"fieldType": "sap.m.Button",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "type",
+																													"grouping": "Properties",
+																													"value": "Transparent",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "text",
+																													"grouping": "Properties",
+																													"value": "Add statement",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "press",
+																													"grouping": "Events",
+																													"value": "Anonymous Function",
+																													"script": "file://event/sap.m.Button/elementCheckListToolbarAdd/press.script",
+																													"translation": []
+																												}
+																											],
+																											"data": []
+																										},
+																										{
+																											"fieldNo": "de18ceb7-5797-41f2-b33a-53b4286fc706",
+																											"fieldName": "elementCheckListToolbarSpacer",
+																											"fieldParent": "6d6aac18-81ef-4568-d546-02842ab4da1c",
+																											"fieldType": "sap.m.ToolbarSpacer",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [],
+																											"data": []
+																										},
+																										{
+																											"fieldNo": "fde4a789-0ff9-41f5-ac0c-cd03a80d92fd",
+																											"fieldName": "elementSwitchToolbarLabel1",
+																											"fieldParent": "6d6aac18-81ef-4568-d546-02842ab4da1c",
+																											"fieldType": "sap.m.Switch",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "state",
+																													"grouping": "Properties",
+																													"value": "{enableLabel}",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": []
+																										},
+																										{
+																											"fieldNo": "c4778077-597e-4df2-fd6d-bc5a8190a962",
+																											"fieldName": "elementSwitchToolbarLabelLabel1",
+																											"fieldParent": "6d6aac18-81ef-4568-d546-02842ab4da1c",
+																											"fieldType": "sap.m.Label",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "text",
+																													"grouping": "Properties",
+																													"value": "Label",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": []
+																										},
+																										{
+																											"fieldNo": "88f72760-ae2a-410d-c6b1-15a90fa874f6",
+																											"fieldName": "elementSwitchToolbarRequired1",
+																											"fieldParent": "6d6aac18-81ef-4568-d546-02842ab4da1c",
+																											"fieldType": "sap.m.Switch",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "state",
+																													"grouping": "Properties",
+																													"value": "{required}",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": []
+																										},
+																										{
+																											"fieldNo": "f4ba22ff-6170-4d32-bce2-5702052a8ffe",
+																											"fieldName": "elementSwitchToolbarRequiredLabel1",
+																											"fieldParent": "6d6aac18-81ef-4568-d546-02842ab4da1c",
+																											"fieldType": "sap.m.Label",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "text",
+																													"grouping": "Properties",
+																													"value": "Required",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": []
+																										},
+																										{
+																											"fieldNo": "01190b7f-f1df-4163-a9e3-a67899f4a7f9",
+																											"fieldName": "elementSwitchToolbarDescription1",
+																											"fieldParent": "6d6aac18-81ef-4568-d546-02842ab4da1c",
+																											"fieldType": "sap.m.Switch",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "state",
+																													"grouping": "Properties",
+																													"value": "{enableDescription}",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": []
+																										},
+																										{
+																											"fieldNo": "d0340f93-6f89-4136-e278-a8e5cec03796",
+																											"fieldName": "elementSwitchToolbarDescriptionLabel1",
+																											"fieldParent": "6d6aac18-81ef-4568-d546-02842ab4da1c",
 																											"fieldType": "sap.m.Label",
 																											"script": "",
 																											"customComponent": false,
@@ -9267,6 +10545,13 @@
 																			"value": "Anonymous Function",
 																			"script": "file://event/sap.f.Avatar/addNew/press.script",
 																			"language": "javascript",
+																			"translation": []
+																		},
+																		{
+																			"attribute": "backgroundColor",
+																			"grouping": "Properties",
+																			"value": "Accent7",
+																			"script": "",
 																			"translation": []
 																		}
 																	],
@@ -9447,6 +10732,178 @@
 															"data": []
 														}
 													]
+												},
+												{
+													"fieldNo": "24cba871-a446-4242-e8f7-790146e40202",
+													"fieldName": "Right",
+													"fieldParent": "36b8ef56-06ae-4b0b-d897-7b0f59b32a06",
+													"fieldType": "neptune.BarContent",
+													"script": "",
+													"customComponent": false,
+													"request": [],
+													"response": [],
+													"attributes": [
+														{
+															"attribute": "position",
+															"grouping": "Parent",
+															"value": "ContentRight",
+															"script": "",
+															"translation": []
+														}
+													],
+													"data": [
+														{
+															"fieldNo": "2077a3f1-50ee-4383-f5b5-0de8857f48c6",
+															"fieldName": "butPreviewWidth",
+															"fieldParent": "24cba871-a446-4242-e8f7-790146e40202",
+															"fieldType": "sap.m.SegmentedButton",
+															"script": "",
+															"customComponent": false,
+															"request": [],
+															"response": [],
+															"attributes": [
+																{
+																	"attribute": "width",
+																	"grouping": "Properties",
+																	"value": "100%",
+																	"script": "",
+																	"translation": []
+																},
+																{
+																	"attribute": "selectedKey",
+																	"grouping": "Properties",
+																	"value": "formPreviewDesktop",
+																	"script": "",
+																	"translation": []
+																},
+																{
+																	"attribute": "enableCompactMode",
+																	"grouping": "Properties",
+																	"value": "true",
+																	"script": "",
+																	"translation": []
+																},
+																{
+																	"attribute": "selectionChange",
+																	"grouping": "Events",
+																	"value": "Anonymous Function",
+																	"script": "file://event/sap.m.SegmentedButton/butPreviewWidth/selectionChange.script",
+																	"language": "javascript",
+																	"translation": []
+																}
+															],
+															"data": [
+																{
+																	"fieldNo": "e99d2796-167c-4f2d-d5ef-1b68ecb8d6d1",
+																	"fieldName": "PreviewWidthDesktop",
+																	"fieldParent": "2077a3f1-50ee-4383-f5b5-0de8857f48c6",
+																	"fieldType": "sap.m.SegmentedButtonItem",
+																	"script": "",
+																	"customComponent": false,
+																	"request": [],
+																	"response": [],
+																	"attributes": [
+																		{
+																			"attribute": "key",
+																			"grouping": "Properties",
+																			"value": "formPreviewDesktop",
+																			"script": "",
+																			"translation": []
+																		},
+																		{
+																			"attribute": "icon",
+																			"grouping": "Properties",
+																			"value": "sap-icon://fa-solid/desktop",
+																			"script": "",
+																			"translation": []
+																		}
+																	],
+																	"data": []
+																},
+																{
+																	"fieldNo": "5d43c90a-af87-437b-b501-676651662154",
+																	"fieldName": "PreviewWidthTablet",
+																	"fieldParent": "2077a3f1-50ee-4383-f5b5-0de8857f48c6",
+																	"fieldType": "sap.m.SegmentedButtonItem",
+																	"script": "",
+																	"customComponent": false,
+																	"request": [],
+																	"response": [],
+																	"attributes": [
+																		{
+																			"attribute": "key",
+																			"grouping": "Properties",
+																			"value": "formPreviewTablet",
+																			"script": "",
+																			"translation": []
+																		},
+																		{
+																			"attribute": "icon",
+																			"grouping": "Properties",
+																			"value": "sap-icon://fa-solid/tablet-alt",
+																			"script": "",
+																			"translation": []
+																		}
+																	],
+																	"data": []
+																},
+																{
+																	"fieldNo": "1a676827-4241-428e-b6a0-31cee5d07cd5",
+																	"fieldName": "PreviewWidthMobile",
+																	"fieldParent": "2077a3f1-50ee-4383-f5b5-0de8857f48c6",
+																	"fieldType": "sap.m.SegmentedButtonItem",
+																	"script": "",
+																	"customComponent": false,
+																	"request": [],
+																	"response": [],
+																	"attributes": [
+																		{
+																			"attribute": "key",
+																			"grouping": "Properties",
+																			"value": "formPreviewMobile",
+																			"script": "",
+																			"translation": []
+																		},
+																		{
+																			"attribute": "icon",
+																			"grouping": "Properties",
+																			"value": "sap-icon://fa-solid/mobile-alt",
+																			"script": "",
+																			"translation": []
+																		}
+																	],
+																	"data": []
+																},
+																{
+																	"fieldNo": "69dc042e-94ca-472c-fcb4-4cb087eab63d",
+																	"fieldName": "PreviewWidthFull",
+																	"fieldParent": "2077a3f1-50ee-4383-f5b5-0de8857f48c6",
+																	"fieldType": "sap.m.SegmentedButtonItem",
+																	"script": "",
+																	"customComponent": false,
+																	"request": [],
+																	"response": [],
+																	"attributes": [
+																		{
+																			"attribute": "key",
+																			"grouping": "Properties",
+																			"value": "formPreviewFull",
+																			"script": "",
+																			"translation": []
+																		},
+																		{
+																			"attribute": "icon",
+																			"grouping": "Properties",
+																			"value": "sap-icon://full-screen",
+																			"script": "",
+																			"translation": []
+																		}
+																	],
+																	"data": []
+																}
+															]
+														}
+													]
 												}
 											]
 										},
@@ -9503,7 +10960,7 @@
 														{
 															"attribute": "styleClass",
 															"grouping": "Properties",
-															"value": "nepFormInput",
+															"value": "formPreviewDesktop",
 															"script": "",
 															"translation": []
 														},
@@ -10049,7 +11506,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.1.15.150",
+	"ver": "23.1.16.943",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
