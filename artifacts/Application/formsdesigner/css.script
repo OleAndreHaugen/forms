@@ -22,6 +22,11 @@
     margin-right: auto;
 }
 
+.formHeaderTitle {
+    border-bottom: 1px solid #ced4da;
+    border-radius: 0;
+}
+
 .formGeneral .sapUiFormResGrid>div {
     padding-bottom: 10px !important;
 }

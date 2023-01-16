@@ -113,8 +113,6 @@ const controller = {
             case "CheckList":
                 newElement.questionTitle = "Question";
                 newElement.answerTitle = "Answer";
-                newElement.expanded = true;
-                newElement.expandable = true;
 
                 newElement.items = [
                     { id: ModelData.genID(), question: "Question 1", type: "Switch" },

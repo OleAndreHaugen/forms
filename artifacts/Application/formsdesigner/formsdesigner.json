@@ -1975,7 +1975,7 @@
 														{
 															"attribute": "backgroundDesign",
 															"grouping": "Properties",
-															"value": "Transparent",
+															"value": "Solid",
 															"script": "",
 															"translation": []
 														}
@@ -1995,6 +1995,13 @@
 																	"attribute": "styleClassMargin",
 																	"grouping": "Properties",
 																	"value": "sapUiSmallMarginTop",
+																	"script": "",
+																	"translation": []
+																},
+																{
+																	"attribute": "styleClass",
+																	"grouping": "Properties",
+																	"value": "formHeaderTitle",
 																	"script": "",
 																	"translation": []
 																},
@@ -2027,7 +2034,7 @@
 																		{
 																			"attribute": "text",
 																			"grouping": "Properties",
-																			"value": "Sections (0)",
+																			"value": "Sections",
 																			"script": "",
 																			"translation": []
 																		}
@@ -2225,14 +2232,6 @@
 																					"value": "Transparent",
 																					"script": "",
 																					"translation": []
-																				},
-																				{
-																					"attribute": "updateFinished",
-																					"grouping": "Events",
-																					"value": "Anonymous Function",
-																					"script": "file://event/sap.m.Table/tabSections/updateFinished.script",
-																					"language": "javascript",
-																					"translation": []
 																				}
 																			],
 																			"data": [
@@ -2272,6 +2271,34 @@
 																							"grouping": "Properties",
 																							"value": "items",
 																							"script": "",
+																							"translation": []
+																						}
+																					],
+																					"data": []
+																				},
+																				{
+																					"fieldNo": "b1e2741b-94f8-4aa5-e698-295e77396d46",
+																					"fieldName": "oDropInfo",
+																					"fieldParent": "9eb7f4dd-97ab-4ade-dd35-a56f2eb264d5",
+																					"fieldType": "sap.ui.core.dnd.DropInfo",
+																					"script": "",
+																					"customComponent": false,
+																					"request": [],
+																					"response": [],
+																					"attributes": [
+																						{
+																							"attribute": "targetAggregation",
+																							"grouping": "Properties",
+																							"value": "items",
+																							"script": "",
+																							"translation": []
+																						},
+																						{
+																							"attribute": "drop",
+																							"grouping": "Events",
+																							"value": "Anonymous Function",
+																							"script": "file://event/sap.ui.core.dnd.DropInfo/oDropInfo/drop.script",
+																							"language": "javascript",
 																							"translation": []
 																						}
 																					],
@@ -2606,6 +2633,13 @@
 																															"translation": []
 																														},
 																														{
+																															"attribute": "text",
+																															"grouping": "Properties",
+																															"value": "Elements ({countElements})",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
 																															"attribute": "styleClassMargin",
 																															"grouping": "Properties",
 																															"value": "sapUiTinyMarginEnd",
@@ -2680,13 +2714,6 @@
 																													"attribute": "editable",
 																													"grouping": "Properties",
 																													"value": "true",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "columnsM",
-																													"grouping": "Properties",
-																													"value": "1",
 																													"script": "",
 																													"translation": []
 																												},
@@ -2921,13 +2948,6 @@
 																												},
 																												{
 																													"attribute": "columnsM",
-																													"grouping": "Properties",
-																													"value": "2",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "columnsL",
 																													"grouping": "Properties",
 																													"value": "2",
 																													"script": "",
@@ -5437,6 +5457,13 @@
 															"response": [],
 															"attributes": [
 																{
+																	"attribute": "styleClassPadding",
+																	"grouping": "Properties",
+																	"value": "sapUiNoContentPadding",
+																	"script": "",
+																	"translation": []
+																},
+																{
 																	"attribute": "showHeader",
 																	"grouping": "Properties",
 																	"value": "false",
@@ -5477,6 +5504,13 @@
 																			"translation": []
 																		},
 																		{
+																			"attribute": "styleClass",
+																			"grouping": "Properties",
+																			"value": "formHeaderTitle",
+																			"script": "",
+																			"translation": []
+																		},
+																		{
 																			"attribute": "backgroundDesign",
 																			"grouping": "Properties",
 																			"value": "Transparent",
@@ -5505,7 +5539,7 @@
 																				{
 																					"attribute": "text",
 																					"grouping": "Properties",
-																					"value": "{/title} ({/countElements})",
+																					"value": "{/title}",
 																					"script": "",
 																					"translation": []
 																				}
@@ -6088,13 +6122,6 @@
 																															"translation": []
 																														},
 																														{
-																															"attribute": "columnsM",
-																															"grouping": "Properties",
-																															"value": "1",
-																															"script": "",
-																															"translation": []
-																														},
-																														{
 																															"attribute": "columnsL",
 																															"grouping": "Properties",
 																															"value": "1",
@@ -6357,13 +6384,6 @@
 																																	"translation": []
 																																},
 																																{
-																																	"attribute": "columnsM",
-																																	"grouping": "Properties",
-																																	"value": "1",
-																																	"script": "",
-																																	"translation": []
-																																},
-																																{
 																																	"attribute": "columnsL",
 																																	"grouping": "Properties",
 																																	"value": "1",
@@ -6523,13 +6543,6 @@
 																																	"attribute": "editable",
 																																	"grouping": "Properties",
 																																	"value": "true",
-																																	"script": "",
-																																	"translation": []
-																																},
-																																{
-																																	"attribute": "columnsM",
-																																	"grouping": "Properties",
-																																	"value": "1",
 																																	"script": "",
 																																	"translation": []
 																																},
@@ -6774,13 +6787,6 @@
 																																	"attribute": "editable",
 																																	"grouping": "Properties",
 																																	"value": "true",
-																																	"script": "",
-																																	"translation": []
-																																},
-																																{
-																																	"attribute": "columnsM",
-																																	"grouping": "Properties",
-																																	"value": "1",
 																																	"script": "",
 																																	"translation": []
 																																},
@@ -7038,13 +7044,6 @@
 																																	"attribute": "editable",
 																																	"grouping": "Properties",
 																																	"value": "true",
-																																	"script": "",
-																																	"translation": []
-																																},
-																																{
-																																	"attribute": "columnsM",
-																																	"grouping": "Properties",
-																																	"value": "1",
 																																	"script": "",
 																																	"translation": []
 																																},
@@ -7356,13 +7355,6 @@
 																																	"attribute": "editable",
 																																	"grouping": "Properties",
 																																	"value": "true",
-																																	"script": "",
-																																	"translation": []
-																																},
-																																{
-																																	"attribute": "columnsM",
-																																	"grouping": "Properties",
-																																	"value": "1",
 																																	"script": "",
 																																	"translation": []
 																																},
@@ -7687,13 +7679,6 @@
 																																	"attribute": "editable",
 																																	"grouping": "Properties",
 																																	"value": "true",
-																																	"script": "",
-																																	"translation": []
-																																},
-																																{
-																																	"attribute": "columnsM",
-																																	"grouping": "Properties",
-																																	"value": "1",
 																																	"script": "",
 																																	"translation": []
 																																},
@@ -8429,13 +8414,6 @@
 																																	"translation": []
 																																},
 																																{
-																																	"attribute": "columnsM",
-																																	"grouping": "Properties",
-																																	"value": "1",
-																																	"script": "",
-																																	"translation": []
-																																},
-																																{
 																																	"attribute": "columnsL",
 																																	"grouping": "Properties",
 																																	"value": "1",
@@ -8649,13 +8627,6 @@
 																																	"attribute": "editable",
 																																	"grouping": "Properties",
 																																	"value": "true",
-																																	"script": "",
-																																	"translation": []
-																																},
-																																{
-																																	"attribute": "columnsM",
-																																	"grouping": "Properties",
-																																	"value": "1",
 																																	"script": "",
 																																	"translation": []
 																																},
@@ -9336,13 +9307,6 @@
 																																	"attribute": "editable",
 																																	"grouping": "Properties",
 																																	"value": "true",
-																																	"script": "",
-																																	"translation": []
-																																},
-																																{
-																																	"attribute": "columnsM",
-																																	"grouping": "Properties",
-																																	"value": "1",
 																																	"script": "",
 																																	"translation": []
 																																},
@@ -10235,13 +10199,6 @@
 																																	"attribute": "editable",
 																																	"grouping": "Properties",
 																																	"value": "true",
-																																	"script": "",
-																																	"translation": []
-																																},
-																																{
-																																	"attribute": "columnsM",
-																																	"grouping": "Properties",
-																																	"value": "1",
 																																	"script": "",
 																																	"translation": []
 																																},
@@ -12081,7 +12038,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.1.16.1718",
+	"ver": "23.1.16.1939",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
