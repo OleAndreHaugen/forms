@@ -241,7 +241,7 @@ const FORMS = {
         });
 
         if (element.approveSwitch) {
-            elementField.setType("AcceptReject");
+            newField.setType("AcceptReject");
         }
 
         return newField;
@@ -262,7 +262,7 @@ const FORMS = {
         });
 
         element.items.forEach(function (item, i) {
-            elementField.addItem(new sap.ui.core.Item({ key: item.key, text: item.title }));
+            newField.addItem(new sap.ui.core.Item({ key: item.key, text: item.title }));
         });
 
         return newField;
@@ -323,7 +323,7 @@ const FORMS = {
         });
 
         element.items.forEach(function (item, i) {
-            elementField.addItem(new sap.ui.core.Item({ key: item.key, text: item.title }));
+            newField.addItem(new sap.ui.core.Item({ key: item.key, text: item.title }));
         });
 
         return newField;
