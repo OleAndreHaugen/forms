@@ -46,6 +46,7 @@ const controller = {
             },
         }).then(function (req) {
             tabDetail.setSelectedItem(tabDetailInfo);
+            navElements.to(oPageEmpty);
             modeloPageDetail.setData(req);
             oApp.to(oPageDetail);
         });
@@ -62,12 +63,22 @@ const controller = {
     },
 
     delete: function () {
-        apiDelete({
-            parameters: { id: modeloPageDetail.oData.id },
-        }).then(function (req) {
-            sap.m.MessageToast.show("Form Deleted");
-            controller.list();
-            oApp.back();
+        sap.m.MessageBox.confirm("Delete this FORM ? This cannot be undone !", {
+            icon: sap.m.MessageBox.Icon.ERROR,
+            title: "Danger Zone",
+            actions: [sap.m.MessageBox.Action.DELETE, sap.m.MessageBox.Action.NO],
+            initialFocus: "No",
+            onClose: function (sAction) {
+                if (sAction === "DELETE") {
+                    apiDelete({
+                        parameters: { id: modeloPageDetail.oData.id },
+                    }).then(function (req) {
+                        sap.m.MessageToast.show("Form Deleted");
+                        controller.list();
+                        oApp.back();
+                    });
+                }
+            },
         });
     },
 
@@ -79,6 +90,7 @@ const controller = {
             editable: true,
         });
         tabDetail.setSelectedItem(tabDetailInfo);
+        navElements.to(oPageEmpty);
         oApp.to(oPageDetail);
     },
 
@@ -144,6 +156,7 @@ const controller = {
                     { id: ModelData.genID(), title: "Option 2", key: "key2" },
                     { id: ModelData.genID(), title: "Option 3", key: "key3" },
                 ];
+                newElement.validationParam = 1;
                 newElement.validationType = "noLimit";
                 newElement.horizontal = false;
                 break;
@@ -154,6 +167,7 @@ const controller = {
                     { id: ModelData.genID(), title: "Option 2", key: "key2" },
                     { id: ModelData.genID(), title: "Option 3", key: "key3" },
                 ];
+                newElement.validationParam = 1;
                 newElement.validationType = "noLimit";
                 break;
         }

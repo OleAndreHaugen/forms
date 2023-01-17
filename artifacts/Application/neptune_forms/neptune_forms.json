@@ -53,6 +53,26 @@
 			"fieldNo": 99999,
 			"data": [
 				{
+					"fieldNo": "74b52218-9ae9-4ec9-e2ac-29d6738900ac",
+					"fieldName": "oVBox",
+					"fieldParent": 99999,
+					"fieldType": "sap.m.VBox",
+					"script": "",
+					"customComponent": false,
+					"request": [],
+					"response": [],
+					"attributes": [
+						{
+							"attribute": "renderType",
+							"grouping": "Properties",
+							"value": "Bare",
+							"script": "",
+							"translation": []
+						}
+					],
+					"data": []
+				},
+				{
 					"fieldNo": "3cf1e9b2-73d9-435f-98d7-9363cf7bbca5",
 					"fieldName": "FORMS",
 					"fieldParent": 99999,
@@ -77,7 +97,7 @@
 			"sap.m.Panel"
 		]
 	},
-	"ver": "23.1.17.08",
+	"ver": "23.1.17.1339",
 	"application": "neptune_forms",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",

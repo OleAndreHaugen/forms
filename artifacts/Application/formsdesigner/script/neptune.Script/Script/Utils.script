@@ -17,14 +17,6 @@ const Utils = {
 
     buildValParamSelect: (select, i) => {
         select.destroyItems();
-
-        select.addItem(
-            new sap.ui.core.ListItem({
-                key: "",
-                text: "",
-            })
-        );
-
         while (i > 0) {
             select.addItem(
                 new sap.ui.core.ListItem({

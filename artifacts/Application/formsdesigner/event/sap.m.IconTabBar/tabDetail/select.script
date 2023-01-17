@@ -1,5 +1,17 @@
 let selected = oEvent.getParameter("selectedKey");
 
-if (selected === "preview") {
-    controller.preview();
+switch (selected) {
+    case "preview":
+        controller.preview();
+        break;
+
+    case "designer":
+        if (controller.currentParent) {
+            modeloPageElements.setData(controller.currentParent);
+            modeloPageElements.refresh();
+        }
+        break;
+
+    default:
+        break;
 }

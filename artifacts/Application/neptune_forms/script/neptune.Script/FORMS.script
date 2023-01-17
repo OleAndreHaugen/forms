@@ -274,34 +274,18 @@ const FORMS = {
         if (element.horizontal) {
             newField = new sap.m.HBox(FORMS.buildElementFieldID(element), {
                 wrap: "Wrap",
+                renderType: "Bare",
             });
         } else {
             newField = new sap.m.VBox(FORMS.buildElementFieldID(element), {
                 wrap: "Wrap",
+                renderType: "Bare",
             });
         }
 
-        // // TODO - Implement generic if we should have conditional visibility
-        // if (element.condField) {
-        //     const formatParts = "/" + element.id;
-
-        //     elementField.bindProperty("visible", {
-        //         parts: [formatParts],
-        //         formatter: function () {
-        //             const formModel = FORMS.formParent.getModel();
-        //             if (formModel.oData[element.condField] === element.condValue) {
-        //                 return true;
-        //             } else {
-        //                 return false;
-        //             }
-        //         },
-        //     });
-        // }
-
         element.items.forEach(function (item, i) {
-            const elementRadio = new sap.m.RadioButton({
+            const elementRadio = new sap.m.RadioButton("item" + item.id, {
                 text: item.title,
-                width: element.width,
                 groupName: element.id,
                 select: function (oEvent) {
                     const formModel = FORMS.formParent.getModel();
@@ -309,6 +293,10 @@ const FORMS = {
                     formModel.refresh(true);
                 },
             });
+
+            if (element.enableWidth) {
+                elementRadio.setWidth(element.width + "px");
+            }
 
             elementRadio.addStyleClass("sapUiTinyMarginBegin");
             newField.addItem(elementRadio);
@@ -335,32 +323,37 @@ const FORMS = {
         if (element.horizontal) {
             newField = new sap.m.HBox(FORMS.buildElementFieldID(element), {
                 wrap: "Wrap",
+                renderType: "Bare",
             });
         } else {
             newField = new sap.m.VBox(FORMS.buildElementFieldID(element), {
                 wrap: "Wrap",
+                renderType: "Bare",
             });
         }
 
         element.items.forEach(function (item, i) {
-            newField.addItem(
-                new sap.m.CheckBox({
-                    width: element.width,
-                    text: item.title,
-                    select: function (oEvent) {
-                        const formModel = FORMS.formParent.getModel();
-                        if (!formModel.oData[element.id]) formModel.oData[element.id] = [];
+            const elementCheckBox = new sap.m.CheckBox("item" + item.id, {
+                text: item.title,
+                select: function (oEvent) {
+                    const formModel = FORMS.formParent.getModel();
+                    if (!formModel.oData[element.id]) formModel.oData[element.id] = [];
 
-                        if (this.getSelected()) {
-                            formModel.oData[element.id].push(item.key);
-                        } else {
-                            const index = formModel.oData[element.id].indexOf(item.key);
-                            if (index > -1) formModel.oData[element.id].splice(index, 1);
-                        }
-                        formModel.refresh(true);
-                    },
-                }).addStyleClass("sapUiTinyMarginBegin")
-            );
+                    if (this.getSelected()) {
+                        formModel.oData[element.id].push(item.key);
+                    } else {
+                        const index = formModel.oData[element.id].indexOf(item.key);
+                        if (index > -1) formModel.oData[element.id].splice(index, 1);
+                    }
+                    formModel.refresh(true);
+                },
+            }).addStyleClass("sapUiTinyMarginBegin");
+
+            if (element.enableWidth) {
+                elementCheckBox.setWidth(element.width + "px");
+            }
+
+            newField.addItem(elementCheckBox);
         });
 
         return newField;
@@ -375,7 +368,7 @@ const FORMS = {
     },
 
     buildElementImage: function (element) {
-        const newField = new sap.m.VBox({
+        const newField = new sap.m.VBox(FORMS.buildElementFieldID(element), {
             width: "100%",
         });
 
@@ -486,7 +479,14 @@ const FORMS = {
 
     getData: function () {
         const formModel = FORMS.formParent.getModel();
-        return JSON.parse(JSON.stringify(formModel.oData));
+
+        const formData = {
+            data: JSON.parse(JSON.stringify(formModel.oData)),
+            config: FORMS.config,
+            completed: FORMS.validate("OnlyCheck"),
+        };
+
+        return formData;
     },
 
     setData: function (data) {
@@ -496,53 +496,85 @@ const FORMS = {
     },
 
     clear: function () {
+        // Model
         const formModel = FORMS.formParent.getModel();
         formModel.setData({});
         formModel.refresh();
+
+        // Fields
+        FORMS.validate("Reset");
+
+        // Single/MultiChoice
+        FORMS.config.setup.forEach(function (section, i) {
+            section.elements.forEach(function (element, i) {
+                if (element.type === "SingleChoice" || element.type === "MultipleChoice") {
+                    element.items.forEach(function (item, i) {
+                        const field = sap.ui.getCore().byId("item" + item.id);
+                        if (field) field.setSelected(false);
+                    });
+                }
+            });
+        });
     },
 
-    validate: function () {
+    validate: function (process) {
         let validForm = true;
+        let fieldCompleted;
         const formModel = FORMS.formParent.getModel();
 
         FORMS.config.setup.forEach(function (section, i) {
-            // Items
             section.elements.forEach(function (element, i) {
                 if (element.required) {
-                    const field = sap.ui.getCore().byId("field" + element.id);
+                    fieldCompleted = formModel.oData[element.id] ? true : false;
+                    if (validForm) validForm = fieldCompleted;
+                    FORMS.validateMarkField(element.id, fieldCompleted, process);
+                }
 
-                    if (field && field.getVisible()) {
-                        if (!formModel.oData[element.id]) {
-                            validForm = false;
-                            if (field.setValueState) field.setValueState("Error");
-
-                            if (!field.setValueState) {
-                                field.addStyleClass("notValid");
+                // MultipleSelect/MultipleChoice
+                if (
+                    fieldCompleted &&
+                    element.validationType !== "noLimit" &&
+                    (element.type === "MultipleChoice" || element.type === "MultipleSelect")
+                ) {
+                    switch (element.validationType) {
+                        case "equalTo":
+                            if (
+                                formModel.oData[element.id].length !==
+                                parseInt(element.validationParam)
+                            ) {
+                                FORMS.validateMarkField(element.id, false, process);
                             }
-                        } else {
-                            if (field.setValueState) field.setValueState();
+                            break;
 
-                            if (!field.setValueState) {
-                                field.removeStyleClass("notValid");
+                        case "atMost":
+                            if (
+                                formModel.oData[element.id].length >
+                                parseInt(element.validationParam)
+                            ) {
+                                FORMS.validateMarkField(element.id, false, process);
                             }
-                        }
+                            break;
+
+                        case "atLeast":
+                            if (
+                                formModel.oData[element.id].length <
+                                parseInt(element.validationParam)
+                            ) {
+                                FORMS.validateMarkField(element.id, false, process);
+                            }
+                            break;
+
+                        default:
+                            break;
                     }
                 }
 
-                // CheckList
                 if (element.type === "CheckList") {
                     element.items.forEach(function (item, i) {
                         if (item.required) {
-                            const field = sap.ui.getCore().byId("field" + item.id);
-
-                            if (field) {
-                                if (!formModel.oData[item.id]) {
-                                    validForm = false;
-                                    if (field.setHighlight) field.setHighlight("Error");
-                                } else {
-                                    if (field.setHighlight) field.setHighlight();
-                                }
-                            }
+                            const fieldCompleted = formModel.oData[item.id] ? true : false;
+                            if (validForm) validForm = fieldCompleted;
+                            FORMS.validateMarkField(item.id, fieldCompleted, process);
                         }
                     });
                 }
@@ -550,6 +582,33 @@ const FORMS = {
         });
 
         return validForm;
+    },
+
+    validateMarkField: function (id, valid, process) {
+        if (process === "OnlyCheck") return;
+        if (process === "Reset") valid = true;
+
+        const field = sap.ui.getCore().byId("field" + id);
+
+        if (!field) return;
+
+        if (valid) {
+            if (field.setValueState) {
+                field.setValueState();
+            } else {
+                field.removeStyleClass("notValid");
+            }
+
+            if (field.setHighlight) field.setHighlight();
+        } else {
+            if (field.setValueState) {
+                field.setValueState("Error");
+            } else {
+                field.addStyleClass("notValid");
+            }
+
+            if (field.setHighlight) field.setHighlight("Error");
+        }
     },
 
     apiGetForm: function (id) {
@@ -587,3 +646,22 @@ const FORMS = {
 };
 
 window.importImage = FORMS.importImage;
+
+// // TODO - Implement generic if we should have conditional visibility
+// if (element.condField) {
+//     const formatParts = "/" + element.id;
+
+//     elementField.bindProperty("visible", {
+//         parts: [formatParts],
+//         formatter: function () {
+//             const formModel = FORMS.formParent.getModel();
+//             if (formModel.oData[element.condField] === element.condValue) {
+//                 return true;
+//             } else {
+//                 return false;
+//             }
+//         },
+//     });
+// }
+
+//

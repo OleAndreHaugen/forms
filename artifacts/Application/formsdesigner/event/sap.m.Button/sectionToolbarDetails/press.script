@@ -1,7 +1,7 @@
 const context = oEvent.oSource.getBindingContext();
-const data = context.getObject();
+controller.currentParent = context.getObject();
 
-modeloPageElements.setData(data);
+modeloPageElements.setData(controller.currentParent);
 modeloPageElements.refresh();
 
 navElements.to(oPageElements);
