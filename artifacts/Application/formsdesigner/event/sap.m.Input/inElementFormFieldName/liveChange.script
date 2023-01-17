@@ -1,0 +1,8 @@
+var newValue = this.getValue().replace(/\s+/g, '');
+
+if (!/^[a-zA-Z0-9_-]*$/g.test(newValue)) {
+    newValue = newValue.replace(/[\W]+/g, '');
+    sap.m.MessageToast.show("Special characters not allowed");
+}
+
+this.setValue(newValue);

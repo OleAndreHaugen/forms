@@ -27,6 +27,12 @@
 			"application": "formsdesigner",
 			"title": "Neptune FORMS",
 			"description": "Neptune FORMS"
+		},
+		{
+			"id": "4b507eda-02d6-4b00-ab00-c730a27c7ffd",
+			"application": "planet9_adaptive_forms",
+			"title": "Adaptive FORMS",
+			"description": "Adaptive FORMS"
 		}
 	],
 	"api": [
@@ -66,6 +72,11 @@
 			"id": "7341be77-5379-4c38-a6c5-01b4cb553199",
 			"name": "formSave",
 			"description": null
+		},
+		{
+			"id": "6614e08f-6f22-4387-b661-757dd8648642",
+			"name": "demo",
+			"description": null
 		}
 	],
 	"jsscript_group": [
@@ -98,7 +109,13 @@
 	"department": [],
 	"script_scheduler": [],
 	"wf_definition": [],
-	"connector": [],
+	"connector": [
+		{
+			"id": "a47d931d-3a18-4a66-b183-98d85399c432",
+			"name": "Neptune FORMS ",
+			"description": "Neptune FORMS"
+		}
+	],
 	"events": [],
 	"media_library": []
 }

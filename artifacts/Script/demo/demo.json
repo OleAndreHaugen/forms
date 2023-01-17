@@ -1,21 +1,15 @@
 {
-	"id": "8451fdc0-46ea-4f35-bcf9-e3ebcdd0c79b",
-	"createdAt": "2023-01-13T06:42:08.000Z",
+	"id": "6614e08f-6f22-4387-b661-757dd8648642",
+	"createdAt": "2023-01-17T13:27:43.000Z",
 	"createdBy": "ole-andre.haugen@neptune-software.com",
 	"globalScripts": [],
 	"externalModules": [],
-	"entitySets": [
-		{
-			"id": "29f811fe-1310-4769-a00f-c27cd73d7f21",
-			"name": "forms_design",
-			"contextname": "forms_design"
-		}
-	],
+	"entitySets": [],
 	"apis": [],
-	"name": "formList",
-	"ver": "23.1.17.1438",
+	"name": "demo",
+	"ver": "23.1.17.1434",
 	"description": null,
-	"content": "file:///content.script",
+	"content": null,
 	"useAsGlobalScript": false,
 	"transpiledContent": null,
 	"lastRunSuccessful": false,

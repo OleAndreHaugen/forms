@@ -26,13 +26,21 @@
 			"isUnique": false,
 			"description": "Setup in JSON",
 			"isNullable": true
+		},
+		{
+			"id": "c9ed32fe-ed1d-4d36-a33b-cbec977efe29",
+			"fieldName": "released",
+			"fieldType": "boolean",
+			"isUnique": false,
+			"description": "Is FORM Released",
+			"isNullable": true
 		}
 	],
 	"indices": [],
 	"foreignKeys": [],
 	"name": "forms_design",
 	"description": "FORMS: Design",
-	"ver": "23.1.10.1738",
+	"ver": "23.1.17.1417",
 	"enableAudit": false,
 	"includeDataInPackage": false,
 	"package": "a313322e-f024-45f1-960f-b90081757b85",

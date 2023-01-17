@@ -864,6 +864,75 @@
 									]
 								},
 								{
+									"fieldNo": "d3a9cf25-3638-445f-e139-d4e7c4ec302b",
+									"fieldName": "colReleased",
+									"fieldParent": "790d7445-a6a7-4b7c-f3cc-4711daca8a61",
+									"fieldType": "sap.ui.table.Column",
+									"script": "",
+									"customComponent": false,
+									"request": [],
+									"response": [],
+									"attributes": [
+										{
+											"attribute": "label",
+											"grouping": "Properties",
+											"value": "Released",
+											"script": "",
+											"translation": []
+										},
+										{
+											"attribute": "sortProperty",
+											"grouping": "Properties",
+											"value": "released",
+											"script": "",
+											"translation": []
+										}
+									],
+									"data": [
+										{
+											"fieldNo": "9a949bf5-5be7-4a41-97ea-397c7d19a0cb",
+											"fieldName": "txttabReleased",
+											"fieldParent": "d3a9cf25-3638-445f-e139-d4e7c4ec302b",
+											"fieldType": "sap.tnt.InfoLabel",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "text",
+													"grouping": "Properties",
+													"value": "{released}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "colorScheme",
+													"grouping": "Properties",
+													"value": "{released}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "text",
+													"grouping": "Formatter",
+													"value": "Anonymous Function",
+													"script": "file://event/sap.tnt.InfoLabel/txttabReleased/text.script",
+													"translation": []
+												},
+												{
+													"attribute": "colorScheme",
+													"grouping": "Formatter",
+													"value": "Anonymous Function",
+													"script": "file://event/sap.tnt.InfoLabel/txttabReleased/colorScheme.script",
+													"translation": []
+												}
+											],
+											"data": []
+										}
+									]
+								},
+								{
 									"fieldNo": "ae70ad2c-ad72-406f-ff17-238d5d77f3eb",
 									"fieldName": "colChangedOn",
 									"fieldParent": "790d7445-a6a7-4b7c-f3cc-4711daca8a61",
@@ -1707,6 +1776,45 @@
 																			"attribute": "editable",
 																			"grouping": "Properties",
 																			"value": "{AppControl>/edit}",
+																			"script": "",
+																			"translation": []
+																		}
+																	],
+																	"data": []
+																},
+																{
+																	"fieldNo": "dd9dceaa-f015-42a0-9c2e-442bf7aed430",
+																	"fieldName": "lblformDetailReleased",
+																	"fieldParent": "9b86fdae-9d11-4b21-bfa9-dce8c526729c",
+																	"fieldType": "sap.m.Label",
+																	"script": "",
+																	"customComponent": false,
+																	"request": [],
+																	"response": [],
+																	"attributes": [],
+																	"data": []
+																},
+																{
+																	"fieldNo": "9168e13d-22ea-4c8c-d1a6-c98a6d637552",
+																	"fieldName": "informDetailReleased",
+																	"fieldParent": "9b86fdae-9d11-4b21-bfa9-dce8c526729c",
+																	"fieldType": "sap.m.CheckBox",
+																	"script": "",
+																	"customComponent": false,
+																	"request": [],
+																	"response": [],
+																	"attributes": [
+																		{
+																			"attribute": "text",
+																			"grouping": "Properties",
+																			"value": "Released",
+																			"script": "",
+																			"translation": []
+																		},
+																		{
+																			"attribute": "selected",
+																			"grouping": "Properties",
+																			"value": "{/released}",
 																			"script": "",
 																			"translation": []
 																		}
@@ -6253,12 +6361,53 @@
 																																	"value": "{title}",
 																																	"script": "",
 																																	"translation": []
+																																}
+																															],
+																															"data": []
+																														},
+																														{
+																															"fieldNo": "368c5f07-403a-4969-9c0a-0be2a1e88699",
+																															"fieldName": "lblElementFormFieldName",
+																															"fieldParent": "6ee1a5c2-bf4b-4291-fe8f-c97dbc149763",
+																															"fieldType": "sap.m.Label",
+																															"script": "",
+																															"customComponent": false,
+																															"request": [],
+																															"response": [],
+																															"attributes": [
+																																{
+																																	"attribute": "text",
+																																	"grouping": "Properties",
+																																	"value": "Field Name (dataset)",
+																																	"script": "",
+																																	"translation": []
+																																}
+																															],
+																															"data": []
+																														},
+																														{
+																															"fieldNo": "d2eebb57-8a1a-443f-d52c-cf407dbd7387",
+																															"fieldName": "inElementFormFieldName",
+																															"fieldParent": "6ee1a5c2-bf4b-4291-fe8f-c97dbc149763",
+																															"fieldType": "sap.m.Input",
+																															"script": "",
+																															"customComponent": false,
+																															"request": [],
+																															"response": [],
+																															"attributes": [
+																																{
+																																	"attribute": "value",
+																																	"grouping": "Properties",
+																																	"value": "{fieldName}",
+																																	"script": "",
+																																	"translation": []
 																																},
 																																{
 																																	"attribute": "liveChange",
 																																	"grouping": "Events",
-																																	"value": "modeloPageElements.refresh();",
-																																	"script": "modeloPageElements.refresh();",
+																																	"value": "Anonymous Function",
+																																	"script": "file://event/sap.m.Input/inElementFormFieldName/liveChange.script",
+																																	"language": "javascript",
 																																	"translation": []
 																																}
 																															],
@@ -12278,7 +12427,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.1.17.1330",
+	"ver": "23.1.17.1440",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
@@ -12294,7 +12443,7 @@
 	"ui5_m": true,
 	"ui5_f": true,
 	"ui5_table": true,
-	"ui5_tnt": false,
+	"ui5_tnt": true,
 	"ui5_uxap": false,
 	"ui5_chart": false,
 	"ui5_theme": "sap_horizon",

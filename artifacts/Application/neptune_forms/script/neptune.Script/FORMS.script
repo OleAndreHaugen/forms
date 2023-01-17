@@ -4,14 +4,29 @@ const FORMS = {
     cache: [],
     formParent: null,
     formTitleHide: [],
+    editable: true,
 
     build: function (parent, options) {
+        if (!parent) {
+            sap.m.MessageToast.show("Parent UI Container is missing in the interface");
+            return;
+        }
+
         if (!options.config) {
-            options.config = ModelData.FindFirst(FORMS.cache, "id", options.id);
+            let formId;
+
+            if (typeof options === "string") {
+                formId = options;
+                options = {};
+            } else {
+                formId = options.id;
+            }
+
+            options.config = ModelData.FindFirst(FORMS.cache, "id", formId);
 
             if (!options.config) {
                 var actions = [];
-                actions.push(FORMS.apiGetForm(options.id));
+                actions.push(FORMS.apiGetForm(formId));
 
                 Promise.all(actions).then(function (values) {
                     options.config = values[0];
@@ -27,6 +42,12 @@ const FORMS = {
     },
 
     buildForm: function (parent, options) {
+        if (!options.config) {
+            sap.m.MessageToast.show("FORM not found");
+            return;
+        }
+
+        FORMS.editable = true;
         FORMS.formTitleHide = [];
         FORMS.config = options.config;
 
@@ -34,7 +55,7 @@ const FORMS = {
         if (!FORMS.formParent) {
             FORMS.formParent = new sap.m.Panel({
                 backgroundDesign: "Transparent",
-            });
+            }).addStyleClass("sapUiNoContentPadding");
 
             FORMS.formParent.onAfterRendering = function (oEvent) {
                 FORMS.formTitleHide.forEach(function (fieldID) {
@@ -45,23 +66,22 @@ const FORMS = {
                     }
                 });
             };
-
-            FORMS.formParent.addStyleClass("sapUiNoContentPadding");
         } else {
-            FORMS.formParent.destroyContent();
+            FORMS.formParent.removeAllContent();
         }
 
         // Model
         const formModel = new sap.ui.model.json.JSONModel();
 
         if (options.data) {
+            if (options.completed) FORMS.editable = false;
             formModel.setData(options.data);
         } else {
             formModel.setData({});
         }
 
         FORMS.formParent.setModel(formModel);
-        formModel.refresh();
+        formModel.refresh(true);
 
         let sectionForm;
 
@@ -102,6 +122,10 @@ const FORMS = {
 
         if (parent.addContent) parent.addContent(FORMS.formParent);
         if (parent.addItem) parent.addItem(FORMS.formParent);
+
+        // setTimeout(function () {
+        //     formModel.refresh(true);
+        // }, 500);
     },
 
     buildElement: function (parent, element) {
@@ -173,6 +197,7 @@ const FORMS = {
             default:
                 elementField = new sap.m.Input(FORMS.buildElementFieldID(element), {
                     value: "{/" + element.id + "}",
+                    editable: FORMS.editable,
                     placeholder: element.placeholder,
                 });
                 break;
@@ -212,6 +237,7 @@ const FORMS = {
         const newField = new sap.m.TextArea(FORMS.buildElementFieldID(element), {
             value: "{/" + element.id + "}",
             placeholder: element.placeholder,
+            editable: FORMS.editable,
             growing: element.growing,
             rows: parseInt(element.rows),
             width: "100%",
@@ -225,6 +251,7 @@ const FORMS = {
         const newField = new sap.m.StepInput(FORMS.buildElementFieldID(element), {
             value: "{/" + element.id + "}",
             placeholder: element.placeholder,
+            editable: FORMS.editable,
         });
 
         if (element.min) newField.setMin(parseInt(element.min));
@@ -236,6 +263,7 @@ const FORMS = {
     buildElementSwitch: function (element) {
         const newField = new sap.m.Switch(FORMS.buildElementFieldID(element), {
             state: "{/" + element.id + "}",
+            enabled: FORMS.editable,
             customTextOff: element.customTextOff,
             customTextOn: element.customTextOn,
         });
@@ -250,6 +278,7 @@ const FORMS = {
     buildElementCheckBox: function (element) {
         const newField = new sap.m.CheckBox(FORMS.buildElementFieldID(element), {
             selected: "{/" + element.id + "}",
+            editable: FORMS.editable,
             text: element.text,
         });
 
@@ -259,6 +288,7 @@ const FORMS = {
     buildElementSingleSelect: function (element) {
         const newField = new sap.m.ComboBox(FORMS.buildElementFieldID(element), {
             selectedKey: "{/" + element.id + "}",
+            editable: FORMS.editable,
         });
 
         element.items.forEach(function (item, i) {
@@ -283,10 +313,13 @@ const FORMS = {
             });
         }
 
+        const formModel = FORMS.formParent.getModel();
+
         element.items.forEach(function (item, i) {
             const elementRadio = new sap.m.RadioButton("item" + item.id, {
                 text: item.title,
                 groupName: element.id,
+                editable: FORMS.editable,
                 select: function (oEvent) {
                     const formModel = FORMS.formParent.getModel();
                     formModel.oData[element.id] = item.key;
@@ -296,6 +329,11 @@ const FORMS = {
 
             if (element.enableWidth) {
                 elementRadio.setWidth(element.width + "px");
+            }
+
+            // If Data Present
+            if (formModel.oData[element.id] && formModel.oData[element.id] === item.key) {
+                elementRadio.setSelected(true);
             }
 
             elementRadio.addStyleClass("sapUiTinyMarginBegin");
@@ -308,6 +346,7 @@ const FORMS = {
     buildElementMultipleSelect: function (element) {
         const newField = new sap.m.MultiComboBox(FORMS.buildElementFieldID(element), {
             selectedKeys: "{/" + element.id + "}",
+            editable: FORMS.editable,
         });
 
         element.items.forEach(function (item, i) {
@@ -332,11 +371,13 @@ const FORMS = {
             });
         }
 
+        const formModel = FORMS.formParent.getModel();
+
         element.items.forEach(function (item, i) {
             const elementCheckBox = new sap.m.CheckBox("item" + item.id, {
                 text: item.title,
+                editable: FORMS.editable,
                 select: function (oEvent) {
-                    const formModel = FORMS.formParent.getModel();
                     if (!formModel.oData[element.id]) formModel.oData[element.id] = [];
 
                     if (this.getSelected()) {
@@ -353,6 +394,11 @@ const FORMS = {
                 elementCheckBox.setWidth(element.width + "px");
             }
 
+            // If Data Present
+            if (formModel.oData[element.id] && formModel.oData[element.id].includes(item.key)) {
+                elementCheckBox.setSelected(true);
+            }
+
             newField.addItem(elementCheckBox);
         });
 
@@ -362,6 +408,7 @@ const FORMS = {
     buildElementDatePicker: function (element) {
         const newField = new sap.m.DatePicker(FORMS.buildElementFieldID(element), {
             value: "{/" + element.id + "}",
+            editable: FORMS.editable,
         });
 
         return newField;
@@ -375,6 +422,7 @@ const FORMS = {
         const elementUploader = new sap.m.Button({
             type: element.buttonType,
             text: element.text,
+            enabled: FORMS.editable,
             press: function (oEvent) {
                 FORMS.elementUpload = element;
                 $("#imageUploader").click();
@@ -395,6 +443,7 @@ const FORMS = {
     buildElementDateTimePicker: function (element) {
         const newField = new sap.m.DateTimePicker(FORMS.buildElementFieldID(element), {
             value: "{/" + element.id + "}",
+            editable: FORMS.editable,
         });
 
         return newField;
@@ -447,12 +496,14 @@ const FORMS = {
                 case "Input":
                     itemAnswer = new sap.m.Input({
                         value: "{/" + item.id + "}",
+                        editable: FORMS.editable,
                     });
                     break;
 
                 case "AcceptReject":
                     itemAnswer = new sap.m.Switch({
                         state: "{/" + item.id + "}",
+                        enabled: FORMS.editable,
                         type: "AcceptReject",
                     });
                     break;
@@ -460,12 +511,14 @@ const FORMS = {
                 case "CheckBox":
                     itemAnswer = new sap.m.CheckBox({
                         selected: "{/" + item.id + "}",
+                        editable: FORMS.editable,
                     });
                     break;
 
                 default:
                     itemAnswer = new sap.m.Switch({
                         state: "{/" + item.id + "}",
+                        enabled: FORMS.editable,
                     });
                     break;
             }
@@ -477,11 +530,42 @@ const FORMS = {
         return tabCheckList;
     },
 
+    getValid: function () {
+        return FORMS.validate("OnlyCheck");
+    },
+
     getData: function () {
         const formModel = FORMS.formParent.getModel();
 
+        const outputData = {};
+
+        FORMS.config.setup.forEach(function (section) {
+            section.elements.forEach(function (element) {
+                if (formModel.oData[element.id]) {
+                    if (element.fieldName) {
+                        outputData[element.fieldName] = formModel.oData[element.id]; // TODO - Should we use fieldNames here ?
+                    } else {
+                        outputData[element.id] = formModel.oData[element.id];
+                    }
+                }
+
+                // CheckList
+                if (element.type === "CheckList") {
+                    element.items.forEach(function (item) {
+                        if (formModel.oData[item.id]) {
+                            if (item.fieldName) {
+                                outputData[item.fieldName] = formModel.oData[item.id]; // TODO - Should we use fieldNames here ?
+                            } else {
+                                outputData[item.id] = formModel.oData[item.id];
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
         const formData = {
-            data: JSON.parse(JSON.stringify(formModel.oData)),
+            data: outputData,
             config: FORMS.config,
             completed: FORMS.validate("OnlyCheck"),
         };
@@ -532,7 +616,7 @@ const FORMS = {
 
                 // MultipleSelect/MultipleChoice
                 if (
-                    fieldCompleted &&
+                    formModel.oData[element.id] &&
                     element.validationType !== "noLimit" &&
                     (element.type === "MultipleChoice" || element.type === "MultipleSelect")
                 ) {
@@ -586,13 +670,12 @@ const FORMS = {
 
     validateMarkField: function (id, valid, process) {
         if (process === "OnlyCheck") return;
-        if (process === "Reset") valid = true;
-
+        const validStatus = process === "Reset" ? true : valid;
         const field = sap.ui.getCore().byId("field" + id);
 
         if (!field) return;
 
-        if (valid) {
+        if (validStatus) {
             if (field.setValueState) {
                 field.setValueState();
             } else {

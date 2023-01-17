@@ -53,31 +53,23 @@
 			"fieldNo": 99999,
 			"data": [
 				{
-					"fieldNo": "74b52218-9ae9-4ec9-e2ac-29d6738900ac",
-					"fieldName": "oVBox",
-					"fieldParent": 99999,
-					"fieldType": "sap.m.VBox",
-					"script": "",
-					"customComponent": false,
-					"request": [],
-					"response": [],
-					"attributes": [
-						{
-							"attribute": "renderType",
-							"grouping": "Properties",
-							"value": "Bare",
-							"script": "",
-							"translation": []
-						}
-					],
-					"data": []
-				},
-				{
 					"fieldNo": "3cf1e9b2-73d9-435f-98d7-9363cf7bbca5",
 					"fieldName": "FORMS",
 					"fieldParent": 99999,
 					"fieldType": "neptune.Script",
 					"script": "file://script/neptune.Script/FORMS.script",
+					"customComponent": false,
+					"request": [],
+					"response": [],
+					"attributes": [],
+					"data": []
+				},
+				{
+					"fieldNo": "fdb17090-521f-4075-dca7-94e0c01f37e8",
+					"fieldName": "oSwitch",
+					"fieldParent": 99999,
+					"fieldType": "sap.m.Switch",
+					"script": "",
 					"customComponent": false,
 					"request": [],
 					"response": [],
@@ -97,7 +89,7 @@
 			"sap.m.Panel"
 		]
 	},
-	"ver": "23.1.17.1339",
+	"ver": "23.1.17.2117",
 	"application": "neptune_forms",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
