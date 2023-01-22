@@ -1294,47 +1294,6 @@
 									],
 									"data": [
 										{
-											"fieldNo": "b6deabb8-0d07-435f-b250-119a7ecaf6f6",
-											"fieldName": "butDetailData",
-											"fieldParent": "ad225645-b1d6-454e-bfbb-df715f38e363",
-											"fieldType": "sap.m.Button",
-											"script": "",
-											"customComponent": false,
-											"request": [],
-											"response": [],
-											"attributes": [
-												{
-													"attribute": "type",
-													"grouping": "Properties",
-													"value": "Emphasized",
-													"script": "",
-													"translation": []
-												},
-												{
-													"attribute": "text",
-													"grouping": "Properties",
-													"value": "Get Data",
-													"script": "",
-													"translation": []
-												},
-												{
-													"attribute": "enableCompactMode",
-													"grouping": "Properties",
-													"value": "true",
-													"script": "",
-													"translation": []
-												},
-												{
-													"attribute": "press",
-													"grouping": "Events",
-													"value": "console.log(FORMS.getData());",
-													"script": "console.log(FORMS.getData());",
-													"translation": []
-												}
-											],
-											"data": []
-										},
-										{
 											"fieldNo": "66fa9415-1c5d-44d8-9071-872eb4ccbdcb",
 											"fieldName": "butDetailSave",
 											"fieldParent": "ad225645-b1d6-454e-bfbb-df715f38e363",
@@ -10412,7 +10371,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.1.22.216",
+	"ver": "23.1.22.2125",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
