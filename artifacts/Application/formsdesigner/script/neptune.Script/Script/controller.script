@@ -89,6 +89,15 @@ const controller = {
             oEvent.preventDefault();
         };
 
+        // ClickToPreview
+        panPreview.attachBrowserEvent("click", function (e) {
+            let target = e.target.id.split("--")[0];
+            if (target) {
+                target = target.split("field")[1];
+                if (target.substring) controller.selectObjectFromId(target.substring(0, 36));
+            }
+        });
+
         var binding = new sap.ui.model.Binding(
             modelpanTopProperties,
             "/",
