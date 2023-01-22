@@ -2,29 +2,8 @@
     outline: none !important;
 }
 
-.splitDesigner .sapUiFormContainerTitle>.sapUiFormTitleH1,
-.splitDesigner .sapUiFormContainerTitle>.sapUiFormTitleH2,
-.splitDesigner .sapUiFormContainerTitle>.sapUiFormTitleH3,
-.splitDesigner .sapUiFormContainerTitle>.sapUiFormTitleH4,
-.splitDesigner .sapUiFormContainerTitle>.sapUiFormTitleH5,
-.splitDesigner .sapUiFormContainerTitle>.sapUiFormTitleH6 {
-    font-size: 1.2rem;
-}
-
-.formNoPadding .sapMListTblHighlightCol+.sapMListTblHeaderCell,
-.formNoPadding .sapMListTblHighlightCell+.sapMListTblCell {
-    padding: 0
-}
-
-.nepFormInput {
-    max-width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.formHeaderTitle {
-    border-bottom: 1px solid #ced4da;
-    border-radius: 0;
+.sapMTreeItemBaseChildren {
+    background-color: transparent;
 }
 
 .formGeneral .sapUiFormResGrid>div {
@@ -35,8 +14,21 @@
     padding-top: 0 !important;
 }
 
+.panProperties .sapUiFormContainerTitle>.sapUiFormTitleH1,
+.panProperties .sapUiFormContainerTitle>.sapUiFormTitleH2,
+.panProperties .sapUiFormContainerTitle>.sapUiFormTitleH3,
+.panProperties .sapUiFormContainerTitle>.sapUiFormTitleH4,
+.panProperties .sapUiFormContainerTitle>.sapUiFormTitleH5,
+.panProperties .sapUiFormContainerTitle>.sapUiFormTitleH6 {
+    font-size: 1.2rem;
+}
+
+.formPreview {
+    border: 6px dashed var(--nepBorderColor);
+}
+
 .formPreviewMobile {
-    max-width: 400px;
+    max-width: 500px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -57,23 +49,4 @@
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-}
-
-.formElementButton {
-    margin-left: 12px !important;
-    margin-right: 10px !important;
-}
-
-.formBorder {
-    border: 1px solid #ced4da;
-}
-
-.formToolbar.sapMTB.sapMTBStandard {
-    border-radius: 6px;
-    background: #f8f9fa;
-    border: 1px solid #ced4da;
-}
-
-.sapMColumnHeaderContent {
-    width: 100%;
 }

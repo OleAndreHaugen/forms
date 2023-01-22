@@ -63,18 +63,6 @@
 					"response": [],
 					"attributes": [],
 					"data": []
-				},
-				{
-					"fieldNo": "fdb17090-521f-4075-dca7-94e0c01f37e8",
-					"fieldName": "oSwitch",
-					"fieldParent": 99999,
-					"fieldType": "sap.m.Switch",
-					"script": "",
-					"customComponent": false,
-					"request": [],
-					"response": [],
-					"attributes": [],
-					"data": []
 				}
 			]
 		},
@@ -89,7 +77,7 @@
 			"sap.m.Panel"
 		]
 	},
-	"ver": "23.1.17.2117",
+	"ver": "23.1.22.1032",
 	"application": "neptune_forms",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",

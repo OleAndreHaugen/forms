@@ -1,2 +1,0 @@
-ModelData.UpdateField(modeloPageDetail.oData.setup, "_expanded", true, "_expanded", false);
-modeloPageDetail.refresh();

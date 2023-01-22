@@ -1,10 +1,8 @@
-const context = oEvent.oSource.getBindingContext();
-const data = context.getObject();
-
-data.items.push({
+modelpanTopProperties.oData.items.push({
     id: ModelData.genID(),
-    title: "Option " + (data.items.length + 1),
-    key: "key" + (data.items.length + 1),
+    title: "Option " + (modelpanTopProperties.oData.items.length + 1),
+    key: "key" + (modelpanTopProperties.oData.items.length + 1),
+    option: "I",
 });
 
-modeloPageElements.refresh();
+modelpanTopProperties.refresh();

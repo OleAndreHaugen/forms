@@ -1,5 +1,0 @@
-let binding = this.getBinding('items');
-modeloPageElements.oData.countElements = binding.getLength();
-modeloPageElements.refresh();
-modeloPageDetail.refresh();
-

@@ -1,21 +1,60 @@
 const controller = {
     currentIndex: null,
+    currentObject: null,
+    currentFilter: null,
+
     elementTypes: [
-        // { icon: "sap-icon://form", text: "Form", type: "Form" },
-        { icon: "sap-icon://header", text: "Form Title", type: "FormTitle" },
-        { icon: "sap-icon://calendar", text: "Date Picker", type: "DatePicker" },
-        { icon: "sap-icon://date-time", text: "Date Time Picker", type: "DateTimePicker" },
-        { icon: "sap-icon://fa-regular/check-square", text: "Check Box", type: "CheckBox" },
-        { icon: "sap-icon://checklist", text: "Check List", type: "CheckList" },
-        { icon: "sap-icon://document-text", text: "Text Area", type: "TextArea" },
-        { icon: "sap-icon://request", text: "Input", type: "Input" },
-        { icon: "sap-icon://fa-solid/image", text: "Image", type: "Image" },
-        { icon: "sap-icon://number-sign", text: "Step Input", type: "StepInput" },
-        { icon: "sap-icon://switch-views", text: "Switch", type: "Switch" },
-        { icon: "sap-icon://fa-regular/circle", text: "Single Select", type: "SingleSelect" },
-        { icon: "sap-icon://fa-regular/circle", text: "Single Choice", type: "SingleChoice" },
-        { icon: "sap-icon://multi-select", text: "Multiple Select", type: "MultipleSelect" },
-        { icon: "sap-icon://multi-select", text: "Multiple Choice", type: "MultipleChoice" },
+        { icon: "sap-icon://form", text: "Form", type: "Form", parent: true },
+        // {
+        //     icon: "sap-icon://message-information",
+        //     text: "Message Strip",
+        //     type: "MessageStrip",
+        //     parent: true,
+        // },
+        { icon: "sap-icon://header", text: "Form Title", type: "FormTitle", parent: false },
+        { icon: "sap-icon://calendar", text: "Date Picker", type: "DatePicker", parent: false },
+        {
+            icon: "sap-icon://date-time",
+            text: "Date Time Picker",
+            type: "DateTimePicker",
+            parent: false,
+        },
+        {
+            icon: "sap-icon://fa-regular/check-square",
+            text: "Check Box",
+            type: "CheckBox",
+            parent: false,
+        },
+        { icon: "sap-icon://checklist", text: "Check List", type: "CheckList", parent: false },
+        { icon: "sap-icon://document-text", text: "Text Area", type: "TextArea", parent: false },
+        { icon: "sap-icon://request", text: "Input", type: "Input", parent: false },
+        { icon: "sap-icon://fa-solid/image", text: "Image", type: "Image", parent: false },
+        { icon: "sap-icon://number-sign", text: "Step Input", type: "StepInput", parent: false },
+        { icon: "sap-icon://switch-views", text: "Switch", type: "Switch", parent: false },
+        {
+            icon: "sap-icon://fa-regular/circle",
+            text: "Single Select",
+            type: "SingleSelect",
+            parent: false,
+        },
+        {
+            icon: "sap-icon://fa-regular/circle",
+            text: "Single Choice",
+            type: "SingleChoice",
+            parent: false,
+        },
+        {
+            icon: "sap-icon://multi-select",
+            text: "Multiple Select",
+            type: "MultipleSelect",
+            parent: false,
+        },
+        {
+            icon: "sap-icon://multi-select",
+            text: "Multiple Choice",
+            type: "MultipleChoice",
+            parent: false,
+        },
     ],
 
     init: function () {
@@ -23,14 +62,42 @@ const controller = {
 
         modellistElementTypes.setData(this.elementTypes);
 
-        // controller.elementTypes.forEach(function (element) {
-        //     elementToolbarType.addItem(
-        //         new sap.ui.core.ListItem({
-        //             key: element.type,
-        //             text: element.text,
-        //         })
-        //     );
-        // });
+        treeOutline.getBinding("items").filter([new sap.ui.model.Filter("option", "NE", "I")]);
+
+        // Global Event Handler - contextMenu
+        document.oncontextmenu = function (oEvent) {
+            if (oEvent.target.parentNode.role === "treeitem") {
+                const context = sap.ui
+                    .getCore()
+                    .byId(oEvent.target.parentNode.id)
+                    .getBindingContext();
+
+                controller.currentObject = context.getObject();
+
+                if (context.sPath.indexOf("elements") > -1) {
+                    controller.currentIndex = parseInt(context.sPath.split("/")[4]) + 1;
+                } else {
+                    controller.currentIndex = null;
+                }
+
+                treeOutline.setSelectedItemById(oEvent.target.parentNode.id);
+                treeOutline.fireItemPress();
+
+                controller.setElementsFilter("Element");
+                popElements.openBy(oEvent.target);
+            }
+            oEvent.preventDefault();
+        };
+
+        var binding = new sap.ui.model.Binding(
+            modelpanTopProperties,
+            "/",
+            modelpanTopProperties.getContext("/")
+        );
+        binding.attachChange(function () {
+            modeloPageDetail.refresh(true);
+            controller.preview();
+        });
 
         this.list();
     },
@@ -45,9 +112,22 @@ const controller = {
                 id: id,
             },
         }).then(function (req) {
+            // Convert Data
+            req.setup.forEach(function (section) {
+                if (!section.option) section.option = "P";
+                section.elements.forEach(function (element) {
+                    if (!element.option) element.option = "E";
+                    if (element.items) {
+                        element.items.forEach(function (item) {
+                            if (!item.option) item.option = "I";
+                        });
+                    }
+                });
+            });
+
             tabDetail.setSelectedItem(tabDetailInfo);
-            navElements.to(oPageEmpty);
             modeloPageDetail.setData(req);
+            controller.preview();
             oApp.to(oPageDetail);
         });
     },
@@ -57,7 +137,12 @@ const controller = {
             data: modeloPageDetail.oData,
         }).then(function (req) {
             sap.m.MessageToast.show("Form Saved");
-            modeloPageDetail.setData(req);
+            modeloPageDetail.oData.id = req.id;
+            modeloPageDetail.oData.updatedAt = req.updatedAt;
+            modeloPageDetail.oData.updatedBy = req.updatedBy;
+            modeloPageDetail.oData.createdAt = req.createdAt;
+            modeloPageDetail.oData.createdBy = req.createdBy;
+            modeloPageDetail.refresh(true);
             controller.list();
         });
     },
@@ -82,15 +167,77 @@ const controller = {
         });
     },
 
+    setElementsFilter: function (type) {
+        if (type === "Parent") {
+            listElementTypes
+                .getBinding("items")
+                .filter([new sap.ui.model.Filter("parent", "EQ", true)]);
+        } else {
+            listElementTypes
+                .getBinding("items")
+                .filter([new sap.ui.model.Filter("parent", "EQ", false)]);
+        }
+
+        controller.currentFilter = type;
+    },
+
+    getParentFromId: function (id) {
+        let parentData = null;
+        modeloPageDetail.oData.setup.forEach(function (section, i) {
+            section.elements.forEach(function (element, i) {
+                if (element.id === id) parentData = section;
+            });
+        });
+
+        return parentData;
+    },
+
+    getObjectFromId: function (id) {
+        let elementData = null;
+        modeloPageDetail.oData.setup.forEach(function (section, i) {
+            if (section.id === id) elementData = section;
+
+            section.elements.forEach(function (element, i) {
+                if (element.id === id) elementData = element;
+            });
+        });
+
+        return elementData;
+    },
+
+    expandParent: function (id) {
+        modeloPageDetail.oData.setup.forEach(function (section, i) {
+            if (section.id === id) {
+                treeOutline.onItemExpanderPressed(treeOutline.getItems()[i], true);
+            }
+        });
+    },
+
+    selectObjectFromId: function (id) {
+        const parent = controller.getParentFromId(id);
+        if (parent) controller.expandParent(parent.id);
+
+        const items = treeOutline.getItems();
+
+        items.forEach(function (item, i) {
+            const context = item.getBindingContext();
+            const data = context.getObject();
+
+            if (data.id === id) {
+                treeOutline.setSelectedItemById(item.sId);
+                treeOutline.fireItemPress();
+            }
+        });
+    },
+
     newForm: function () {
         modeloPageDetail.setData({
             name: "",
             description: "",
             setup: [],
-            editable: true,
         });
         tabDetail.setSelectedItem(tabDetailInfo);
-        navElements.to(oPageEmpty);
+        controller.preview();
         oApp.to(oPageDetail);
     },
 
@@ -108,15 +255,31 @@ const controller = {
             type: elementData.type,
             enableDescription: false,
             enablePlaceholder: false,
+            enableDuplicate: false,
             enableLabel: true,
+            duplicateButtonText: "Add",
+            duplicateButtonType: "Transparent",
             placeholder: "",
+            option: "E",
             title: elementData.type,
             description: "",
             required: false,
-            _expanded: true,
         };
 
         switch (elementData.type) {
+            case "MessageStrip":
+                newElement.option = "P";
+                newElement.elements = [];
+                break;
+
+            case "Form":
+                newElement.expanded = false;
+                newElement.expandable = false;
+                newElement.option = "P";
+                newElement.elements = [];
+                newElement.layout = "ResponsiveGridLayout";
+                break;
+
             case "Image":
                 newElement.text = "Upload";
                 newElement.buttonType = "Emphasized";
@@ -127,34 +290,49 @@ const controller = {
                 newElement.answerTitle = "Answer";
 
                 newElement.items = [
-                    { id: ModelData.genID(), question: "Question 1", type: "Switch" },
-                    { id: ModelData.genID(), question: "Question 2", type: "Switch" },
-                    { id: ModelData.genID(), question: "Question 3", type: "Switch" },
+                    {
+                        id: ModelData.genID(),
+                        question: "Question 1",
+                        type: "Switch",
+                        option: "I",
+                    },
+                    {
+                        id: ModelData.genID(),
+                        question: "Question 2",
+                        type: "Switch",
+                        option: "I",
+                    },
+                    {
+                        id: ModelData.genID(),
+                        question: "Question 3",
+                        type: "Switch",
+                        option: "I",
+                    },
                 ];
                 break;
 
             case "SingleChoice":
                 newElement.items = [
-                    { id: ModelData.genID(), title: "Option 1", key: "key1" },
-                    { id: ModelData.genID(), title: "Option 2", key: "key2" },
-                    { id: ModelData.genID(), title: "Option 3", key: "key3" },
+                    { id: ModelData.genID(), title: "Option 1", key: "key1", option: "I" },
+                    { id: ModelData.genID(), title: "Option 2", key: "key2", option: "I" },
+                    { id: ModelData.genID(), title: "Option 3", key: "key3", option: "I" },
                 ];
                 newElement.horizontal = false;
                 break;
 
             case "SingleSelect":
                 newElement.items = [
-                    { id: ModelData.genID(), title: "Option 1", key: "key1" },
-                    { id: ModelData.genID(), title: "Option 2", key: "key2" },
-                    { id: ModelData.genID(), title: "Option 3", key: "key3" },
+                    { id: ModelData.genID(), title: "Option 1", key: "key1", option: "I" },
+                    { id: ModelData.genID(), title: "Option 2", key: "key2", option: "I" },
+                    { id: ModelData.genID(), title: "Option 3", key: "key3", option: "I" },
                 ];
                 break;
 
             case "MultipleChoice":
                 newElement.items = [
-                    { id: ModelData.genID(), title: "Option 1", key: "key1" },
-                    { id: ModelData.genID(), title: "Option 2", key: "key2" },
-                    { id: ModelData.genID(), title: "Option 3", key: "key3" },
+                    { id: ModelData.genID(), title: "Option 1", key: "key1", option: "I" },
+                    { id: ModelData.genID(), title: "Option 2", key: "key2", option: "I" },
+                    { id: ModelData.genID(), title: "Option 3", key: "key3", option: "I" },
                 ];
                 newElement.validationParam = 1;
                 newElement.validationType = "noLimit";
@@ -163,45 +341,32 @@ const controller = {
 
             case "MultipleSelect":
                 newElement.items = [
-                    { id: ModelData.genID(), title: "Option 1", key: "key1" },
-                    { id: ModelData.genID(), title: "Option 2", key: "key2" },
-                    { id: ModelData.genID(), title: "Option 3", key: "key3" },
+                    { id: ModelData.genID(), title: "Option 1", key: "key1", option: "I" },
+                    { id: ModelData.genID(), title: "Option 2", key: "key2", option: "I" },
+                    { id: ModelData.genID(), title: "Option 3", key: "key3", option: "I" },
                 ];
                 newElement.validationParam = 1;
                 newElement.validationType = "noLimit";
                 break;
         }
 
-        if (controller.currentIndex) {
-            modeloPageElements.oData.elements.splice(controller.currentIndex, 0, newElement);
-        } else {
-            modeloPageElements.oData.elements.push(newElement);
-        }
-
-        modeloPageElements.refresh();
-    },
-
-    addSection: function (currentIndex) {
-        let newElement = {
-            id: ModelData.genID(),
-            title: "New Form",
-            expanded: false,
-            expandable: false,
-            required: false,
-            type: "Form",
-            elements: [],
-            countElements: 0,
-            layout: "ResponsiveGridLayout",
-            _expanded: true,
-        };
-
-        if (currentIndex) {
-            modeloPageDetail.oData.setup.splice(currentIndex, 0, newElement);
-        } else {
+        if (controller.currentFilter === "Parent") {
             modeloPageDetail.oData.setup.push(newElement);
+        } else {
+            let currentObject =
+                controller.currentObject.type === "Form"
+                    ? controller.currentObject
+                    : controller.getParentFromId(controller.currentObject.id);
+
+            if (controller.currentIndex) {
+                currentObject.elements.splice(controller.currentIndex, 0, newElement);
+            } else {
+                currentObject.elements.push(newElement);
+            }
         }
 
-        modeloPageDetail.refresh();
+        modeloPageDetail.refresh(true);
+        controller.selectObjectFromId(newElement.id);
     },
 };
 

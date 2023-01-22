@@ -12,15 +12,11 @@ let oDroppedData = oDroppedContext.getObject();
 let indexDrag = 0;
 let indexDrop = 0;
 
-let elementIndex = oDraggedContext.sPath.split("/")[2];
+modelpanTopProperties.oData.items.forEach(function (data, i) {
+    if (data.id === oDraggedData.id) indexDrag = i;
+    if (data.id === oDroppedData.id) indexDrop = i;
+});
 
-if (modeloPageElements.oData.elements[elementIndex]) {
-    modeloPageElements.oData.elements[elementIndex].items.forEach(function (data, i) {
-        if (data.id === oDraggedData.id) indexDrag = i;
-        if (data.id === oDroppedData.id) indexDrop = i;
-    });
+Utils.arrayMove(modelpanTopProperties.oData.items, indexDrag, indexDrop);
 
-    Utils.arrayMove(modeloPageElements.oData.elements[elementIndex].items, indexDrag, indexDrop);
-}
-
-modeloPageElements.refresh();
+modelpanTopProperties.refresh();

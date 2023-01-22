@@ -1,2 +1,0 @@
-controller.currentIndex = null;
-popElements.openBy(this);
