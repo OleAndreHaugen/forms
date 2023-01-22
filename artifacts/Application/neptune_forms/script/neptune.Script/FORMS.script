@@ -116,19 +116,18 @@ const FORMS = {
                     const tabModel = new sap.ui.model.json.JSONModel();
                     sectionParent.setModel(tabModel);
 
-                    let modelData = [];
-
-                    if (options.data[section.id]) {
-                        modelData = options.data[section.id];
+                    if (options.data && options.data[section.id]) {
+                        tabModel.setData(options.data[section.id]);
                     } else {
+                        let modelData = [];
                         let rows = section.rows || 5;
 
                         for (let i = 0; i < rows; i++) {
                             modelData.push({});
                         }
-                    }
 
-                    tabModel.setData(modelData);
+                        tabModel.setData(modelData);
+                    }
                     break;
             }
         });
