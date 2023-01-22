@@ -124,13 +124,16 @@ const FORMS = {
         sectionForm = new sap.ui.layout.form.SimpleForm({
             layout: "ResponsiveGridLayout",
             editable: true,
-            labelSpanL: parseInt(section.labelSpanL) || 4,
-            labelSpanM: parseInt(section.labelSpanM) || 2,
-            labelSpanS: parseInt(section.labelSpanS) || 12,
-            columnsXL: parseInt(section.columnsXL) || -1,
-            columnsL: parseInt(section.columnsL) || 2,
-            columnsM: parseInt(section.columnsM) || 1,
+            labelSpanL: parseInt(section.labelSpan) || 4,
+            labelSpanM: parseInt(section.labelSpan) || 4,
+            labelSpanS: 12,
+            columnsL: parseInt(section.columns) || 2,
+            columnsM: 2,
         });
+
+        if (section.enableCompact) {
+            sectionForm.addStyleClass("sapUiSizeCompact");
+        }
 
         sectionPanel.addContent(sectionForm);
 

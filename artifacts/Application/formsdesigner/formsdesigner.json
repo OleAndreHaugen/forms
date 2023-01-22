@@ -3429,6 +3429,13 @@
 																							"response": [],
 																							"attributes": [
 																								{
+																									"attribute": "styleClass",
+																									"grouping": "Properties",
+																									"value": "formSettings",
+																									"script": "",
+																									"translation": []
+																								},
+																								{
 																									"attribute": "maxContainerCols",
 																									"grouping": "Properties",
 																									"value": "3",
@@ -3473,191 +3480,9 @@
 																							],
 																							"data": [
 																								{
-																									"fieldNo": "3dd344eb-463a-41b1-dcc9-53feb2806789",
-																									"fieldName": "titlesectionSettings",
-																									"fieldParent": "a26afb73-57ed-4ad7-fbc5-6c23ed2066ea",
-																									"fieldType": "sap.ui.core.Title",
-																									"script": "",
-																									"customComponent": false,
-																									"request": [],
-																									"response": [],
-																									"attributes": [
-																										{
-																											"attribute": "text",
-																											"grouping": "Properties",
-																											"value": "Settings",
-																											"script": "",
-																											"translation": []
-																										}
-																									],
-																									"data": []
-																								},
-																								{
-																									"fieldNo": "0563eec7-b801-432b-a4fb-80065c0bd5f5",
-																									"fieldName": "lblsectionFormSettings",
-																									"fieldParent": "a26afb73-57ed-4ad7-fbc5-6c23ed2066ea",
-																									"fieldType": "sap.m.Label",
-																									"script": "",
-																									"customComponent": false,
-																									"request": [],
-																									"response": [],
-																									"attributes": [],
-																									"data": []
-																								},
-																								{
-																									"fieldNo": "1dc74891-dfea-480e-8b39-ff8b5b53deac",
-																									"fieldName": "boxsectionFormSettings",
-																									"fieldParent": "a26afb73-57ed-4ad7-fbc5-6c23ed2066ea",
-																									"fieldType": "sap.m.VBox",
-																									"script": "",
-																									"customComponent": false,
-																									"request": [],
-																									"response": [],
-																									"attributes": [],
-																									"data": [
-																										{
-																											"fieldNo": "74448c02-9dc7-446e-aa42-46edd77f79a3",
-																											"fieldName": "insectionFormExpandable",
-																											"fieldParent": "1dc74891-dfea-480e-8b39-ff8b5b53deac",
-																											"fieldType": "sap.m.CheckBox",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "Expandable",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "selected",
-																													"grouping": "Properties",
-																													"value": "{/expandable}",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "bef5ca5a-b4ee-4aa1-d7f9-33cd03a28ed2",
-																											"fieldName": "insectionFormExpanded",
-																											"fieldParent": "1dc74891-dfea-480e-8b39-ff8b5b53deac",
-																											"fieldType": "sap.m.CheckBox",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "visible",
-																													"grouping": "Properties",
-																													"value": "{= ${/expandable} ? true:false }",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "Expanded",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "selected",
-																													"grouping": "Properties",
-																													"value": "{/expanded}",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										}
-																									]
-																								}
-																							]
-																						},
-																						{
-																							"fieldNo": "b4b62bbf-df91-4a87-913a-c18488041e31",
-																							"fieldName": "sectionFormProperties",
-																							"fieldParent": "8877521b-0167-43e5-b55f-2a0e2b7eee13",
-																							"fieldType": "sap.ui.layout.form.SimpleForm",
-																							"script": "",
-																							"customComponent": false,
-																							"request": [],
-																							"response": [],
-																							"attributes": [
-																								{
-																									"attribute": "maxContainerCols",
-																									"grouping": "Properties",
-																									"value": "3",
-																									"script": "",
-																									"translation": []
-																								},
-																								{
-																									"attribute": "layout",
-																									"grouping": "Properties",
-																									"value": "ResponsiveGridLayout",
-																									"script": "",
-																									"translation": []
-																								},
-																								{
-																									"attribute": "labelSpanM",
-																									"grouping": "Properties",
-																									"value": "12",
-																									"script": "",
-																									"translation": []
-																								},
-																								{
-																									"attribute": "labelSpanL",
-																									"grouping": "Properties",
-																									"value": "12",
-																									"script": "",
-																									"translation": []
-																								},
-																								{
-																									"attribute": "editable",
-																									"grouping": "Properties",
-																									"value": "true",
-																									"script": "",
-																									"translation": []
-																								},
-																								{
-																									"attribute": "columnsM",
-																									"grouping": "Properties",
-																									"value": "2",
-																									"script": "",
-																									"translation": []
-																								}
-																							],
-																							"data": [
-																								{
-																									"fieldNo": "76c9eca4-2b1a-4af3-979f-1b67a44ab268",
-																									"fieldName": "sectionFormTitleLabels1",
-																									"fieldParent": "b4b62bbf-df91-4a87-913a-c18488041e31",
-																									"fieldType": "sap.ui.core.Title",
-																									"script": "",
-																									"customComponent": false,
-																									"request": [],
-																									"response": [],
-																									"attributes": [
-																										{
-																											"attribute": "text",
-																											"grouping": "Properties",
-																											"value": "Labels",
-																											"script": "",
-																											"translation": []
-																										}
-																									],
-																									"data": []
-																								},
-																								{
 																									"fieldNo": "dc237565-a658-408d-dcd7-5e300037ebb8",
 																									"fieldName": "lblsectionSpanL1",
-																									"fieldParent": "b4b62bbf-df91-4a87-913a-c18488041e31",
+																									"fieldParent": "a26afb73-57ed-4ad7-fbc5-6c23ed2066ea",
 																									"fieldType": "sap.m.Label",
 																									"script": "",
 																									"customComponent": false,
@@ -3667,7 +3492,7 @@
 																										{
 																											"attribute": "text",
 																											"grouping": "Properties",
-																											"value": "Label Span L",
+																											"value": "Label Span",
 																											"script": "",
 																											"translation": []
 																										}
@@ -3677,7 +3502,7 @@
 																								{
 																									"fieldNo": "681315eb-79fd-4419-d112-f826b8fc6052",
 																									"fieldName": "insectionSpanL1",
-																									"fieldParent": "b4b62bbf-df91-4a87-913a-c18488041e31",
+																									"fieldParent": "a26afb73-57ed-4ad7-fbc5-6c23ed2066ea",
 																									"fieldType": "sap.m.Select",
 																									"script": "",
 																									"customComponent": false,
@@ -3687,7 +3512,7 @@
 																										{
 																											"attribute": "selectedKey",
 																											"grouping": "Properties",
-																											"value": "{/labelSpanL}",
+																											"value": "{/labelSpan}",
 																											"script": "",
 																											"translation": []
 																										}
@@ -4032,764 +3857,10 @@
 																									]
 																								},
 																								{
-																									"fieldNo": "a9f76f68-afac-414d-c5bf-766d33f4e396",
-																									"fieldName": "lblsectionSpanM1",
-																									"fieldParent": "b4b62bbf-df91-4a87-913a-c18488041e31",
+																									"fieldNo": "42985b69-3c16-4f59-ca92-d8cafd83ab77",
+																									"fieldName": "lblsectionColumnsXL1",
+																									"fieldParent": "a26afb73-57ed-4ad7-fbc5-6c23ed2066ea",
 																									"fieldType": "sap.m.Label",
-																									"script": "",
-																									"customComponent": false,
-																									"request": [],
-																									"response": [],
-																									"attributes": [
-																										{
-																											"attribute": "text",
-																											"grouping": "Properties",
-																											"value": "Label Span  M",
-																											"script": "",
-																											"translation": []
-																										}
-																									],
-																									"data": []
-																								},
-																								{
-																									"fieldNo": "0697bb17-f2fd-4b62-f86f-0ff813887af8",
-																									"fieldName": "insectionSpanM1",
-																									"fieldParent": "b4b62bbf-df91-4a87-913a-c18488041e31",
-																									"fieldType": "sap.m.Select",
-																									"script": "",
-																									"customComponent": false,
-																									"request": [],
-																									"response": [],
-																									"attributes": [
-																										{
-																											"attribute": "selectedKey",
-																											"grouping": "Properties",
-																											"value": "{/labelSpanM}",
-																											"script": "",
-																											"translation": []
-																										}
-																									],
-																									"data": [
-																										{
-																											"fieldNo": "e92a0bf7-211f-45db-bca2-fe62df69c24b",
-																											"fieldName": "informPopFormSpanM",
-																											"fieldParent": "0697bb17-f2fd-4b62-f86f-0ff813887af8",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "0c6b9a6d-89d2-47d0-afb3-51408cc98227",
-																											"fieldName": "informPopFormSpanM13",
-																											"fieldParent": "0697bb17-f2fd-4b62-f86f-0ff813887af8",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "1",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "1",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "38104173-3e1a-4365-e491-b5ebd10b5888",
-																											"fieldName": "informPopFormSpanM14",
-																											"fieldParent": "0697bb17-f2fd-4b62-f86f-0ff813887af8",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "2",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "2",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "b2edebc4-9176-4f43-e241-22618ea62585",
-																											"fieldName": "informPopFormSpanM15",
-																											"fieldParent": "0697bb17-f2fd-4b62-f86f-0ff813887af8",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "3",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "3",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "5ae7a2c9-c3f2-415e-dea8-e8b7ea7a9b6c",
-																											"fieldName": "informPopFormSpanM16",
-																											"fieldParent": "0697bb17-f2fd-4b62-f86f-0ff813887af8",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "4",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "4",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "0cbefbba-0a0c-4327-d673-68dbeb1de110",
-																											"fieldName": "informPopFormSpanM17",
-																											"fieldParent": "0697bb17-f2fd-4b62-f86f-0ff813887af8",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "5",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "5",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "3269b357-338d-49fa-fb3f-c0a43c7f91b7",
-																											"fieldName": "informPopFormSpanM18",
-																											"fieldParent": "0697bb17-f2fd-4b62-f86f-0ff813887af8",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "6",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "6",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "32b75a91-8efe-475e-de30-285eba23e1a7",
-																											"fieldName": "informPopFormSpanM19",
-																											"fieldParent": "0697bb17-f2fd-4b62-f86f-0ff813887af8",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "7",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "7",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "1b084602-709e-4577-8a2f-13ce22abd3a7",
-																											"fieldName": "informPopFormSpanM20",
-																											"fieldParent": "0697bb17-f2fd-4b62-f86f-0ff813887af8",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "8",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "8",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "35fb01f3-a71a-4fb9-9dd2-9184f8d3c9c7",
-																											"fieldName": "informPopFormSpanM21",
-																											"fieldParent": "0697bb17-f2fd-4b62-f86f-0ff813887af8",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "9",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "9",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "de0050d6-8da5-4719-bfe3-d1b46e62f498",
-																											"fieldName": "informPopFormSpanM22",
-																											"fieldParent": "0697bb17-f2fd-4b62-f86f-0ff813887af8",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "10",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "10",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "5d01faa6-76ba-4fff-aeb4-53353b783c72",
-																											"fieldName": "informPopFormSpanM23",
-																											"fieldParent": "0697bb17-f2fd-4b62-f86f-0ff813887af8",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "11",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "11",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "5a2b255a-ac33-49b3-8e8c-bd91927c3f31",
-																											"fieldName": "informPopFormSpanM24",
-																											"fieldParent": "0697bb17-f2fd-4b62-f86f-0ff813887af8",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "12",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "12",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										}
-																									]
-																								},
-																								{
-																									"fieldNo": "070766f0-2fa8-4df0-8ddd-37dbc52d0840",
-																									"fieldName": "lblsectionSpanS1",
-																									"fieldParent": "b4b62bbf-df91-4a87-913a-c18488041e31",
-																									"fieldType": "sap.m.Label",
-																									"script": "",
-																									"customComponent": false,
-																									"request": [],
-																									"response": [],
-																									"attributes": [
-																										{
-																											"attribute": "text",
-																											"grouping": "Properties",
-																											"value": "Label Span S",
-																											"script": "",
-																											"translation": []
-																										}
-																									],
-																									"data": []
-																								},
-																								{
-																									"fieldNo": "1b455433-f49e-4b3c-c30d-edee7a366d5b",
-																									"fieldName": "insectionSpanS1",
-																									"fieldParent": "b4b62bbf-df91-4a87-913a-c18488041e31",
-																									"fieldType": "sap.m.Select",
-																									"script": "",
-																									"customComponent": false,
-																									"request": [],
-																									"response": [],
-																									"attributes": [
-																										{
-																											"attribute": "selectedKey",
-																											"grouping": "Properties",
-																											"value": "{/labelSpanS}",
-																											"script": "",
-																											"translation": []
-																										}
-																									],
-																									"data": [
-																										{
-																											"fieldNo": "82d044c2-54e8-41be-e460-9f0503ca0bea",
-																											"fieldName": "informPopFormSpanS",
-																											"fieldParent": "1b455433-f49e-4b3c-c30d-edee7a366d5b",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "769b0e2c-a1fe-43d8-d3cb-14bf3a63247e",
-																											"fieldName": "informPopFormSpanS13",
-																											"fieldParent": "1b455433-f49e-4b3c-c30d-edee7a366d5b",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "1",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "1",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "9abd95d9-4c31-4db1-f6be-523eafd14e4b",
-																											"fieldName": "informPopFormSpanS14",
-																											"fieldParent": "1b455433-f49e-4b3c-c30d-edee7a366d5b",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "2",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "2",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "b79717d2-066a-4056-cdac-2c4ae45c93eb",
-																											"fieldName": "informPopFormSpanS15",
-																											"fieldParent": "1b455433-f49e-4b3c-c30d-edee7a366d5b",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "3",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "3",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "a32a078b-a418-4467-d349-b0bd71134f9f",
-																											"fieldName": "informPopFormSpanS16",
-																											"fieldParent": "1b455433-f49e-4b3c-c30d-edee7a366d5b",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "4",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "4",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "a444feea-8c32-4f3f-e7fe-c3a99b345a94",
-																											"fieldName": "informPopFormSpanS17",
-																											"fieldParent": "1b455433-f49e-4b3c-c30d-edee7a366d5b",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "5",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "5",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "bb090fba-a329-4aa6-9ea7-56bae3e4b0ba",
-																											"fieldName": "informPopFormSpanS18",
-																											"fieldParent": "1b455433-f49e-4b3c-c30d-edee7a366d5b",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "6",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "6",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "60aa0733-9acd-42c4-9497-a40839fb2e04",
-																											"fieldName": "informPopFormSpanS19",
-																											"fieldParent": "1b455433-f49e-4b3c-c30d-edee7a366d5b",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "7",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "7",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "a76d2d52-83c9-457d-da0e-91b0fe987e60",
-																											"fieldName": "informPopFormSpanS20",
-																											"fieldParent": "1b455433-f49e-4b3c-c30d-edee7a366d5b",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "8",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "8",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "4e9c2727-139d-47d5-c7dc-3bb5d0ac488d",
-																											"fieldName": "informPopFormSpanS21",
-																											"fieldParent": "1b455433-f49e-4b3c-c30d-edee7a366d5b",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "9",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "9",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "052ca0d7-9820-44ab-b64c-aa15fe84ef6c",
-																											"fieldName": "informPopFormSpanS22",
-																											"fieldParent": "1b455433-f49e-4b3c-c30d-edee7a366d5b",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "10",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "10",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "cbcb3b9b-72b4-40cf-fbdf-0365f28cf37f",
-																											"fieldName": "informPopFormSpanS23",
-																											"fieldParent": "1b455433-f49e-4b3c-c30d-edee7a366d5b",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "11",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "11",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "f38fbce2-f40e-4cc3-f1aa-50c1ce668c28",
-																											"fieldName": "informPopFormSpanS24",
-																											"fieldParent": "1b455433-f49e-4b3c-c30d-edee7a366d5b",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "12",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "12",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										}
-																									]
-																								},
-																								{
-																									"fieldNo": "2d765993-81de-4250-d737-4989973525f0",
-																									"fieldName": "sectionFormTitleColumns1",
-																									"fieldParent": "b4b62bbf-df91-4a87-913a-c18488041e31",
-																									"fieldType": "sap.ui.core.Title",
 																									"script": "",
 																									"customComponent": false,
 																									"request": [],
@@ -4806,29 +3877,9 @@
 																									"data": []
 																								},
 																								{
-																									"fieldNo": "42985b69-3c16-4f59-ca92-d8cafd83ab77",
-																									"fieldName": "lblsectionColumnsXL1",
-																									"fieldParent": "b4b62bbf-df91-4a87-913a-c18488041e31",
-																									"fieldType": "sap.m.Label",
-																									"script": "",
-																									"customComponent": false,
-																									"request": [],
-																									"response": [],
-																									"attributes": [
-																										{
-																											"attribute": "text",
-																											"grouping": "Properties",
-																											"value": "Columns XL",
-																											"script": "",
-																											"translation": []
-																										}
-																									],
-																									"data": []
-																								},
-																								{
 																									"fieldNo": "94f388ee-e284-4038-a3ce-0183e1819f73",
 																									"fieldName": "insectionColumnsXL1",
-																									"fieldParent": "b4b62bbf-df91-4a87-913a-c18488041e31",
+																									"fieldParent": "a26afb73-57ed-4ad7-fbc5-6c23ed2066ea",
 																									"fieldType": "sap.m.Select",
 																									"script": "",
 																									"customComponent": false,
@@ -4838,7 +3889,7 @@
 																										{
 																											"attribute": "selectedKey",
 																											"grouping": "Properties",
-																											"value": "{/columnsXL}",
+																											"value": "{/columns}",
 																											"script": "",
 																											"translation": []
 																										}
@@ -5017,64 +4068,11 @@
 																												}
 																											],
 																											"data": []
-																										}
-																									]
-																								},
-																								{
-																									"fieldNo": "ac1fc5fe-666b-4ed6-a8f9-2ede02118661",
-																									"fieldName": "lblsectionColumnsL1",
-																									"fieldParent": "b4b62bbf-df91-4a87-913a-c18488041e31",
-																									"fieldType": "sap.m.Label",
-																									"script": "",
-																									"customComponent": false,
-																									"request": [],
-																									"response": [],
-																									"attributes": [
-																										{
-																											"attribute": "text",
-																											"grouping": "Properties",
-																											"value": "Columns L",
-																											"script": "",
-																											"translation": []
-																										}
-																									],
-																									"data": []
-																								},
-																								{
-																									"fieldNo": "41ea8bba-626f-4f4b-9467-b6f0daea92e9",
-																									"fieldName": "insectionColumnsL1",
-																									"fieldParent": "b4b62bbf-df91-4a87-913a-c18488041e31",
-																									"fieldType": "sap.m.Select",
-																									"script": "",
-																									"customComponent": false,
-																									"request": [],
-																									"response": [],
-																									"attributes": [
-																										{
-																											"attribute": "selectedKey",
-																											"grouping": "Properties",
-																											"value": "{/columnsL}",
-																											"script": "",
-																											"translation": []
-																										}
-																									],
-																									"data": [
-																										{
-																											"fieldNo": "512c34bf-a30b-4cd5-8cd5-68b53c811cb7",
-																											"fieldName": "informPopFormColumnsL",
-																											"fieldParent": "41ea8bba-626f-4f4b-9467-b6f0daea92e9",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [],
-																											"data": []
 																										},
 																										{
-																											"fieldNo": "75f1e0b9-a88c-4720-da7b-181bf0569311",
-																											"fieldName": "informPopFormColumnsL1",
-																											"fieldParent": "41ea8bba-626f-4f4b-9467-b6f0daea92e9",
+																											"fieldNo": "aa08625a-a05a-4771-a613-0fd2eb9d89cd",
+																											"fieldName": "informPopFormCoXLumnsXL13",
+																											"fieldParent": "94f388ee-e284-4038-a3ce-0183e1819f73",
 																											"fieldType": "sap.ui.core.Item",
 																											"script": "",
 																											"customComponent": false,
@@ -5084,14 +4082,14 @@
 																												{
 																													"attribute": "text",
 																													"grouping": "Properties",
-																													"value": "1",
+																													"value": "7",
 																													"script": "",
 																													"translation": []
 																												},
 																												{
 																													"attribute": "key",
 																													"grouping": "Properties",
-																													"value": "1",
+																													"value": "7",
 																													"script": "",
 																													"translation": []
 																												}
@@ -5099,9 +4097,9 @@
 																											"data": []
 																										},
 																										{
-																											"fieldNo": "31896249-b32a-49b5-f3e1-667f67b406ec",
-																											"fieldName": "informPopFormColumnsL2",
-																											"fieldParent": "41ea8bba-626f-4f4b-9467-b6f0daea92e9",
+																											"fieldNo": "eacb7285-70cd-4a38-baf3-ddd2853ffac5",
+																											"fieldName": "informPopFormCoXLumnsXL14",
+																											"fieldParent": "94f388ee-e284-4038-a3ce-0183e1819f73",
 																											"fieldType": "sap.ui.core.Item",
 																											"script": "",
 																											"customComponent": false,
@@ -5111,122 +4109,14 @@
 																												{
 																													"attribute": "text",
 																													"grouping": "Properties",
-																													"value": "2",
+																													"value": "8",
 																													"script": "",
 																													"translation": []
 																												},
 																												{
 																													"attribute": "key",
 																													"grouping": "Properties",
-																													"value": "2",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "7c753047-be84-43b2-e630-bde56d1235a7",
-																											"fieldName": "informPopFormColumnsL3",
-																											"fieldParent": "41ea8bba-626f-4f4b-9467-b6f0daea92e9",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "3",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "3",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "22b2c421-82e5-431c-ed12-dfe94a186cb0",
-																											"fieldName": "informPopFormColumnsL6",
-																											"fieldParent": "41ea8bba-626f-4f4b-9467-b6f0daea92e9",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "4",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "4",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "1ce9ca40-4606-4678-a814-d8296757a432",
-																											"fieldName": "informPopFormColumnsL7",
-																											"fieldParent": "41ea8bba-626f-4f4b-9467-b6f0daea92e9",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "5",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "5",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "9461521b-e28a-4a85-fc4d-e9db40bd4f12",
-																											"fieldName": "informPopFormColumnsL8",
-																											"fieldParent": "41ea8bba-626f-4f4b-9467-b6f0daea92e9",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "6",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "6",
+																													"value": "8",
 																													"script": "",
 																													"translation": []
 																												}
@@ -5236,10 +4126,10 @@
 																									]
 																								},
 																								{
-																									"fieldNo": "0f63c532-a0ff-4016-8515-0fac30149bd5",
-																									"fieldName": "lblsectionColumnsM1",
-																									"fieldParent": "b4b62bbf-df91-4a87-913a-c18488041e31",
-																									"fieldType": "sap.m.Label",
+																									"fieldNo": "3dd344eb-463a-41b1-dcc9-53feb2806789",
+																									"fieldName": "titlesectionSettings",
+																									"fieldParent": "a26afb73-57ed-4ad7-fbc5-6c23ed2066ea",
+																									"fieldType": "sap.ui.core.Title",
 																									"script": "",
 																									"customComponent": false,
 																									"request": [],
@@ -5248,7 +4138,7 @@
 																										{
 																											"attribute": "text",
 																											"grouping": "Properties",
-																											"value": "Columns M",
+																											"value": "Settings",
 																											"script": "",
 																											"translation": []
 																										}
@@ -5256,41 +4146,33 @@
 																									"data": []
 																								},
 																								{
-																									"fieldNo": "7a690b81-0634-4a5a-ba9e-1f3fa9a0f8b6",
-																									"fieldName": "insectionColumnsM1",
-																									"fieldParent": "b4b62bbf-df91-4a87-913a-c18488041e31",
-																									"fieldType": "sap.m.Select",
+																									"fieldNo": "0563eec7-b801-432b-a4fb-80065c0bd5f5",
+																									"fieldName": "lblsectionFormSettings",
+																									"fieldParent": "a26afb73-57ed-4ad7-fbc5-6c23ed2066ea",
+																									"fieldType": "sap.m.Label",
 																									"script": "",
 																									"customComponent": false,
 																									"request": [],
 																									"response": [],
-																									"attributes": [
-																										{
-																											"attribute": "selectedKey",
-																											"grouping": "Properties",
-																											"value": "{/columnsM}",
-																											"script": "",
-																											"translation": []
-																										}
-																									],
+																									"attributes": [],
+																									"data": []
+																								},
+																								{
+																									"fieldNo": "1dc74891-dfea-480e-8b39-ff8b5b53deac",
+																									"fieldName": "boxsectionFormSettings",
+																									"fieldParent": "a26afb73-57ed-4ad7-fbc5-6c23ed2066ea",
+																									"fieldType": "sap.m.VBox",
+																									"script": "",
+																									"customComponent": false,
+																									"request": [],
+																									"response": [],
+																									"attributes": [],
 																									"data": [
 																										{
-																											"fieldNo": "c23e52a6-ac80-4950-a819-7a39b9ff3762",
-																											"fieldName": "informPopFormColumnsM",
-																											"fieldParent": "7a690b81-0634-4a5a-ba9e-1f3fa9a0f8b6",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "495586bf-0c87-433c-a95f-a5f25e6e6148",
-																											"fieldName": "informPopFormColumnsM13",
-																											"fieldParent": "7a690b81-0634-4a5a-ba9e-1f3fa9a0f8b6",
-																											"fieldType": "sap.ui.core.Item",
+																											"fieldNo": "74448c02-9dc7-446e-aa42-46edd77f79a3",
+																											"fieldName": "insectionFormExpandable",
+																											"fieldParent": "1dc74891-dfea-480e-8b39-ff8b5b53deac",
+																											"fieldType": "sap.m.CheckBox",
 																											"script": "",
 																											"customComponent": false,
 																											"request": [],
@@ -5299,14 +4181,14 @@
 																												{
 																													"attribute": "text",
 																													"grouping": "Properties",
-																													"value": "1",
+																													"value": "Expandable",
 																													"script": "",
 																													"translation": []
 																												},
 																												{
-																													"attribute": "key",
+																													"attribute": "selected",
 																													"grouping": "Properties",
-																													"value": "1",
+																													"value": "{/expandable}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -5314,26 +4196,33 @@
 																											"data": []
 																										},
 																										{
-																											"fieldNo": "1164dce7-9161-4fae-894e-7a5b6d7ebd5a",
-																											"fieldName": "informPopFormColumnsM14",
-																											"fieldParent": "7a690b81-0634-4a5a-ba9e-1f3fa9a0f8b6",
-																											"fieldType": "sap.ui.core.Item",
+																											"fieldNo": "bef5ca5a-b4ee-4aa1-d7f9-33cd03a28ed2",
+																											"fieldName": "insectionFormExpanded",
+																											"fieldParent": "1dc74891-dfea-480e-8b39-ff8b5b53deac",
+																											"fieldType": "sap.m.CheckBox",
 																											"script": "",
 																											"customComponent": false,
 																											"request": [],
 																											"response": [],
 																											"attributes": [
 																												{
-																													"attribute": "text",
+																													"attribute": "visible",
 																													"grouping": "Properties",
-																													"value": "2",
+																													"value": "{= ${/expandable} ? true:false }",
 																													"script": "",
 																													"translation": []
 																												},
 																												{
-																													"attribute": "key",
+																													"attribute": "text",
 																													"grouping": "Properties",
-																													"value": "2",
+																													"value": "Expanded",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "selected",
+																													"grouping": "Properties",
+																													"value": "{/expanded}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -5341,10 +4230,10 @@
 																											"data": []
 																										},
 																										{
-																											"fieldNo": "b99287a0-6d74-4740-ca2b-c1e010e9eefb",
-																											"fieldName": "informPopFormColumnsM15",
-																											"fieldParent": "7a690b81-0634-4a5a-ba9e-1f3fa9a0f8b6",
-																											"fieldType": "sap.ui.core.Item",
+																											"fieldNo": "f69b18fd-6048-4005-c677-1102da045313",
+																											"fieldName": "insectionFormCompact",
+																											"fieldParent": "1dc74891-dfea-480e-8b39-ff8b5b53deac",
+																											"fieldType": "sap.m.CheckBox",
 																											"script": "",
 																											"customComponent": false,
 																											"request": [],
@@ -5353,41 +4242,14 @@
 																												{
 																													"attribute": "text",
 																													"grouping": "Properties",
-																													"value": "3",
+																													"value": "Compact Mode",
 																													"script": "",
 																													"translation": []
 																												},
 																												{
-																													"attribute": "key",
+																													"attribute": "selected",
 																													"grouping": "Properties",
-																													"value": "3",
-																													"script": "",
-																													"translation": []
-																												}
-																											],
-																											"data": []
-																										},
-																										{
-																											"fieldNo": "53c9807f-a175-403d-d021-c3a21ffdd7c4",
-																											"fieldName": "informPopFormColumnsM16",
-																											"fieldParent": "7a690b81-0634-4a5a-ba9e-1f3fa9a0f8b6",
-																											"fieldType": "sap.ui.core.Item",
-																											"script": "",
-																											"customComponent": false,
-																											"request": [],
-																											"response": [],
-																											"attributes": [
-																												{
-																													"attribute": "text",
-																													"grouping": "Properties",
-																													"value": "4",
-																													"script": "",
-																													"translation": []
-																												},
-																												{
-																													"attribute": "key",
-																													"grouping": "Properties",
-																													"value": "4",
+																													"value": "{/enableCompact}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -10750,7 +9612,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.1.22.1059",
+	"ver": "23.1.22.1116",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
