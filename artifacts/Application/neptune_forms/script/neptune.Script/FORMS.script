@@ -6,6 +6,8 @@ const FORMS = {
     formParent: null,
     formTitleHide: [],
     editable: true,
+    bindingPath: "",
+    columnTemplate: null,
 
     build: function (parent, options) {
         let formOptions;
@@ -81,35 +83,58 @@ const FORMS = {
         FORMS.formParent.setModel(formModel);
         formModel.refresh(true);
 
-        let sectionForm;
+        let sectionParent;
 
         // Section
         options.config.setup.forEach(function (section, i) {
             switch (section.type) {
                 case "Form":
-                    sectionForm = FORMS.buildParentForm(section);
+                    FORMS.bindingPath = "/";
+                    sectionParent = FORMS.buildParentForm(section);
                     break;
 
-                case "MessageStrip":
-                    FORMS.formParent.addContent(FORMS.buildParentMessageStrip(section));
+                case "Table":
+                    FORMS.bindingPath = "";
+                    sectionParent = FORMS.buildParentTable(section);
                     break;
             }
 
             // Elements
             section.elements.forEach(function (element, i) {
-                FORMS.buildElement(sectionForm, element, section, i);
+                FORMS.buildElement(sectionParent, element, section, i);
             });
+
+            // Post processing
+            switch (section.type) {
+                case "Table":
+                    sectionParent.bindAggregation("items", {
+                        path: "/",
+                        template: FORMS.columnTemplate,
+                        templateShareable: false,
+                    });
+
+                    const tabModel = new sap.ui.model.json.JSONModel();
+                    sectionParent.setModel(tabModel);
+
+                    let modelData = [];
+
+                    if (options.data[section.id]) {
+                        modelData = options.data[section.id];
+                    } else {
+                        let rows = section.rows || 5;
+
+                        for (let i = 0; i < rows; i++) {
+                            modelData.push({});
+                        }
+                    }
+
+                    tabModel.setData(modelData);
+                    break;
+            }
         });
 
         if (parent.addContent) parent.addContent(FORMS.formParent);
         if (parent.addItem) parent.addItem(FORMS.formParent);
-    },
-
-    buildParentMessageStrip: function (section) {
-        return new sap.m.MessageStrip({
-            text: section.title,
-            type: "Information",
-        });
     },
 
     buildParentForm: function (section) {
@@ -119,21 +144,17 @@ const FORMS = {
             expanded: section.expanded,
         });
 
-        sectionPanel.addStyleClass("sapUiSmallMarginBottom");
-
-        sectionForm = new sap.ui.layout.form.SimpleForm({
+        const sectionForm = new sap.ui.layout.form.SimpleForm({
             layout: "ResponsiveGridLayout",
             editable: true,
             labelSpanL: parseInt(section.labelSpan) || 4,
             labelSpanM: parseInt(section.labelSpan) || 4,
             labelSpanS: 12,
             columnsL: parseInt(section.columns) || 2,
-            columnsM: 2,
+            columnsM: parseInt(section.columns) || 2,
         });
 
-        if (section.enableCompact) {
-            sectionForm.addStyleClass("sapUiSizeCompact");
-        }
+        if (section.enableCompact) sectionForm.addStyleClass("sapUiSizeCompact");
 
         sectionPanel.addContent(sectionForm);
 
@@ -142,22 +163,149 @@ const FORMS = {
         return sectionForm;
     },
 
+    buildParentFormChildren: function (parent, element, section, index, elementField) {
+        // Form Title
+        if (element.type === "FormTitle") {
+            parent.addContent(elementField);
+            return;
+        }
+
+        // Label
+        if (element.enableLabel) {
+            const elementLabel = new sap.m.Label({
+                text: element.title,
+                required: element.required,
+                design: "Bold",
+            });
+
+            if (section.labelLeftAlign) elementLabel.addStyleClass("nepLabelLeftAlign");
+
+            parent.addContent(elementLabel);
+        }
+
+        const elementParent = new sap.m.VBox({ width: "100%", wrap: "Wrap" });
+        elementParent.addItem(elementField);
+
+        // Description
+        if (element.enableDescription) {
+            elementParent.addItem(new sap.m.Label({ text: element.description, wrapping: true }));
+        }
+
+        // Duplicate
+        if (element.enableDuplicate) {
+            if (element.isDuplicate) {
+                elementParent.addItem(
+                    new sap.m.Button({
+                        icon: "sap-icon://delete",
+                        type: "Reject",
+                        press: function (oEvent) {
+                            let data = FORMS.getData();
+                            data.completed = false;
+
+                            let parentData = ModelData.FindFirst(
+                                data.config.setup,
+                                "id",
+                                section.id
+                            );
+                            if (parentData) parentData.elements.splice(index, 1);
+
+                            FORMS.build(FORMS.customerParent, data);
+                        },
+                    }).addStyleClass("sapUiSizeCompact")
+                );
+            } else {
+                elementParent.addItem(
+                    new sap.m.Button({
+                        text: element.duplicateButtonText,
+                        type: element.duplicateButtonType,
+                        press: function (oEvent) {
+                            let data = FORMS.getData();
+                            data.completed = false;
+
+                            let newElement = JSON.parse(JSON.stringify(element));
+                            newElement.id = ModelData.genID();
+                            newElement.isDuplicate = true;
+
+                            if (newElement.items) {
+                                newElement.items.forEach(function (item) {
+                                    item.id = ModelData.genID();
+                                });
+                            }
+
+                            let parentData = ModelData.FindFirst(
+                                data.config.setup,
+                                "id",
+                                section.id
+                            );
+                            if (parentData) parentData.elements.splice(index + 1, 0, newElement);
+
+                            FORMS.build(FORMS.customerParent, data);
+                        },
+                    }).addStyleClass("sapUiSizeCompact")
+                );
+            }
+        }
+
+        parent.addContent(elementParent);
+    },
+
+    buildParentTable: function (section) {
+        const sectionPanel = new sap.m.Panel({
+            headerText: section.title,
+            expandable: section.expandable,
+            expanded: section.expanded,
+        });
+
+        const sectionTable = new sap.m.Table(FORMS.buildElementFieldID(section), {
+            showSeparators: sap.m.ListSeparators.None,
+            backgroundDesign: "Transparent",
+            contextualWidth: "Auto",
+            showNoData: false,
+        });
+
+        if (section.enableCompact) sectionTable.addStyleClass("sapUiSizeCompact");
+
+        FORMS.columnTemplate = new sap.m.ColumnListItem();
+
+        if (section.vAlign) FORMS.columnTemplate.setVAlign(section.vAlign);
+
+        sectionPanel.addContent(sectionTable);
+
+        FORMS.formParent.addContent(sectionPanel);
+
+        return sectionTable;
+    },
+
+    buildParentTableChildren: function (parent, element, section, index, elementField) {
+        const newColumn = new sap.m.Column({
+            demandPopin: true,
+            popinDisplay: "Block",
+            minScreenWidth: "Tablet",
+        });
+
+        parent.addColumn(newColumn);
+
+        newColumn.setHeader(
+            new sap.m.Label({
+                text: element.title,
+                required: element.required,
+                design: "Bold",
+            })
+        );
+
+        FORMS.columnTemplate.addCell(elementField);
+    },
+
     buildElement: function (parent, element, section, index) {
         let elementField;
 
-        let addLabel = true;
-        if (!element.enableLabel) addLabel = false;
-
-        const elementLabel = new sap.m.Label({
-            text: element.title,
-            required: element.required,
-            design: "Bold",
-        });
-
         switch (element.type) {
             case "FormTitle":
-                addLabel = false;
                 elementField = FORMS.buildElementFormTitle(element);
+                break;
+
+            case "MessageStrip":
+                elementField = FORMS.buildElementMessageStrip(element);
                 break;
 
             case "TextArea":
@@ -218,57 +366,30 @@ const FORMS = {
 
         if (!elementField) return;
 
-        // Label
-        if (addLabel) parent.addContent(elementLabel);
+        switch (section.type) {
+            case "Form":
+                FORMS.buildParentFormChildren(parent, element, section, index, elementField);
+                break;
 
-        // Form Title
-        if (element.type === "FormTitle") {
-            parent.addContent(elementField);
-            return;
+            case "Table":
+                FORMS.buildParentTableChildren(parent, element, section, index, elementField);
+                break;
+
+            default:
+                break;
         }
-
-        const elementParent = new sap.m.VBox({ width: "100%", wrap: "Wrap" });
-        elementParent.addItem(elementField);
-
-        // Description
-        if (element.enableDescription) {
-            elementParent.addItem(new sap.m.Label({ text: element.description, wrapping: true }));
-        }
-
-        // Duplicate
-        if (element.enableDuplicate) {
-            elementParent.addItem(
-                new sap.m.Button({
-                    text: element.duplicateButtonText,
-                    type: element.duplicateButtonType,
-                    press: function (oEvent) {
-                        let data = FORMS.getData();
-                        data.completed = false;
-
-                        let newElement = JSON.parse(JSON.stringify(element));
-                        newElement.id = ModelData.genID();
-                        newElement.required = false;
-
-                        if (newElement.items) {
-                            newElement.items.forEach(function (item) {
-                                item.id = ModelData.genID();
-                            });
-                        }
-
-                        let parentData = ModelData.FindFirst(data.config.setup, "id", section.id);
-                        if (parentData) parentData.elements.splice(index + 1, 0, newElement);
-
-                        FORMS.build(FORMS.customerParent, data);
-                    },
-                }).addStyleClass("sapUiSizeCompact")
-            );
-        }
-
-        parent.addContent(elementParent);
     },
 
     buildElementFieldID: function (element) {
         return "field" + element.id;
+    },
+
+    buildElementMessageStrip: function (element) {
+        return new sap.m.MessageStrip(FORMS.buildElementFieldID(element), {
+            text: element.messageText,
+            showIcon: element.messageIcon,
+            type: element.messageType || "Information",
+        });
     },
 
     buildElementFormTitle: function (element) {
@@ -285,7 +406,7 @@ const FORMS = {
 
     buildElementInput: function (element) {
         const newField = new sap.m.Input(FORMS.buildElementFieldID(element), {
-            value: "{/" + element.id + "}",
+            value: "{" + FORMS.bindingPath + element.id + "}",
             editable: FORMS.editable,
             placeholder: element.placeholder,
         });
@@ -295,7 +416,7 @@ const FORMS = {
 
     buildElementTextArea: function (element) {
         const newField = new sap.m.TextArea(FORMS.buildElementFieldID(element), {
-            value: "{/" + element.id + "}",
+            value: "{" + FORMS.bindingPath + element.id + "}",
             placeholder: element.placeholder,
             editable: FORMS.editable,
             growing: element.growing,
@@ -309,7 +430,7 @@ const FORMS = {
 
     buildElementStepInput: function (element) {
         const newField = new sap.m.StepInput(FORMS.buildElementFieldID(element), {
-            value: "{/" + element.id + "}",
+            value: "{" + FORMS.bindingPath + element.id + "}",
             placeholder: element.placeholder,
             editable: FORMS.editable,
         });
@@ -322,7 +443,7 @@ const FORMS = {
 
     buildElementSwitch: function (element) {
         const newField = new sap.m.Switch(FORMS.buildElementFieldID(element), {
-            state: "{/" + element.id + "}",
+            state: "{" + FORMS.bindingPath + element.id + "}",
             enabled: FORMS.editable,
             customTextOff: element.customTextOff,
             customTextOn: element.customTextOn,
@@ -337,7 +458,7 @@ const FORMS = {
 
     buildElementCheckBox: function (element) {
         const newField = new sap.m.CheckBox(FORMS.buildElementFieldID(element), {
-            selected: "{/" + element.id + "}",
+            selected: "{" + FORMS.bindingPath + element.id + "}",
             editable: FORMS.editable,
             text: element.text,
         });
@@ -347,7 +468,7 @@ const FORMS = {
 
     buildElementSingleSelect: function (element) {
         const newField = new sap.m.ComboBox(FORMS.buildElementFieldID(element), {
-            selectedKey: "{/" + element.id + "}",
+            selectedKey: "{" + FORMS.bindingPath + element.id + "}",
             width: "100%",
             editable: FORMS.editable,
         });
@@ -406,7 +527,7 @@ const FORMS = {
 
     buildElementMultipleSelect: function (element) {
         const newField = new sap.m.MultiComboBox(FORMS.buildElementFieldID(element), {
-            selectedKeys: "{/" + element.id + "}",
+            selectedKeys: "{" + FORMS.bindingPath + element.id + "}",
             width: "100%",
             editable: FORMS.editable,
         });
@@ -469,7 +590,7 @@ const FORMS = {
 
     buildElementDatePicker: function (element) {
         const newField = new sap.m.DatePicker(FORMS.buildElementFieldID(element), {
-            value: "{/" + element.id + "}",
+            value: "{" + FORMS.bindingPath + element.id + "}",
             editable: FORMS.editable,
         });
 
@@ -493,7 +614,7 @@ const FORMS = {
 
         const elementImage = new sap.m.Image({
             height: "200px",
-            src: "{/" + element.id + "}",
+            src: "{" + FORMS.bindingPath + element.id + "}",
         });
 
         newField.addItem(elementUploader);
@@ -504,7 +625,7 @@ const FORMS = {
 
     buildElementDateTimePicker: function (element) {
         const newField = new sap.m.DateTimePicker(FORMS.buildElementFieldID(element), {
-            value: "{/" + element.id + "}",
+            value: "{" + FORMS.bindingPath + element.id + "}",
             editable: FORMS.editable,
         });
 
@@ -515,6 +636,7 @@ const FORMS = {
         const tabCheckList = new sap.m.Table({
             showSeparators: sap.m.ListSeparators.None,
             backgroundDesign: "Transparent",
+            contextualWidth: "Auto",
         });
 
         // Columns
@@ -602,24 +724,33 @@ const FORMS = {
         const outputData = {};
 
         FORMS.config.setup.forEach(function (section) {
+            if (section.type === "Table") {
+                const tabObject = sap.ui.getCore().byId("field" + section.id);
+                const tabModel = tabObject.getModel();
+                if (tabModel) {
+                    outputData[section.id] = tabModel.oData;
+                }
+                return;
+            }
+
             section.elements.forEach(function (element) {
                 if (formModel.oData[element.id]) {
-                    if (element.fieldName) {
-                        outputData[element.fieldName] = formModel.oData[element.id]; // TODO - Should we use fieldNames here ?
-                    } else {
-                        outputData[element.id] = formModel.oData[element.id];
-                    }
+                    // if (element.fieldName) {
+                    //     outputData[element.fieldName] = formModel.oData[element.id]; // TODO - Need in/out handling for fieldnames
+                    // } else {
+                    outputData[element.id] = formModel.oData[element.id];
+                    // }
                 }
 
                 // CheckList
                 if (element.type === "CheckList") {
                     element.items.forEach(function (item) {
                         if (formModel.oData[item.id]) {
-                            if (item.fieldName) {
-                                outputData[item.fieldName] = formModel.oData[item.id]; // TODO - Should we use fieldNames here ?
-                            } else {
-                                outputData[item.id] = formModel.oData[item.id];
-                            }
+                            // if (item.fieldName) {
+                            //     outputData[item.fieldName] = formModel.oData[item.id]; // TODO - Need in/out handling for fieldnames
+                            // } else {
+                            outputData[item.id] = formModel.oData[item.id];
+                            // }
                         }
                     });
                 }

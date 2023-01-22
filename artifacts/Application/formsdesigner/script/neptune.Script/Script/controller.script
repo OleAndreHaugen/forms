@@ -5,12 +5,7 @@ const controller = {
 
     elementTypes: [
         { icon: "sap-icon://form", text: "Form", type: "Form", parent: true },
-        // {
-        //     icon: "sap-icon://message-information",
-        //     text: "Message Strip",
-        //     type: "MessageStrip",
-        //     parent: true,
-        // },
+        { icon: "sap-icon://table-view", text: "Table", type: "Table", parent: true },
         { icon: "sap-icon://header", text: "Form Title", type: "FormTitle", parent: false },
         { icon: "sap-icon://calendar", text: "Date Picker", type: "DatePicker", parent: false },
         {
@@ -26,9 +21,14 @@ const controller = {
             parent: false,
         },
         { icon: "sap-icon://checklist", text: "Check List", type: "CheckList", parent: false },
-        { icon: "sap-icon://document-text", text: "Text Area", type: "TextArea", parent: false },
         { icon: "sap-icon://request", text: "Input", type: "Input", parent: false },
         { icon: "sap-icon://fa-solid/image", text: "Image", type: "Image", parent: false },
+        {
+            icon: "sap-icon://message-information",
+            text: "Message Strip",
+            type: "MessageStrip",
+            parent: false,
+        },
         { icon: "sap-icon://number-sign", text: "Step Input", type: "StepInput", parent: false },
         { icon: "sap-icon://switch-views", text: "Switch", type: "Switch", parent: false },
         {
@@ -55,6 +55,7 @@ const controller = {
             type: "MultipleChoice",
             parent: false,
         },
+        { icon: "sap-icon://document-text", text: "Text Area", type: "TextArea", parent: false },
     ],
 
     init: function () {
@@ -90,13 +91,24 @@ const controller = {
         };
 
         // ClickToPreview
-        panPreview.attachBrowserEvent("click", function (e) {
-            let target = e.target.id.split("--")[0];
-            if (target) {
-                target = target.split("field")[1];
-                if (target.substring) controller.selectObjectFromId(target.substring(0, 36));
-            }
-        });
+        // panPreview.attachBrowserEvent("click", function (e) {
+        //     let target;
+
+        //     if (e.target.id.indexOf("field") > -1) {
+        //         target = e.target.id.split("--")[0];
+        //     } else if (e.target.parentElement.id.indexOf("field") > -1) {
+        //         target = e.target.parentElement.id.split("--")[0];
+        //     } else if (e.target.parentElement.parentElement.id.indexOf("field") > -1) {
+        //         target = e.target.parentElement.parentElement.id.split("--")[0];
+        //     }
+
+        //     if (target) {
+        //         target = target.split("field")[1];
+        //         if (target && target.substring) {
+        //             controller.selectObjectFromId(target.substring(0, 36));
+        //         }
+        //     }
+        // });
 
         var binding = new sap.ui.model.Binding(
             modelpanTopProperties,
@@ -276,9 +288,11 @@ const controller = {
         };
 
         switch (elementData.type) {
-            case "MessageStrip":
+            // Parents
+            case "Table":
                 newElement.option = "P";
                 newElement.elements = [];
+                newElement.rows = 5;
                 break;
 
             case "Form":
@@ -287,6 +301,13 @@ const controller = {
                 newElement.option = "P";
                 newElement.elements = [];
                 newElement.layout = "ResponsiveGridLayout";
+                break;
+
+            // Elements
+            case "MessageStrip":
+                newElement.messageText = "";
+                newElement.messageType = "Information";
+                newElement.messageIcon = false;
                 break;
 
             case "Image":
@@ -363,10 +384,9 @@ const controller = {
             modeloPageDetail.oData.setup.push(newElement);
         } else {
             let currentObject =
-                controller.currentObject.type === "Form"
+                controller.currentObject.option === "P"
                     ? controller.currentObject
                     : controller.getParentFromId(controller.currentObject.id);
-
             if (controller.currentIndex) {
                 currentObject.elements.splice(controller.currentIndex, 0, newElement);
             } else {

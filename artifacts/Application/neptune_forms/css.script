@@ -13,3 +13,10 @@
 .notValid {
     border-left: 4px solid #f53232;
 }
+
+.sapUiRespGridMedia-Std-Phone.sapUiFormResGridCont>.sapUiFormElementLbl:not(.sapUiRespGridSpanS12)>.nepLabelLeftAlign,
+.sapUiRespGridMedia-Std-Tablet.sapUiFormResGridCont>.sapUiFormElementLbl:not(.sapUiRespGridSpanM12)>.nepLabelLeftAlign,
+.sapUiRespGridMedia-Std-Desktop.sapUiFormResGridCont>.sapUiFormElementLbl:not(.sapUiRespGridSpanL12)>.nepLabelLeftAlign,
+.sapUiRespGridMedia-Std-LargeDesktop.sapUiFormResGridCont>.sapUiFormElementLbl:not(.sapUiRespGridSpanXL12)>.nepLabelLeftAlign {
+    text-align: left !important;
+}
