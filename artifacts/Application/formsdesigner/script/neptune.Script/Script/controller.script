@@ -91,24 +91,24 @@ const controller = {
         };
 
         // ClickToPreview
-        // panPreview.attachBrowserEvent("click", function (e) {
-        //     let target;
+        panPreview.attachBrowserEvent("click", function (e) {
+            let target;
 
-        //     if (e.target.id.indexOf("field") > -1) {
-        //         target = e.target.id.split("--")[0];
-        //     } else if (e.target.parentElement.id.indexOf("field") > -1) {
-        //         target = e.target.parentElement.id.split("--")[0];
-        //     } else if (e.target.parentElement.parentElement.id.indexOf("field") > -1) {
-        //         target = e.target.parentElement.parentElement.id.split("--")[0];
-        //     }
+            if (e.target.id.indexOf("field") > -1) {
+                target = e.target.id.split("--")[0];
+            } else if (e.target.parentElement.id.indexOf("field") > -1) {
+                target = e.target.parentElement.id.split("--")[0];
+            } else if (e.target.parentElement.parentElement.id.indexOf("field") > -1) {
+                target = e.target.parentElement.parentElement.id.split("--")[0];
+            }
 
-        //     if (target) {
-        //         target = target.split("field")[1];
-        //         if (target && target.substring) {
-        //             controller.selectObjectFromId(target.substring(0, 36));
-        //         }
-        //     }
-        // });
+            if (target) {
+                target = target.split("field")[1];
+                if (target && target.substring) {
+                    controller.selectObjectFromId(target.substring(0, 36));
+                }
+            }
+        });
 
         var binding = new sap.ui.model.Binding(
             modelpanTopProperties,
@@ -278,6 +278,7 @@ const controller = {
             enablePlaceholder: false,
             enableDuplicate: false,
             enableLabel: true,
+            disabled: false,
             duplicateButtonText: "Add",
             duplicateButtonType: "Transparent",
             placeholder: "",

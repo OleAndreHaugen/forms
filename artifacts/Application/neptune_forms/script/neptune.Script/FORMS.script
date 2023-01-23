@@ -87,6 +87,9 @@ const FORMS = {
 
         // Section
         options.config.setup.forEach(function (section, i) {
+
+            if (section.disabled) return;
+
             switch (section.type) {
                 case "Form":
                     FORMS.bindingPath = "/";
@@ -297,6 +300,8 @@ const FORMS = {
 
     buildElement: function (parent, element, section, index) {
         let elementField;
+
+        if (element.disabled) return;
 
         switch (element.type) {
             case "FormTitle":

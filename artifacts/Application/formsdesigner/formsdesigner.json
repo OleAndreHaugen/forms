@@ -2753,6 +2753,58 @@
 																			"data": []
 																		},
 																		{
+																			"fieldNo": "d5bb9892-f9ec-4c35-c0a0-587ef3d2f1e8",
+																			"fieldName": "elementToolbarDisabledLabel",
+																			"fieldParent": "baecf3dc-f617-4da5-f73f-f9f31c560845",
+																			"fieldType": "sap.m.Label",
+																			"script": "",
+																			"customComponent": false,
+																			"request": [],
+																			"response": [],
+																			"attributes": [
+																				{
+																					"attribute": "text",
+																					"grouping": "Properties",
+																					"value": "Disabled",
+																					"script": "",
+																					"translation": []
+																				}
+																			],
+																			"data": []
+																		},
+																		{
+																			"fieldNo": "54a5580b-437a-463f-de48-9f218e073145",
+																			"fieldName": "elementToolbarDisabled",
+																			"fieldParent": "baecf3dc-f617-4da5-f73f-f9f31c560845",
+																			"fieldType": "sap.m.CheckBox",
+																			"script": "",
+																			"customComponent": false,
+																			"request": [],
+																			"response": [],
+																			"attributes": [
+																				{
+																					"attribute": "selected",
+																					"grouping": "Properties",
+																					"value": "{/disabled}",
+																					"script": "",
+																					"translation": []
+																				}
+																			],
+																			"data": []
+																		},
+																		{
+																			"fieldNo": "f30cebbd-13cc-450d-a039-52ee25633d76",
+																			"fieldName": "elementToolbarSep2",
+																			"fieldParent": "baecf3dc-f617-4da5-f73f-f9f31c560845",
+																			"fieldType": "sap.m.ToolbarSeparator",
+																			"script": "",
+																			"customComponent": false,
+																			"request": [],
+																			"response": [],
+																			"attributes": [],
+																			"data": []
+																		},
+																		{
 																			"fieldNo": "6157413f-0ac8-4158-d0cb-59d1b4de4fa4",
 																			"fieldName": "elementToolbarDelete",
 																			"fieldParent": "baecf3dc-f617-4da5-f73f-f9f31c560845",
@@ -10371,7 +10423,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.1.22.2125",
+	"ver": "23.1.23.1413",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
