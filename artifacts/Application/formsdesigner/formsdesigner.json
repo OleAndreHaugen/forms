@@ -1441,13 +1441,6 @@
 											"response": [],
 											"attributes": [
 												{
-													"attribute": "visible",
-													"grouping": "Properties",
-													"value": "{= ${/id} && ${appControl>/enableEdit}}",
-													"script": "",
-													"translation": []
-												},
-												{
 													"attribute": "type",
 													"grouping": "Properties",
 													"value": "Reject",
@@ -1473,6 +1466,47 @@
 													"grouping": "Events",
 													"value": "controller.delete();",
 													"script": "controller.delete();",
+													"translation": []
+												}
+											],
+											"data": []
+										},
+										{
+											"fieldNo": "113e5fa8-96f5-420c-a7fa-4193c469ea9a",
+											"fieldName": "butDetailCopy",
+											"fieldParent": "ad225645-b1d6-454e-bfbb-df715f38e363",
+											"fieldType": "sap.m.Button",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "type",
+													"grouping": "Properties",
+													"value": "Transparent",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "text",
+													"grouping": "Properties",
+													"value": "Copy",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "enableCompactMode",
+													"grouping": "Properties",
+													"value": "true",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "press",
+													"grouping": "Events",
+													"value": "controller.copy();",
+													"script": "controller.copy();",
 													"translation": []
 												}
 											],
@@ -3013,9 +3047,9 @@
 																			"response": [],
 																			"attributes": [
 																				{
-																					"attribute": "text",
+																					"attribute": "icon",
 																					"grouping": "Properties",
-																					"value": "Copy",
+																					"value": "sap-icon://fa-regular/copy",
 																					"script": "",
 																					"translation": []
 																				},
@@ -3066,16 +3100,9 @@
 																			"response": [],
 																			"attributes": [
 																				{
-																					"attribute": "type",
+																					"attribute": "icon",
 																					"grouping": "Properties",
-																					"value": "Reject",
-																					"script": "",
-																					"translation": []
-																				},
-																				{
-																					"attribute": "text",
-																					"grouping": "Properties",
-																					"value": "Delete",
+																					"value": "sap-icon://delete",
 																					"script": "",
 																					"translation": []
 																				},
@@ -3194,6 +3221,13 @@
 																			"response": [],
 																			"attributes": [
 																				{
+																					"attribute": "styleClassPadding",
+																					"grouping": "Properties",
+																					"value": "sapUiNoContentPadding",
+																					"script": "",
+																					"translation": []
+																				},
+																				{
 																					"attribute": "styleClass",
 																					"grouping": "Properties",
 																					"value": "formBorder",
@@ -3311,10 +3345,10 @@
 																							"data": []
 																						},
 																						{
-																							"fieldNo": "65903e85-3b62-4ef2-8934-f509760a6a09",
+																							"fieldNo": "dc8b975a-931a-4a8c-b4af-baa83f5394ee",
 																							"fieldName": "inElementFormTitle",
 																							"fieldParent": "6ee1a5c2-bf4b-4291-fe8f-c97dbc149763",
-																							"fieldType": "sap.m.Input",
+																							"fieldType": "sap.m.TextArea",
 																							"script": "",
 																							"customComponent": false,
 																							"request": [],
@@ -3324,6 +3358,20 @@
 																									"attribute": "value",
 																									"grouping": "Properties",
 																									"value": "{/title}",
+																									"script": "",
+																									"translation": []
+																								},
+																								{
+																									"attribute": "rows",
+																									"grouping": "Properties",
+																									"value": "1",
+																									"script": "",
+																									"translation": []
+																								},
+																								{
+																									"attribute": "growing",
+																									"grouping": "Properties",
+																									"value": "true",
 																									"script": "",
 																									"translation": []
 																								},
@@ -3358,10 +3406,10 @@
 																							"data": []
 																						},
 																						{
-																							"fieldNo": "d652436e-69e5-4883-bdc3-8b12a81dde3a",
+																							"fieldNo": "f0ffea03-4dc2-4ca6-c5b2-d58693b8bc82",
 																							"fieldName": "inElementFormDescription",
 																							"fieldParent": "6ee1a5c2-bf4b-4291-fe8f-c97dbc149763",
-																							"fieldType": "sap.m.Input",
+																							"fieldType": "sap.m.TextArea",
 																							"script": "",
 																							"customComponent": false,
 																							"request": [],
@@ -3378,6 +3426,20 @@
 																									"attribute": "value",
 																									"grouping": "Properties",
 																									"value": "{/description}",
+																									"script": "",
+																									"translation": []
+																								},
+																								{
+																									"attribute": "rows",
+																									"grouping": "Properties",
+																									"value": "1",
+																									"script": "",
+																									"translation": []
+																								},
+																								{
+																									"attribute": "growing",
+																									"grouping": "Properties",
+																									"value": "true",
 																									"script": "",
 																									"translation": []
 																								},
@@ -3412,10 +3474,10 @@
 																							"data": []
 																						},
 																						{
-																							"fieldNo": "ce28371f-9339-4b52-aebb-96a7e6e27d68",
+																							"fieldNo": "0b5d50c9-3012-4060-c481-40d487a6a566",
 																							"fieldName": "inElementFormPlaceholder",
 																							"fieldParent": "6ee1a5c2-bf4b-4291-fe8f-c97dbc149763",
-																							"fieldType": "sap.m.Input",
+																							"fieldType": "sap.m.TextArea",
 																							"script": "",
 																							"customComponent": false,
 																							"request": [],
@@ -3432,6 +3494,20 @@
 																									"attribute": "value",
 																									"grouping": "Properties",
 																									"value": "{/placeholder}",
+																									"script": "",
+																									"translation": []
+																								},
+																								{
+																									"attribute": "rows",
+																									"grouping": "Properties",
+																									"value": "1",
+																									"script": "",
+																									"translation": []
+																								},
+																								{
+																									"attribute": "growing",
+																									"grouping": "Properties",
+																									"value": "true",
 																									"script": "",
 																									"translation": []
 																								},
@@ -11847,7 +11923,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.1.24.151",
+	"ver": "23.1.24.173",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",

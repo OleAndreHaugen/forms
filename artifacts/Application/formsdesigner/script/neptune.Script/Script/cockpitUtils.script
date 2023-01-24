@@ -49,6 +49,12 @@ const cockpitUtils = {
         modelappControl.oData.enableEdit = editable;
         modelappControl.refresh();
 
+        if (modeloPageDetail.oData.id && editable) {
+            butDetailDelete.setVisible(true);
+        } else {
+            butDetailDelete.setVisible(false);
+        }
+
         // Cockpit Action
         sap.n.Planet9.setToolbarButton(editable);
         sap.n.Planet9.requiredFieldsClear(cockpitUtils.requiredFields);
@@ -59,6 +65,7 @@ const cockpitUtils = {
 
         butDetailSetEdit.setVisible(false);
         butDetailSetDisplay.setVisible(false);
+        butDetailDelete.setVisible(false);
 
         modelappControl.oData.enableEdit = true;
         modelappControl.refresh();

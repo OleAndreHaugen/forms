@@ -214,6 +214,20 @@ const controller = {
         }
     },
 
+    copy: function () {
+        // Copy Object
+        delete modeloPageDetail.oData.id;
+        delete modeloPageDetail.oData.updatedAt;
+        delete modeloPageDetail.oData.updatedBy;
+        delete modeloPageDetail.oData.createdBy;
+        delete modeloPageDetail.oData.createdAt;
+
+        modeloPageDetail.oData.name = modeloPageDetail.oData.name + " - Copy";
+        modeloPageDetail.refresh(true);
+        
+        cockpitUtils.toggleCreate();
+    },
+
     setElementsFilter: function (type) {
         if (type === "Parent") {
             listElementTypes
