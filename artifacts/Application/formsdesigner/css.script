@@ -23,6 +23,11 @@
     font-size: 1.2rem;
 }
 
+.formDnDIcon.sapUiIcon {
+    color: var(--nepInformationColor);
+    margin-top: 6px;
+}
+
 .formPreview {
     border: 6px dashed var(--nepBorderColor);
 }

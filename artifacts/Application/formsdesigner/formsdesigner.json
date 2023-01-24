@@ -1294,6 +1294,81 @@
 									],
 									"data": [
 										{
+											"fieldNo": "d38d75c7-f44a-4a64-9136-aac9a795ac51",
+											"fieldName": "butDetailSetEdit",
+											"fieldParent": "ad225645-b1d6-454e-bfbb-df715f38e363",
+											"fieldType": "sap.m.Button",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "type",
+													"grouping": "Properties",
+													"value": "Transparent",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "enableCompactMode",
+													"grouping": "Properties",
+													"value": "true",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "press",
+													"grouping": "Events",
+													"value": "cockpitUtils.lock();",
+													"script": "cockpitUtils.lock();",
+													"translation": []
+												}
+											],
+											"data": []
+										},
+										{
+											"fieldNo": "41ac17ee-1d33-4211-acbf-9f8022a97199",
+											"fieldName": "butDetailSetDisplay",
+											"fieldParent": "ad225645-b1d6-454e-bfbb-df715f38e363",
+											"fieldType": "sap.m.Button",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "visible",
+													"grouping": "Properties",
+													"value": "false",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "type",
+													"grouping": "Properties",
+													"value": "Transparent",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "enableCompactMode",
+													"grouping": "Properties",
+													"value": "true",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "press",
+													"grouping": "Events",
+													"value": "cockpitUtils.unlock();",
+													"script": "cockpitUtils.unlock();",
+													"translation": []
+												}
+											],
+											"data": []
+										},
+										{
 											"fieldNo": "66fa9415-1c5d-44d8-9071-872eb4ccbdcb",
 											"fieldName": "butDetailSave",
 											"fieldParent": "ad225645-b1d6-454e-bfbb-df715f38e363",
@@ -1303,6 +1378,13 @@
 											"request": [],
 											"response": [],
 											"attributes": [
+												{
+													"attribute": "visible",
+													"grouping": "Properties",
+													"value": "{appControl>/enableEdit}",
+													"script": "",
+													"translation": []
+												},
 												{
 													"attribute": "type",
 													"grouping": "Properties",
@@ -1345,6 +1427,13 @@
 											"response": [],
 											"attributes": [
 												{
+													"attribute": "visible",
+													"grouping": "Properties",
+													"value": "{= ${/id} && ${appControl>/enableEdit}}",
+													"script": "",
+													"translation": []
+												},
+												{
 													"attribute": "type",
 													"grouping": "Properties",
 													"value": "Reject",
@@ -1355,13 +1444,6 @@
 													"attribute": "text",
 													"grouping": "Properties",
 													"value": "Delete",
-													"script": "",
-													"translation": []
-												},
-												{
-													"attribute": "enabled",
-													"grouping": "Properties",
-													"value": "{= ${/id} ? true:false }",
 													"script": "",
 													"translation": []
 												},
@@ -1530,13 +1612,6 @@
 													"response": [],
 													"attributes": [
 														{
-															"attribute": "styleClassMargin",
-															"grouping": "Properties",
-															"value": "sapUiMediumMarginTop",
-															"script": "",
-															"translation": []
-														},
-														{
 															"attribute": "styleClass",
 															"grouping": "Properties",
 															"value": "nepFormInput",
@@ -1675,7 +1750,7 @@
 																},
 																{
 																	"fieldNo": "35bda43d-9527-4c0f-9c34-ef1fc4b7769e",
-																	"fieldName": "lblformDetailNAME",
+																	"fieldName": "lblformDetailName",
 																	"fieldParent": "9b86fdae-9d11-4b21-bfa9-dce8c526729c",
 																	"fieldType": "sap.m.Label",
 																	"script": "",
@@ -1702,7 +1777,7 @@
 																},
 																{
 																	"fieldNo": "232eda92-0b8c-47c9-f6b9-f5e7f699d1e8",
-																	"fieldName": "informDetailNAME",
+																	"fieldName": "informDetailName",
 																	"fieldParent": "9b86fdae-9d11-4b21-bfa9-dce8c526729c",
 																	"fieldType": "sap.m.Input",
 																	"script": "",
@@ -1720,7 +1795,7 @@
 																		{
 																			"attribute": "editable",
 																			"grouping": "Properties",
-																			"value": "{AppControl>/edit}",
+																			"value": "{appControl>/enableEdit}",
 																			"script": "",
 																			"translation": []
 																		}
@@ -1729,7 +1804,7 @@
 																},
 																{
 																	"fieldNo": "4d32a573-5866-4f0a-df56-f38e12d6afa7",
-																	"fieldName": "lblformDetailDESCRIPTION",
+																	"fieldName": "lblformDetailDescription",
 																	"fieldParent": "9b86fdae-9d11-4b21-bfa9-dce8c526729c",
 																	"fieldType": "sap.m.Label",
 																	"script": "",
@@ -1749,7 +1824,7 @@
 																},
 																{
 																	"fieldNo": "d9b7b850-4c72-41dd-f709-f440c5447dd3",
-																	"fieldName": "informDetailDESCRIPTION",
+																	"fieldName": "informDetailDescription",
 																	"fieldParent": "9b86fdae-9d11-4b21-bfa9-dce8c526729c",
 																	"fieldType": "sap.m.Input",
 																	"script": "",
@@ -1767,7 +1842,7 @@
 																		{
 																			"attribute": "editable",
 																			"grouping": "Properties",
-																			"value": "{AppControl>/edit}",
+																			"value": "{appControl>/enableEdit}",
 																			"script": "",
 																			"translation": []
 																		}
@@ -1809,6 +1884,13 @@
 																			"value": "{/released}",
 																			"script": "",
 																			"translation": []
+																		},
+																		{
+																			"attribute": "editable",
+																			"grouping": "Properties",
+																			"value": "{appControl>/enableEdit}",
+																			"script": "",
+																			"translation": []
 																		}
 																	],
 																	"data": []
@@ -1842,7 +1924,7 @@
 																},
 																{
 																	"fieldNo": "1ade6fa5-4ca6-478a-e45d-6474a7f258b8",
-																	"fieldName": "lblformDetailUPDDAT",
+																	"fieldName": "lblformDetailUpdated",
 																	"fieldParent": "9b86fdae-9d11-4b21-bfa9-dce8c526729c",
 																	"fieldType": "sap.m.Label",
 																	"script": "",
@@ -1862,7 +1944,7 @@
 																},
 																{
 																	"fieldNo": "fc52abbd-d94d-45bb-fa0b-824c29793b47",
-																	"fieldName": "informDetailUPDDAT",
+																	"fieldName": "informDetailUpdatedAt",
 																	"fieldParent": "9b86fdae-9d11-4b21-bfa9-dce8c526729c",
 																	"fieldType": "sap.m.Input",
 																	"script": "",
@@ -1896,7 +1978,7 @@
 																},
 																{
 																	"fieldNo": "5e501e3c-d116-4c58-8742-6b7cd5b41605",
-																	"fieldName": "informDetailUPDNAM",
+																	"fieldName": "informDetailUpdatedBy",
 																	"fieldParent": "9b86fdae-9d11-4b21-bfa9-dce8c526729c",
 																	"fieldType": "sap.m.Input",
 																	"script": "",
@@ -1923,7 +2005,7 @@
 																},
 																{
 																	"fieldNo": "52db8fca-6735-4477-cef1-aa547060d5b8",
-																	"fieldName": "lblformDetailCREDAT",
+																	"fieldName": "lblformDetailCreated",
 																	"fieldParent": "9b86fdae-9d11-4b21-bfa9-dce8c526729c",
 																	"fieldType": "sap.m.Label",
 																	"script": "",
@@ -1943,7 +2025,7 @@
 																},
 																{
 																	"fieldNo": "9c6f2677-23e1-4a39-82b1-9a6347e1bc01",
-																	"fieldName": "informDetailCREDAT",
+																	"fieldName": "informDetailCreatedAt",
 																	"fieldParent": "9b86fdae-9d11-4b21-bfa9-dce8c526729c",
 																	"fieldType": "sap.m.Input",
 																	"script": "",
@@ -1977,7 +2059,7 @@
 																},
 																{
 																	"fieldNo": "10202d35-dce5-40fa-ce00-05a514cf962f",
-																	"fieldName": "informDetailCRENAM",
+																	"fieldName": "informDetailCreatedBy",
 																	"fieldParent": "9b86fdae-9d11-4b21-bfa9-dce8c526729c",
 																	"fieldType": "sap.m.Input",
 																	"script": "",
@@ -2040,13 +2122,6 @@
 											"response": [],
 											"attributes": [
 												{
-													"attribute": "styleClass",
-													"grouping": "Properties",
-													"value": "nepPageLeft nepPageRight",
-													"script": "",
-													"translation": []
-												},
-												{
 													"attribute": "renderType",
 													"grouping": "Properties",
 													"value": "Bare",
@@ -2094,7 +2169,7 @@
 																{
 																	"attribute": "styleClass",
 																	"grouping": "Properties",
-																	"value": "nepContentPanel nepContentPanelFull",
+																	"value": "nepNoBorderAll",
 																	"script": "",
 																	"translation": []
 																},
@@ -2235,6 +2310,13 @@
 																					"attribute": "icon",
 																					"grouping": "Properties",
 																					"value": "sap-icon://add",
+																					"script": "",
+																					"translation": []
+																				},
+																				{
+																					"attribute": "enabled",
+																					"grouping": "Properties",
+																					"value": "{appControl>/enableEdit}",
 																					"script": "",
 																					"translation": []
 																				},
@@ -2534,7 +2616,7 @@
 																{
 																	"attribute": "styleClass",
 																	"grouping": "Properties",
-																	"value": "nepContentPanel nepContentPanelFull nepNoScroll panProperties",
+																	"value": "panProperties nepNoBorderAll",
 																	"script": "",
 																	"translation": []
 																},
@@ -2717,9 +2799,16 @@
 																			"response": [],
 																			"attributes": [
 																				{
-																					"attribute": "icon",
+																					"attribute": "text",
 																					"grouping": "Properties",
-																					"value": "sap-icon://fa-regular/copy",
+																					"value": "Copy",
+																					"script": "",
+																					"translation": []
+																				},
+																				{
+																					"attribute": "enabled",
+																					"grouping": "Properties",
+																					"value": "{appControl>/enableEdit}",
 																					"script": "",
 																					"translation": []
 																				},
@@ -2735,6 +2824,66 @@
 																					"grouping": "Events",
 																					"value": "Anonymous Function",
 																					"script": "file://event/sap.m.Button/elementToolbarCopy/press.script",
+																					"translation": []
+																				}
+																			],
+																			"data": []
+																		},
+																		{
+																			"fieldNo": "f30cebbd-13cc-450d-a039-52ee25633d76",
+																			"fieldName": "elementToolbarSep2",
+																			"fieldParent": "baecf3dc-f617-4da5-f73f-f9f31c560845",
+																			"fieldType": "sap.m.ToolbarSeparator",
+																			"script": "",
+																			"customComponent": false,
+																			"request": [],
+																			"response": [],
+																			"attributes": [],
+																			"data": []
+																		},
+																		{
+																			"fieldNo": "6157413f-0ac8-4158-d0cb-59d1b4de4fa4",
+																			"fieldName": "elementToolbarDelete",
+																			"fieldParent": "baecf3dc-f617-4da5-f73f-f9f31c560845",
+																			"fieldType": "sap.m.Button",
+																			"script": "",
+																			"customComponent": false,
+																			"request": [],
+																			"response": [],
+																			"attributes": [
+																				{
+																					"attribute": "type",
+																					"grouping": "Properties",
+																					"value": "Reject",
+																					"script": "",
+																					"translation": []
+																				},
+																				{
+																					"attribute": "text",
+																					"grouping": "Properties",
+																					"value": "Delete",
+																					"script": "",
+																					"translation": []
+																				},
+																				{
+																					"attribute": "enabled",
+																					"grouping": "Properties",
+																					"value": "{appControl>/enableEdit}",
+																					"script": "",
+																					"translation": []
+																				},
+																				{
+																					"attribute": "enableCompactMode",
+																					"grouping": "Properties",
+																					"value": "true",
+																					"script": "",
+																					"translation": []
+																				},
+																				{
+																					"attribute": "press",
+																					"grouping": "Events",
+																					"value": "Anonymous Function",
+																					"script": "file://event/sap.m.Button/elementToolbarDelete/press.script",
 																					"translation": []
 																				}
 																			],
@@ -2788,58 +2937,12 @@
 																					"value": "{/disabled}",
 																					"script": "",
 																					"translation": []
-																				}
-																			],
-																			"data": []
-																		},
-																		{
-																			"fieldNo": "f30cebbd-13cc-450d-a039-52ee25633d76",
-																			"fieldName": "elementToolbarSep2",
-																			"fieldParent": "baecf3dc-f617-4da5-f73f-f9f31c560845",
-																			"fieldType": "sap.m.ToolbarSeparator",
-																			"script": "",
-																			"customComponent": false,
-																			"request": [],
-																			"response": [],
-																			"attributes": [],
-																			"data": []
-																		},
-																		{
-																			"fieldNo": "6157413f-0ac8-4158-d0cb-59d1b4de4fa4",
-																			"fieldName": "elementToolbarDelete",
-																			"fieldParent": "baecf3dc-f617-4da5-f73f-f9f31c560845",
-																			"fieldType": "sap.m.Button",
-																			"script": "",
-																			"customComponent": false,
-																			"request": [],
-																			"response": [],
-																			"attributes": [
-																				{
-																					"attribute": "type",
-																					"grouping": "Properties",
-																					"value": "Reject",
-																					"script": "",
-																					"translation": []
 																				},
 																				{
-																					"attribute": "icon",
+																					"attribute": "editable",
 																					"grouping": "Properties",
-																					"value": "sap-icon://delete",
+																					"value": "{appControl>/enableEdit}",
 																					"script": "",
-																					"translation": []
-																				},
-																				{
-																					"attribute": "enableCompactMode",
-																					"grouping": "Properties",
-																					"value": "true",
-																					"script": "",
-																					"translation": []
-																				},
-																				{
-																					"attribute": "press",
-																					"grouping": "Events",
-																					"value": "Anonymous Function",
-																					"script": "file://event/sap.m.Button/elementToolbarDelete/press.script",
 																					"translation": []
 																				}
 																			],
@@ -3009,6 +3112,13 @@
 																									"value": "{/title}",
 																									"script": "",
 																									"translation": []
+																								},
+																								{
+																									"attribute": "editable",
+																									"grouping": "Properties",
+																									"value": "{appControl>/enableEdit}",
+																									"script": "",
+																									"translation": []
 																								}
 																							],
 																							"data": []
@@ -3054,6 +3164,13 @@
 																									"attribute": "value",
 																									"grouping": "Properties",
 																									"value": "{/description}",
+																									"script": "",
+																									"translation": []
+																								},
+																								{
+																									"attribute": "editable",
+																									"grouping": "Properties",
+																									"value": "{appControl>/enableEdit}",
 																									"script": "",
 																									"translation": []
 																								}
@@ -3103,6 +3220,13 @@
 																									"value": "{/placeholder}",
 																									"script": "",
 																									"translation": []
+																								},
+																								{
+																									"attribute": "editable",
+																									"grouping": "Properties",
+																									"value": "{appControl>/enableEdit}",
+																									"script": "",
+																									"translation": []
 																								}
 																							],
 																							"data": []
@@ -3150,6 +3274,13 @@
 																									"value": "{/duplicateButtonText}",
 																									"script": "",
 																									"translation": []
+																								},
+																								{
+																									"attribute": "editable",
+																									"grouping": "Properties",
+																									"value": "{appControl>/enableEdit}",
+																									"script": "",
+																									"translation": []
 																								}
 																							],
 																							"data": []
@@ -3175,6 +3306,13 @@
 																									"attribute": "selectedKey",
 																									"grouping": "Properties",
 																									"value": "{/duplicateButtonType}",
+																									"script": "",
+																									"translation": []
+																								},
+																								{
+																									"attribute": "editable",
+																									"grouping": "Properties",
+																									"value": "{appControl>/enableEdit}",
 																									"script": "",
 																									"translation": []
 																								}
@@ -3574,6 +3712,13 @@
 																											"value": "{/labelSpan}",
 																											"script": "",
 																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
+																											"script": "",
+																											"translation": []
 																										}
 																									],
 																									"data": [
@@ -3951,6 +4096,13 @@
 																											"value": "{/columns}",
 																											"script": "",
 																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
+																											"script": "",
+																											"translation": []
 																										}
 																									],
 																									"data": [
@@ -4250,6 +4402,13 @@
 																													"value": "{/expandable}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -4284,6 +4443,13 @@
 																													"value": "{/expanded}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -4311,6 +4477,13 @@
 																													"value": "{/enableCompact}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -4336,6 +4509,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/labelLeftAlign}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -4485,6 +4665,13 @@
 																											"value": "50",
 																											"script": "",
 																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
+																											"script": "",
+																											"translation": []
 																										}
 																									],
 																									"data": []
@@ -4523,6 +4710,13 @@
 																											"attribute": "selectedKey",
 																											"grouping": "Properties",
 																											"value": "{/vAlign}",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
 																											"script": "",
 																											"translation": []
 																										}
@@ -4668,6 +4862,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableCompact}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -4833,6 +5034,13 @@
 																													"value": "{/enableLabel}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -4996,6 +5204,13 @@
 																													"value": "{/required}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -5021,6 +5236,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableDescription}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -5050,6 +5272,13 @@
 																													"value": "{/enablePlaceholder}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -5077,6 +5306,13 @@
 																													"value": "{/enableLabel}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -5102,6 +5338,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableDuplicate}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -5251,6 +5494,13 @@
 																											"value": "true",
 																											"script": "",
 																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
+																											"script": "",
+																											"translation": []
 																										}
 																									],
 																									"data": []
@@ -5289,6 +5539,13 @@
 																											"attribute": "selectedKey",
 																											"grouping": "Properties",
 																											"value": "{/messageType}",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
 																											"script": "",
 																											"translation": []
 																										}
@@ -5470,6 +5727,13 @@
 																													"value": "{/enableLabel}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "enabled",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -5495,6 +5759,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/messageIcon}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "enabled",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -5630,6 +5901,13 @@
 																											"value": "{/text}",
 																											"script": "",
 																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
+																											"script": "",
+																											"translation": []
 																										}
 																									],
 																									"data": []
@@ -5700,6 +5978,13 @@
 																													"value": "{/required}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -5725,6 +6010,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableDescription}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -5754,6 +6046,13 @@
 																													"value": "{/enableLabel}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -5779,6 +6078,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableDuplicate}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -5921,6 +6227,13 @@
 																											"value": "Number",
 																											"script": "",
 																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
+																											"script": "",
+																											"translation": []
 																										}
 																									],
 																									"data": []
@@ -5966,6 +6279,13 @@
 																											"attribute": "type",
 																											"grouping": "Properties",
 																											"value": "Number",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
 																											"script": "",
 																											"translation": []
 																										}
@@ -6038,6 +6358,13 @@
 																													"value": "{/required}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -6063,6 +6390,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableDescription}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -6092,6 +6426,13 @@
 																													"value": "{/enableLabel}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -6117,6 +6458,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableDuplicate}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -6252,6 +6600,13 @@
 																											"value": "{/customTextOff}",
 																											"script": "",
 																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
+																											"script": "",
+																											"translation": []
 																										}
 																									],
 																									"data": []
@@ -6290,6 +6645,13 @@
 																											"attribute": "value",
 																											"grouping": "Properties",
 																											"value": "{/customTextOn}",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
 																											"script": "",
 																											"translation": []
 																										}
@@ -6362,6 +6724,13 @@
 																													"value": "{/required}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -6387,6 +6756,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableDescription}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -6416,6 +6792,13 @@
 																													"value": "{/enableLabel}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -6443,6 +6826,13 @@
 																													"value": "{/approveSwitch}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -6468,6 +6858,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableDuplicate}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -6603,6 +7000,13 @@
 																											"value": "{/text}",
 																											"script": "",
 																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
+																											"script": "",
+																											"translation": []
 																										}
 																									],
 																									"data": []
@@ -6641,6 +7045,13 @@
 																											"attribute": "selectedKey",
 																											"grouping": "Properties",
 																											"value": "{/buttonType}",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
 																											"script": "",
 																											"translation": []
 																										}
@@ -6969,6 +7380,13 @@
 																													"value": "{/required}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -6996,6 +7414,13 @@
 																													"value": "{/enableDescription}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -7021,6 +7446,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableLabel}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -7170,6 +7602,13 @@
 																											"value": "50",
 																											"script": "",
 																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
+																											"script": "",
+																											"translation": []
 																										}
 																									],
 																									"data": []
@@ -7240,6 +7679,13 @@
 																													"value": "{/required}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "enabled",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -7265,6 +7711,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableDescription}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "enabled",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -7294,6 +7747,13 @@
 																													"value": "{/enablePlaceholder}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "enabled",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -7319,6 +7779,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableLabel}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -7348,6 +7815,13 @@
 																													"value": "{/enableDuplicate}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -7373,6 +7847,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/growing}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -7538,6 +8019,13 @@
 																													"value": "{/required}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -7563,6 +8051,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableDescription}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -7592,6 +8087,13 @@
 																													"value": "{/enableLabel}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -7617,6 +8119,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableDuplicate}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -7773,6 +8282,13 @@
 																											"value": "1000",
 																											"script": "",
 																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
+																											"script": "",
+																											"translation": []
 																										}
 																									],
 																									"data": []
@@ -7843,6 +8359,13 @@
 																													"value": "{/required}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -7868,6 +8391,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableDescription}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -7897,6 +8427,13 @@
 																													"value": "{/enablePlaceholder}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -7924,6 +8461,13 @@
 																													"value": "{/enableLabel}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -7949,6 +8493,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableDuplicate}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -7985,6 +8536,13 @@
 																													"value": "{/horizontal}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -8017,6 +8575,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableWidth}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -8128,6 +8693,13 @@
 																													"translation": []
 																												},
 																												{
+																													"attribute": "enabled",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
 																													"attribute": "enableCompactMode",
 																													"grouping": "Properties",
 																													"value": "true",
@@ -8175,7 +8747,7 @@
 																										{
 																											"attribute": "mode",
 																											"grouping": "Properties",
-																											"value": "Delete",
+																											"value": "{= ${appControl>/enableEdit} ? 'Delete':'None'}",
 																											"script": "",
 																											"translation": []
 																										},
@@ -8217,6 +8789,13 @@
 																													"grouping": "Events",
 																													"value": "Anonymous Function",
 																													"script": "file://event/sap.ui.core.dnd.DragDropInfo/sorterSingleSelect/drop.script",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "enabled",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
 																													"translation": []
 																												},
 																												{
@@ -8302,6 +8881,13 @@
 																													"response": [],
 																													"attributes": [
 																														{
+																															"attribute": "styleClass",
+																															"grouping": "Properties",
+																															"value": "formDnDIcon",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
 																															"attribute": "src",
 																															"grouping": "Properties",
 																															"value": "sap-icon://menu2",
@@ -8327,6 +8913,13 @@
 																															"value": "{title}",
 																															"script": "",
 																															"translation": []
+																														},
+																														{
+																															"attribute": "editable",
+																															"grouping": "Properties",
+																															"value": "{appControl>/enableEdit}",
+																															"script": "",
+																															"translation": []
 																														}
 																													],
 																													"data": []
@@ -8345,6 +8938,13 @@
 																															"attribute": "value",
 																															"grouping": "Properties",
 																															"value": "{key}",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
+																															"attribute": "editable",
+																															"grouping": "Properties",
+																															"value": "{appControl>/enableEdit}",
 																															"script": "",
 																															"translation": []
 																														}
@@ -9088,7 +9688,7 @@
 																										{
 																											"attribute": "mode",
 																											"grouping": "Properties",
-																											"value": "Delete",
+																											"value": "{= ${appControl>/enableEdit} ? 'Delete':'None'}",
 																											"script": "",
 																											"translation": []
 																										},
@@ -9138,6 +9738,13 @@
 																													"grouping": "Events",
 																													"value": "Anonymous Function",
 																													"script": "file://event/sap.ui.core.dnd.DragDropInfo/sorterMultipleSelect/drop.script",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "enabled",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
 																													"translation": []
 																												},
 																												{
@@ -9222,6 +9829,13 @@
 																													"request": [],
 																													"response": [],
 																													"attributes": [
+																														{
+																															"attribute": "styleClass",
+																															"grouping": "Properties",
+																															"value": "formDnDIcon",
+																															"script": "",
+																															"translation": []
+																														},
 																														{
 																															"attribute": "src",
 																															"grouping": "Properties",
@@ -9403,6 +10017,13 @@
 																											"value": "{/questionTitle}",
 																											"script": "",
 																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
+																											"script": "",
+																											"translation": []
 																										}
 																									],
 																									"data": []
@@ -9441,6 +10062,13 @@
 																											"attribute": "value",
 																											"grouping": "Properties",
 																											"value": "{/answerTitle}",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "editable",
+																											"grouping": "Properties",
+																											"value": "{appControl>/enableEdit}",
 																											"script": "",
 																											"translation": []
 																										}
@@ -9513,6 +10141,13 @@
 																													"value": "{/enableDescription}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -9538,6 +10173,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableLabel}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -9649,6 +10291,13 @@
 																													"translation": []
 																												},
 																												{
+																													"attribute": "enabled",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
 																													"attribute": "enableCompactMode",
 																													"grouping": "Properties",
 																													"value": "true",
@@ -9689,7 +10338,7 @@
 																										{
 																											"attribute": "mode",
 																											"grouping": "Properties",
-																											"value": "Delete",
+																											"value": "{= ${appControl>/enableEdit} ? 'Delete':'None'}",
 																											"script": "",
 																											"translation": []
 																										},
@@ -9739,6 +10388,13 @@
 																													"grouping": "Events",
 																													"value": "Anonymous Function",
 																													"script": "file://event/sap.ui.core.dnd.DragDropInfo/sorterCheckList/drop.script",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "enabled",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
 																													"translation": []
 																												},
 																												{
@@ -9922,6 +10578,13 @@
 																													"response": [],
 																													"attributes": [
 																														{
+																															"attribute": "styleClass",
+																															"grouping": "Properties",
+																															"value": "formDnDIcon",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
 																															"attribute": "src",
 																															"grouping": "Properties",
 																															"value": "sap-icon://menu2",
@@ -9945,6 +10608,13 @@
 																															"attribute": "value",
 																															"grouping": "Properties",
 																															"value": "{question}",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
+																															"attribute": "editable",
+																															"grouping": "Properties",
+																															"value": "{appControl>/enableEdit}",
 																															"script": "",
 																															"translation": []
 																														}
@@ -9972,6 +10642,13 @@
 																															"attribute": "selectedKey",
 																															"grouping": "Properties",
 																															"value": "{type}",
+																															"script": "",
+																															"translation": []
+																														},
+																														{
+																															"attribute": "editable",
+																															"grouping": "Properties",
+																															"value": "{appControl>/enableEdit}",
 																															"script": "",
 																															"translation": []
 																														}
@@ -10103,6 +10780,13 @@
 																															"value": "{required}",
 																															"script": "",
 																															"translation": []
+																														},
+																														{
+																															"attribute": "editable",
+																															"grouping": "Properties",
+																															"value": "{appControl>/enableEdit}",
+																															"script": "",
+																															"translation": []
 																														}
 																													],
 																													"data": []
@@ -10185,6 +10869,52 @@
 		{
 			"fieldNo": 99999,
 			"data": [
+				{
+					"fieldNo": "c57c9805-784c-4f2d-9aea-70dee241ef14",
+					"fieldName": "Data",
+					"fieldParent": 99999,
+					"fieldType": "neptune.folder",
+					"script": "",
+					"customComponent": false,
+					"request": [],
+					"response": [],
+					"attributes": [],
+					"data": [
+						{
+							"fieldNo": "08b57666-d4bb-4252-be5c-03824ab621f9",
+							"fieldName": "appControl",
+							"fieldParent": "c57c9805-784c-4f2d-9aea-70dee241ef14",
+							"fieldType": "neptune.model",
+							"script": "",
+							"customComponent": false,
+							"bindingValue": "Generic Array",
+							"bindingType": "h",
+							"bindingSource": "P9",
+							"dataModel": [
+								{
+									"id": "4c342e7e-e400-490d-985a-8087ccb7a294",
+									"parent": "",
+									"name": "enableEdit",
+									"objectType": "boolean",
+									"description": "",
+									"isParent": false
+								},
+								{
+									"id": "42325e5b-4b7c-481d-c23c-ed0bcf7f8545",
+									"parent": "",
+									"name": "enableCreate",
+									"objectType": "boolean",
+									"description": "",
+									"isParent": false
+								}
+							],
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						}
+					]
+				},
 				{
 					"fieldNo": "d62c1c7e-da1b-426d-e178-73a78781e887",
 					"fieldName": "Dialogs",
@@ -10402,6 +11132,18 @@
 							"data": []
 						},
 						{
+							"fieldNo": "abe3f571-7604-486a-c8fb-1b003a92d480",
+							"fieldName": "cockpitUtils",
+							"fieldParent": "9a908f5d-5422-474e-adc2-0b14d7e5d638",
+							"fieldType": "neptune.Script",
+							"script": "file://script/neptune.Script/Script/cockpitUtils.script",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						},
+						{
 							"fieldNo": "03c07b25-03c0-460a-8c49-61bc1e2fdb85",
 							"fieldName": "Utils",
 							"fieldParent": "9a908f5d-5422-474e-adc2-0b14d7e5d638",
@@ -10423,7 +11165,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.1.23.1413",
+	"ver": "23.1.24.1014",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",

@@ -127,29 +127,25 @@ const controller = {
         apiList();
     },
 
-    get: function (id) {
+    get: function (id, editable) {
         apiGet({
             parameters: {
                 id: id,
             },
         }).then(function (req) {
-            // Convert Data
-            req.setup.forEach(function (section) {
-                if (!section.option) section.option = "P";
-                section.elements.forEach(function (element) {
-                    if (!element.option) element.option = "E";
-                    if (element.items) {
-                        element.items.forEach(function (item) {
-                            if (!item.option) item.option = "I";
-                        });
-                    }
-                });
-            });
-
-            tabDetail.setSelectedItem(tabDetailInfo);
             modeloPageDetail.setData(req);
             controller.preview();
+
+            if (oApp.getCurrentPage === oPageStart) {
+                tabDetail.setSelectedItem(tabDetailInfo);
+            } else {
+                treeOutline.fireItemPress();
+            }
+
             oApp.to(oPageDetail);
+
+            cockpitUtils.toggleEdit(editable);
+            cockpitUtils.dataSaved = modeloPageDetail.getJSON();
         });
     },
 
@@ -165,27 +161,44 @@ const controller = {
             modeloPageDetail.oData.createdBy = req.createdBy;
             modeloPageDetail.refresh(true);
             controller.list();
+
+            cockpitUtils.dataSaved = modeloPageDetail.getJSON();
         });
     },
 
     delete: function () {
-        sap.m.MessageBox.confirm("Delete this FORM ? This cannot be undone !", {
-            icon: sap.m.MessageBox.Icon.ERROR,
-            title: "Danger Zone",
-            actions: [sap.m.MessageBox.Action.DELETE, sap.m.MessageBox.Action.NO],
-            initialFocus: "No",
-            onClose: function (sAction) {
-                if (sAction === "DELETE") {
-                    apiDelete({
-                        parameters: { id: modeloPageDetail.oData.id },
-                    }).then(function (req) {
-                        sap.m.MessageToast.show("Form Deleted");
-                        controller.list();
-                        oApp.back();
-                    });
-                }
-            },
-        });
+        if (cockpitUtils.isCockpit) {
+            sap.n.Planet9.objectDelete(function () {
+                oApp.setBusy(true);
+                sap.n.Planet9.setToolbarButton(false);
+
+                apiDelete({
+                    parameters: { id: modeloPageDetail.oData.id },
+                }).then(function (req) {
+                    sap.m.MessageToast.show("Form Deleted");
+                    controller.list();
+                    oApp.back();
+                });
+            }, "FORM");
+        } else {
+            sap.m.MessageBox.confirm("Delete this FORM ? This cannot be undone !", {
+                icon: sap.m.MessageBox.Icon.ERROR,
+                title: "Danger Zone",
+                actions: [sap.m.MessageBox.Action.DELETE, sap.m.MessageBox.Action.NO],
+                initialFocus: "No",
+                onClose: function (sAction) {
+                    if (sAction === "DELETE") {
+                        apiDelete({
+                            parameters: { id: modeloPageDetail.oData.id },
+                        }).then(function (req) {
+                            sap.m.MessageToast.show("Form Deleted");
+                            controller.list();
+                            oApp.back();
+                        });
+                    }
+                },
+            });
+        }
     },
 
     setElementsFilter: function (type) {

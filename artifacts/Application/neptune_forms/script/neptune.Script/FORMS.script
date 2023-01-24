@@ -259,6 +259,7 @@ const FORMS = {
         });
 
         const sectionTable = new sap.m.Table(FORMS.buildElementFieldID(section), {
+            autoPopinMode: true,
             showSeparators: sap.m.ListSeparators.None,
             backgroundDesign: "Transparent",
             contextualWidth: "Auto",
