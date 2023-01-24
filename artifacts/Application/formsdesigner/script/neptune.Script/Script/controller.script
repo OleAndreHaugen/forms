@@ -55,6 +55,7 @@ const controller = {
             type: "MultipleChoice",
             parent: false,
         },
+        { icon: "sap-icon://text", text: "Text", type: "Text", parent: false },
         { icon: "sap-icon://document-text", text: "Text Area", type: "TextArea", parent: false },
     ],
 
@@ -333,6 +334,10 @@ const controller = {
                 break;
 
             // Elements
+            case "Text":
+                newElement.titleStyle = "Auto";
+                break;
+
             case "MessageStrip":
                 newElement.messageText = "";
                 newElement.messageType = "Information";
@@ -419,7 +424,8 @@ const controller = {
             if (controller.currentIndex) {
                 currentObject.elements.splice(controller.currentIndex, 0, newElement);
             } else {
-                currentObject.elements.push(newElement);
+                // currentObject.elements.push(newElement);
+                currentObject.elements.splice(0, 0, newElement);
             }
         }
 

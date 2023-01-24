@@ -87,7 +87,6 @@ const FORMS = {
 
         // Section
         options.config.setup.forEach(function (section, i) {
-
             if (section.disabled) return;
 
             switch (section.type) {
@@ -183,6 +182,8 @@ const FORMS = {
             if (section.labelLeftAlign) elementLabel.addStyleClass("nepLabelLeftAlign");
 
             parent.addContent(elementLabel);
+        } else {
+            parent.addContent(new sap.m.Label());
         }
 
         const elementParent = new sap.m.VBox({ width: "100%", wrap: "Wrap" });
@@ -313,6 +314,10 @@ const FORMS = {
                 elementField = FORMS.buildElementMessageStrip(element);
                 break;
 
+            case "Text":
+                elementField = FORMS.buildElementText(element);
+                break;
+
             case "TextArea":
                 elementField = FORMS.buildElementTextArea(element);
                 break;
@@ -391,7 +396,7 @@ const FORMS = {
 
     buildElementMessageStrip: function (element) {
         return new sap.m.MessageStrip(FORMS.buildElementFieldID(element), {
-            text: element.messageText,
+            text: element.text,
             showIcon: element.messageIcon,
             type: element.messageType || "Information",
         });
@@ -414,6 +419,16 @@ const FORMS = {
             value: "{" + FORMS.bindingPath + element.id + "}",
             editable: FORMS.editable,
             placeholder: element.placeholder,
+        });
+
+        return newField;
+    },
+
+    buildElementText: function (element) {
+        const newField = new sap.m.Title(FORMS.buildElementFieldID(element), {
+            text: element.text,
+            titleStyle: element.titleStyle,
+            wrapping: true,
         });
 
         return newField;
