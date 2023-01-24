@@ -36,7 +36,7 @@ const cockpitUtils = {
         cockpitUtils.dataSet = "Neptune FORMS";
 
         // Required Fieldnames for data validation
-        cockpitUtils.requiredFields = ["informDetailNAME"];
+        cockpitUtils.requiredFields = ["informDetailName"];
     },
 
     toggleEdit: function (editable) {
@@ -51,6 +51,20 @@ const cockpitUtils = {
 
         // Cockpit Action
         sap.n.Planet9.setToolbarButton(editable);
+        sap.n.Planet9.requiredFieldsClear(cockpitUtils.requiredFields);
+    },
+
+    toggleCreate: function () {
+        if (!cockpitUtils.isCockpit) return;
+
+        butDetailSetEdit.setVisible(false);
+        butDetailSetDisplay.setVisible(false);
+
+        modelappControl.oData.enableEdit = true;
+        modelappControl.refresh();
+
+        // Cockpit Action
+        sap.n.Planet9.setToolbarButton(true);
         sap.n.Planet9.requiredFieldsClear(cockpitUtils.requiredFields);
     },
 
@@ -128,7 +142,6 @@ const cockpitUtils = {
         }
 
         var processFunction = function () {
-            debugger;
             if (modelappControl.oData.enableEdit) {
                 sap.n.Planet9.function({
                     id: "Locking",
@@ -167,3 +180,9 @@ const cockpitUtils = {
 };
 
 cockpitUtils.init();
+
+if (sap.n) {
+    sap.n.Shell.attachBeforeDisplay(localAppID, function (data) {
+        toolStartUpdate.firePress();
+    });
+}

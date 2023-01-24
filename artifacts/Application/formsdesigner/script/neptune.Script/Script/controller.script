@@ -150,6 +150,14 @@ const controller = {
     },
 
     save: function () {
+        // Check Required Fields
+        if (
+            cockpitUtils.isCockpit &&
+            !sap.n.Planet9.requiredFieldsCheck(cockpitUtils.requiredFields)
+        ) {
+            return;
+        }
+
         apiSave({
             data: modeloPageDetail.oData,
         }).then(function (req) {
@@ -157,12 +165,13 @@ const controller = {
             modeloPageDetail.oData.id = req.id;
             modeloPageDetail.oData.updatedAt = req.updatedAt;
             modeloPageDetail.oData.updatedBy = req.updatedBy;
-            modeloPageDetail.oData.createdAt = req.createdAt;
+            modeloPageDetail.oData.createdAt = req.createdAt || req.updatedAt;
             modeloPageDetail.oData.createdBy = req.createdBy;
-            modeloPageDetail.refresh(true);
+            modeloPageDetail.refresh();
             controller.list();
 
             cockpitUtils.dataSaved = modeloPageDetail.getJSON();
+            cockpitUtils.toggleEdit(true);
         });
     },
 
@@ -177,6 +186,7 @@ const controller = {
                 }).then(function (req) {
                     sap.m.MessageToast.show("Form Deleted");
                     controller.list();
+                    oApp.setBusy(false);
                     oApp.back();
                 });
             }, "FORM");
@@ -188,11 +198,13 @@ const controller = {
                 initialFocus: "No",
                 onClose: function (sAction) {
                     if (sAction === "DELETE") {
+                        oApp.setBusy(true);
                         apiDelete({
                             parameters: { id: modeloPageDetail.oData.id },
                         }).then(function (req) {
                             sap.m.MessageToast.show("Form Deleted");
                             controller.list();
+                            oApp.setBusy(false);
                             oApp.back();
                         });
                     }
@@ -268,10 +280,13 @@ const controller = {
         modeloPageDetail.setData({
             name: "",
             description: "",
+            released: false,
             setup: [],
         });
         tabDetail.setSelectedItem(tabDetailInfo);
         controller.preview();
+        cockpitUtils.toggleCreate();
+        cockpitUtils.dataSaved = modeloPageDetail.getJSON();
         oApp.to(oPageDetail);
     },
 
