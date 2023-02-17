@@ -143,6 +143,7 @@ const FORMS = {
             headerText: section.title,
             expandable: section.expandable,
             expanded: section.expanded,
+            visible: FORMS.buildVisibleCond(section),
         });
 
         const sectionForm = new sap.ui.layout.form.SimpleForm({
@@ -186,7 +187,13 @@ const FORMS = {
             parent.addContent(new sap.m.Label());
         }
 
-        const elementParent = new sap.m.VBox({ width: "100%", wrap: "Wrap" });
+        // Form Container
+        const elementParent = new sap.m.VBox({
+            width: "100%",
+            wrap: "Wrap",
+            visible: FORMS.buildVisibleCond(element),
+        });
+
         elementParent.addItem(elementField);
 
         // Description
@@ -252,11 +259,40 @@ const FORMS = {
         parent.addContent(elementParent);
     },
 
+    buildVisibleCond: function (element) {
+        if (!element.enableVisibleCond) return;
+        if (!element.visibleFieldName) return;
+        if (!element.visibleCondition) return;
+        if (!element.visibleValue) return;
+
+        let bindingPath = element.type === "Table" ? "/" : FORMS.bindingPath;
+        let visibleStatement = element.visibleInverse ? "false:true" : "true:false";
+        let visibleValueSep =
+            element.visibleValue === "true" || element.visibleValue === "false" ? "" : "'";
+
+        let visibleCond =
+            "{= ${" +
+            bindingPath +
+            element.visibleFieldName +
+            "} " +
+            element.visibleCondition +
+            " " +
+            visibleValueSep +
+            element.visibleValue +
+            visibleValueSep +
+            " ? " +
+            visibleStatement +
+            " }";
+
+        return visibleCond;
+    },
+
     buildParentTable: function (section) {
         const sectionPanel = new sap.m.Panel({
             headerText: section.title,
             expandable: section.expandable,
             expanded: section.expanded,
+            visible: FORMS.buildVisibleCond(section),
         });
 
         const sectionTable = new sap.m.Table(FORMS.buildElementFieldID(section), {
@@ -529,7 +565,7 @@ const FORMS = {
                 },
             });
 
-            if (element.enableWidth) {
+            if (element.enableWidth && element.width) {
                 elementRadio.setWidth(element.width + "px");
             }
 
@@ -591,9 +627,9 @@ const FORMS = {
                     }
                     formModel.refresh(true);
                 },
-            }).addStyleClass("sapUiTinyMarginBegin");
+            });
 
-            if (element.enableWidth) {
+            if (element.enableWidth && element.width) {
                 elementCheckBox.setWidth(element.width + "px");
             }
 

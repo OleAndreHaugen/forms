@@ -1,4 +1,4 @@
-const { openAs } = modelAppConfig.oData.settings.navigation;
+const { openAs } = (modelAppConfig.oData.settings?.navigation || {});
 
 if (openAs === 'S') {
     const tabKey = oApp.getParent().getParent().getProperty('key');

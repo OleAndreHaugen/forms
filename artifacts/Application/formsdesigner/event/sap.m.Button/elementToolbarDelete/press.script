@@ -1,9 +1,0 @@
-ModelData.Delete(modeloPageDetail.oData.setup, "id", modelpanTopProperties.oData.id);
-
-modeloPageDetail.oData.setup.forEach(function (section, i) {
-    ModelData.Delete(section.elements, "id", modelpanTopProperties.oData.id);
-});
-
-modelpanTopProperties.setData({});
-modelpanTopProperties.refresh();
-modeloPageDetail.refresh(true);

@@ -470,7 +470,7 @@ const report = {
                     if (s.events && s.events.afterChildSave) s.events.afterChildSave();
 
                     const openedAsSidepanel =
-                        modelAppConfig.oData.settings.navigation.openAs === "S";
+                        modelAppConfig.oData.settings?.navigation?.openAs === "S";
 
                     if (openedAsSidepanel) {
                         // a new record is being created in the sidepanel tab
@@ -515,11 +515,11 @@ const report = {
 
     close: function () {
         const s = modelAppConfig.oData.settings;
-        if (
-            oApp.getParent() &&
+        const isDialog = oApp.getParent() &&
             oApp.getParent().getParent() &&
-            oApp.getParent().getParent().close
-        ) {
+            oApp.getParent().getParent().close;
+            
+        if (isDialog) {
             oApp.getParent().getParent().close();
         } else if (s.events && s.events.onChildBack) {
             s.events.onChildBack();
@@ -531,6 +531,10 @@ const report = {
             sap.n.Launchpad.currentTile.id
         ) {
             sap.n.Shell.closeTile(sap.n.Launchpad.currentTile);
+        }
+        
+        if (!isDialog && sap.n.HashNavigation && sap.n.HashNavigation.deleteNavItem) {
+            sap.n.HashNavigation.deleteNavItem();
         }
     },
 

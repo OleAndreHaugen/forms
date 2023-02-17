@@ -541,7 +541,7 @@
 													"attribute": "press",
 													"grouping": "Events",
 													"value": "Anonymous Function",
-													"script": "file://event/sap.m.Button/toolHeaderBack/press.script",
+													"script": "file://event/sap.m.Button/toolHeaderBack/press.js",
 													"language": "javascript",
 													"translation": []
 												}
@@ -882,7 +882,7 @@
 															"attribute": "updateFinished",
 															"grouping": "Events",
 															"value": "Anonymous Function",
-															"script": "file://event/sap.m.Table/tabAttachment/updateFinished.script",
+															"script": "file://event/sap.m.Table/tabAttachment/updateFinished.js",
 															"language": "javascript",
 															"translation": []
 														},
@@ -1482,7 +1482,7 @@
 											"attribute": "afterRendering",
 											"grouping": "Events",
 											"value": "Anonymous Function",
-											"script": "file://event/sap.ui.core.HTML/oHTMLUpload/afterRendering.script",
+											"script": "file://event/sap.ui.core.HTML/oHTMLUpload/afterRendering.js",
 											"language": "javascript",
 											"translation": []
 										}
@@ -1595,7 +1595,7 @@
 							"fieldName": "helpers",
 							"fieldParent": "326c943b-7679-4056-cc35-794ee3168f3f",
 							"fieldType": "neptune.Script",
-							"script": "file://script/neptune.Script/Adaptive/helpers.script",
+							"script": "file://script/neptune.Script/Adaptive/helpers.js",
 							"customComponent": false,
 							"request": [],
 							"response": [],
@@ -1607,7 +1607,7 @@
 							"fieldName": "metadata",
 							"fieldParent": "326c943b-7679-4056-cc35-794ee3168f3f",
 							"fieldType": "neptune.Script",
-							"script": "file://script/neptune.Script/Adaptive/metadata.script",
+							"script": "file://script/neptune.Script/Adaptive/metadata.js",
 							"customComponent": false,
 							"request": [],
 							"response": [],
@@ -1619,7 +1619,7 @@
 							"fieldName": "report",
 							"fieldParent": "326c943b-7679-4056-cc35-794ee3168f3f",
 							"fieldType": "neptune.Script",
-							"script": "file://script/neptune.Script/Adaptive/report.script",
+							"script": "file://script/neptune.Script/Adaptive/report.js",
 							"customComponent": false,
 							"request": [],
 							"response": [],
@@ -1648,7 +1648,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.1.17.213",
+	"ver": "23.2.2.1432",
 	"application": "planet9_adaptive_forms",
 	"title": "Adaptive FORMS",
 	"description": "Adaptive FORMS",
@@ -1672,7 +1672,8 @@
 	"ui5_language": null,
 	"ui5_url": "",
 	"cus_theme": "",
-	"css": "file:///css.script",
+	"css": "file:///css.css",
+	"compiledCss": null,
 	"header": "",
 	"manifest": "",
 	"globalScript": null,
@@ -1684,6 +1685,8 @@
 	"ui5_ionic": false,
 	"useV2AppHandler": false,
 	"compilerTarget": 3,
+	"tabWidth": null,
+	"printWidth": null,
 	"apis": [],
 	"package": "a313322e-f024-45f1-960f-b90081757b85"
 }

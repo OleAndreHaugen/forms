@@ -11,7 +11,7 @@
 					"fieldName": "namespace",
 					"fieldParent": 99999,
 					"fieldType": "neptune.Typescript",
-					"script": "file://script/neptune.Typescript/namespace.script",
+					"script": "file://script/neptune.Typescript/namespace.ts",
 					"customComponent": false,
 					"request": [],
 					"response": [],
@@ -57,6 +57,7 @@
 	"ui5_url": "",
 	"cus_theme": "",
 	"css": "",
+	"compiledCss": null,
 	"header": "",
 	"manifest": "",
 	"globalScript": null,
@@ -68,6 +69,8 @@
 	"ui5_ionic": false,
 	"useV2AppHandler": false,
 	"compilerTarget": 3,
+	"tabWidth": null,
+	"printWidth": null,
 	"apis": [],
 	"package": "a313322e-f024-45f1-960f-b90081757b85"
 }

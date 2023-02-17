@@ -15,7 +15,7 @@
 	"name": "formList",
 	"ver": "23.1.17.1438",
 	"description": null,
-	"content": "file:///content.script",
+	"content": "file:///content.js",
 	"useAsGlobalScript": false,
 	"transpiledContent": null,
 	"lastRunSuccessful": false,
