@@ -705,9 +705,13 @@ const controller = {
             // Navigate to Element
             if (!controller.pressedPreview) {
                 scrollPreview.scrollToElement(elementPreview, 0);
-                let position = scrollPreview._oScroller._scrollY - 300;
-                if (position < 0) position = 0;
-                scrollPreview.scrollTo(0, position);
+
+                if (scrollPreview._oScroller._scrollY !== scrollPreview._oScroller.getMaxScrollTop()) {
+                    const max = scrollPreview._oScroller.getMaxScrollTop() - 300;
+                    let position = scrollPreview._oScroller._scrollY - 300;
+                    if (position < 0) position = 0;
+                    scrollPreview.scrollTo(0, position);
+                }
             } else {
                 controller.pressedPreview = false;
             }
