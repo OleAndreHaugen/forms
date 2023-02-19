@@ -104,16 +104,18 @@ const FORMS = {
             // Elements
             section.elements.forEach(function (element, i) {
                 FORMS.buildElement(sectionParent, element, section, i);
+
+                if (element.elements) {
+                    element.elements.forEach(function (subElement, iSub) {
+                        FORMS.buildElement(sectionParent, subElement, section, iSub);
+                    });
+                }
             });
 
             // Post processing
             switch (section.type) {
                 case "Table":
-                    sectionParent.bindAggregation("items", {
-                        path: "/",
-                        template: FORMS.columnTemplate,
-                        templateShareable: false,
-                    });
+                    sectionParent.bindAggregation("items", { path: "/", template: FORMS.columnTemplate, templateShareable: false });
 
                     const tabModel = new sap.ui.model.json.JSONModel();
                     sectionParent.setModel(tabModel);
@@ -125,7 +127,22 @@ const FORMS = {
                         let rows = section.rows || 5;
 
                         for (let i = 0; i < rows; i++) {
-                            modelData.push({});
+                            let newRec = { id: ModelData.genID() };
+
+                            // Default Data
+                            section.elements.forEach(function (element, i) {
+                                switch (element.type) {
+                                    case "SingleChoice":
+                                        const firstItem = element.items[0];
+                                        newRec[element.id] = firstItem.key;
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                            });
+
+                            modelData.push(newRec);
                         }
 
                         tabModel.setData(modelData);
@@ -139,10 +156,10 @@ const FORMS = {
     },
 
     buildParentForm: function (section) {
-        const sectionPanel = new sap.m.Panel({
+        const sectionPanel = new sap.m.Panel(FORMS.buildElementFieldID(section), {
             headerText: section.title,
-            expandable: section.expandable,
-            expanded: section.expanded,
+            // expandable: section.expandable,
+            // expanded: section.expanded,
             visible: FORMS.buildVisibleCond(section),
         });
 
@@ -212,11 +229,7 @@ const FORMS = {
                             let data = FORMS.getData();
                             data.completed = false;
 
-                            let parentData = ModelData.FindFirst(
-                                data.config.setup,
-                                "id",
-                                section.id
-                            );
+                            let parentData = ModelData.FindFirst(data.config.setup, "id", section.id);
                             if (parentData) parentData.elements.splice(index, 1);
 
                             FORMS.build(FORMS.customerParent, data);
@@ -228,6 +241,7 @@ const FORMS = {
                     new sap.m.Button({
                         text: element.duplicateButtonText,
                         type: element.duplicateButtonType,
+                        icon: element.duplicateButtonIcon,
                         press: function (oEvent) {
                             let data = FORMS.getData();
                             data.completed = false;
@@ -242,11 +256,7 @@ const FORMS = {
                                 });
                             }
 
-                            let parentData = ModelData.FindFirst(
-                                data.config.setup,
-                                "id",
-                                section.id
-                            );
+                            let parentData = ModelData.FindFirst(data.config.setup, "id", section.id);
                             if (parentData) parentData.elements.splice(index + 1, 0, newElement);
 
                             FORMS.build(FORMS.customerParent, data);
@@ -267,53 +277,242 @@ const FORMS = {
 
         let bindingPath = element.type === "Table" ? "/" : FORMS.bindingPath;
         let visibleStatement = element.visibleInverse ? "false:true" : "true:false";
-        let visibleValueSep =
-            element.visibleValue === "true" || element.visibleValue === "false" ? "" : "'";
+        let visibleValueSep = element.visibleValue === "true" || element.visibleValue === "false" ? "" : "'";
 
         let visibleCond =
-            "{= ${" +
-            bindingPath +
-            element.visibleFieldName +
-            "} " +
-            element.visibleCondition +
-            " " +
-            visibleValueSep +
-            element.visibleValue +
-            visibleValueSep +
-            " ? " +
-            visibleStatement +
-            " }";
+            "{= ${" + bindingPath + element.visibleFieldName + "} " + element.visibleCondition + " " + visibleValueSep + element.visibleValue + visibleValueSep + " ? " + visibleStatement + " }";
 
         return visibleCond;
     },
 
     buildParentTable: function (section) {
-        const sectionPanel = new sap.m.Panel({
-            headerText: section.title,
-            expandable: section.expandable,
-            expanded: section.expanded,
-            visible: FORMS.buildVisibleCond(section),
-        });
-
         const sectionTable = new sap.m.Table(FORMS.buildElementFieldID(section), {
             autoPopinMode: true,
             showSeparators: sap.m.ListSeparators.None,
             backgroundDesign: "Transparent",
             contextualWidth: "Auto",
             showNoData: false,
+            delete: function (oEvent) {
+                const model = this.getModel();
+                const context = oEvent.mParameters.listItem.getBindingContext();
+                const data = context.getObject();
+
+                ModelData.Delete(model, "id", data.id);
+            },
         });
+
+        // Show Separators
+        if (section.enableSeparators) {
+            sectionTable.setShowSeparators(sap.m.ListSeparators.Inner);
+        }
+
+        const sectionPanel = new sap.m.Panel("section" + section.id, {
+            // expandable: section.expandable,
+            // expanded: section.expanded,
+            visible: FORMS.buildVisibleCond(section),
+        });
+
+        const sectionToolbar = new sap.m.Toolbar();
+
+        sectionToolbar.addContent(
+            new sap.m.Title({
+                text: section.title,
+            })
+        );
+
+        // Enable Create
+        if (section.enableCreate) {
+            sectionToolbar.addContent(new sap.m.ToolbarSpacer());
+
+            sectionToolbar.addContent(
+                new sap.m.Button({
+                    text: "Add",
+                    type: "Transparent",
+                    press: function (oEvent) {
+                        const model = sectionTable.getModel();
+                        model.oData.push({ id: ModelData.genID() });
+                        model.refresh();
+                    },
+                })
+            );
+        }
+
+        sectionPanel.setHeaderToolbar(sectionToolbar);
+
+        // Enable Delete
+        if (section.enableDelete) {
+            sectionTable.setMode("Delete");
+        }
 
         if (section.enableCompact) sectionTable.addStyleClass("sapUiSizeCompact");
 
-        FORMS.columnTemplate = new sap.m.ColumnListItem();
+        const columListItem = new sap.m.ColumnListItem();
+        if (section.vAlign) columListItem.setVAlign(section.vAlign);
 
-        if (section.vAlign) FORMS.columnTemplate.setVAlign(section.vAlign);
+        // Enable Copy
+        if (section.enableCopy) {
+            const newColumn = new sap.m.Column({ width: "50px" });
+
+            sectionTable.addColumn(newColumn);
+
+            columListItem.addCell(
+                new sap.m.Button({
+                    icon: "sap-icon://copy",
+                    type: "Transparent",
+                    press: function (oEvent) {
+                        const context = oEvent.oSource.getBindingContext();
+                        const data = context.getObject();
+                        FORMS.buildCopyDialog(columListItem, section.id, data.id);
+                    },
+                })
+            );
+        }
 
         sectionPanel.addContent(sectionTable);
 
         FORMS.formParent.addContent(sectionPanel);
+        FORMS.columnTemplate = columListItem;
 
         return sectionTable;
+    },
+
+    buildCopyDialog: function (columListItem, tableId, rowId) {
+        const diaCopy = new sap.m.Dialog({
+            draggable: true,
+            contentHeight: "800px",
+            contentWidth: "800px",
+            title: "Copy Data",
+        }).addStyleClass("sapUiContentPadding");
+
+        diaCopy.setEndButton(
+            new sap.m.Button({
+                type: "Transparent",
+                text: "Close",
+                press: function (oEvent) {
+                    diaCopy.close();
+                },
+            }).addStyleClass("sapUiSizeCompact")
+        );
+
+        diaCopy.setBeginButton(
+            new sap.m.Button({
+                type: "Emphasized",
+                text: "OK",
+                press: function (oEvent) {
+                    for (let i = 0; i < numCopy.getValue(); i++) {
+                        let newRow = {
+                            id: ModelData.genID(),
+                        };
+
+                        for (var key in rowData) {
+                            if (key !== "id") {
+                                const selected = sap.ui
+                                    .getCore()
+                                    .byId("include-" + key)
+                                    .getSelected();
+
+                                if (selected) newRow[key] = rowData[key];
+                            }
+                        }
+
+                        tableData.push(newRow);
+                    }
+
+                    table.getModel().refresh();
+                    diaCopy.close();
+                },
+            }).addStyleClass("sapUiSizeCompact")
+        );
+
+        const panCopies = new sap.m.Panel();
+        panCopies.addContent(new sap.m.Title({ text: "Number of copies" }));
+        const numCopy = new sap.m.StepInput({ width: "100%", min: 1, max: 1000 }).addStyleClass("sapUiSmallMarginBottom");
+        panCopies.addContent(numCopy);
+        diaCopy.addContent(panCopies);
+
+        const table = sap.ui.getCore().byId("field" + tableId);
+
+        const tableData = FORMS.getData().data[tableId];
+        const rowData = ModelData.FindFirst(tableData, "id", rowId);
+
+        const tabCopy = new sap.m.Table({
+            showSeparators: sap.m.ListSeparators.Inner,
+            backgroundDesign: "Transparent",
+        });
+
+        const cells = columListItem.getCells();
+
+        tabCopy.addColumn(new sap.m.Column({ width: "100px" }).setHeader(new sap.m.Label({ text: "Include", design: "Bold" })));
+        tabCopy.addColumn(new sap.m.Column({ width: "200px" }).setHeader(new sap.m.Label({ text: "Field", design: "Bold" })));
+        tabCopy.addColumn(new sap.m.Column({ width: "100%" }).setHeader(new sap.m.Label({ text: "Content", design: "Bold" })));
+
+        for (let i = 1; i < cells.length; i++) {
+            const columListItem = new sap.m.ColumnListItem();
+            tabCopy.addItem(columListItem);
+
+            const fieldId = cells[i].sId.split("field")[1];
+            const clone = cells[i].clone();
+            const element = FORMS.getObjectFromId(fieldId);
+
+            if (clone.setEditable) {
+                clone.setEditable(false);
+            } else if (clone.setEnabled) {
+                clone.setEnabled(false);
+            }
+
+            columListItem.addCell(new sap.m.CheckBox("include-" + fieldId, { selected: true }));
+            columListItem.addCell(new sap.m.Text({ text: element.title }));
+
+            if (clone.setWidth) clone.setWidth("100%");
+
+            switch (element.type) {
+                case "SingleChoice":
+                    const selectedKey = rowData[fieldId];
+                    const selectedItem = ModelData.FindFirst(element.items, "key", selectedKey);
+
+                    if (selectedItem) {
+                        const buttons = clone.getButtons();
+                        buttons.forEach(function (button, index) {
+                            if (button.getText() === selectedItem.title) {
+                                button.setSelected(true);
+                            }
+                        });
+                    }
+
+                    break;
+
+                case "MultipleChoice":
+                    console.log("NOT IMplemented");
+                    break;
+
+                case "MultipleSelect":
+                    clone.setSelectedKeys(rowData[fieldId]);
+                    break;
+
+                case "Switch":
+                    clone.setState(rowData[fieldId]);
+                    break;
+
+                case "CheckBox":
+                    clone.setSelected(rowData[fieldId]);
+                    break;
+
+                case "SegmentedButton":
+                case "SingleSelect":
+                    clone.setSelectedKey(rowData[fieldId]);
+                    break;
+
+                default:
+                    if (clone.setValue) clone.setValue(rowData[fieldId]);
+                    break;
+            }
+
+            columListItem.addCell(clone);
+        }
+
+        diaCopy.addContent(tabCopy);
+
+        diaCopy.open();
     },
 
     buildParentTableChildren: function (parent, element, section, index, elementField) {
@@ -323,15 +522,27 @@ const FORMS = {
             minScreenWidth: "Tablet",
         });
 
-        parent.addColumn(newColumn);
+        // Column Width
+        if (section.widths) {
+            const widths = section.widths[index];
+            if (widths && widths.width) {
+                if (widths.widthMetric) {
+                    newColumn.setWidth(widths.width + "%");
+                } else {
+                    newColumn.setWidth(widths.width + "px");
+                }
+            }
+        }
 
         newColumn.setHeader(
-            new sap.m.Label({
+            new sap.m.Label(FORMS.buildElementFieldID(element), {
                 text: element.title,
                 required: element.required,
                 design: "Bold",
             })
         );
+
+        parent.addColumn(newColumn);
 
         FORMS.columnTemplate.addCell(elementField);
     },
@@ -358,6 +569,10 @@ const FORMS = {
                 elementField = FORMS.buildElementTextArea(element);
                 break;
 
+            case "SegmentedButton":
+                elementField = FORMS.buildElementSegmentedButton(element);
+                break;
+
             case "StepInput":
                 elementField = FORMS.buildElementStepInput(element);
                 break;
@@ -368,6 +583,14 @@ const FORMS = {
 
             case "CheckBox":
                 elementField = FORMS.buildElementCheckBox(element);
+                break;
+
+            case "Numeric":
+                elementField = FORMS.buildElementNumeric(element);
+                break;
+
+            case "Picture":
+                elementField = FORMS.buildElementPicture(element);
                 break;
 
             case "SingleSelect":
@@ -460,6 +683,30 @@ const FORMS = {
         return newField;
     },
 
+    buildElementPicture: function (element) {
+        const newField = new sap.m.Image(FORMS.buildElementFieldID(element), {
+            src: element.imageSrc,
+        });
+
+        if (element.width) {
+            if (element.widthMetric) {
+                newField.setWidth(element.width + "%");
+            } else {
+                newField.setWidth(element.width + "px");
+            }
+        }
+
+        if (element.height) {
+            if (element.heightMetric) {
+                newField.setHeight(element.height + "%");
+            } else {
+                newField.setHeight(element.height + "px");
+            }
+        }
+
+        return newField;
+    },
+
     buildElementText: function (element) {
         const newField = new sap.m.Title(FORMS.buildElementFieldID(element), {
             text: element.text,
@@ -480,6 +727,20 @@ const FORMS = {
             width: "100%",
         });
         if (element.rows) newField.setRows(parseInt(element.rows));
+
+        return newField;
+    },
+
+    buildElementNumeric: function (element) {
+        const newField = new sap.m.Input(FORMS.buildElementFieldID(element), {
+            value: "{" + FORMS.bindingPath + element.id + "}",
+            placeholder: element.placeholder,
+            editable: FORMS.editable,
+            type: "Number",
+            change: function (oEvent) {
+                this.setValue(parseFloat(this.getValue()).toFixed(element.decimals));
+            },
+        });
 
         return newField;
     },
@@ -522,6 +783,27 @@ const FORMS = {
         return newField;
     },
 
+    buildElementSegmentedButton: function (element) {
+        const newField = new sap.m.SegmentedButton(FORMS.buildElementFieldID(element), {
+            selectedKey: "{" + FORMS.bindingPath + element.id + "}",
+            enabled: FORMS.editable,
+        });
+
+        if (element.width) {
+            if (element.widthMetric) {
+                newField.setWidth(element.width + "%");
+            } else {
+                newField.setWidth(element.width + "px");
+            }
+        }
+
+        element.items.forEach(function (item, i) {
+            newField.addItem(new sap.m.SegmentedButtonItem({ key: item.key, text: item.title, icon: item.icon }));
+        });
+
+        return newField;
+    },
+
     buildElementSingleSelect: function (element) {
         const newField = new sap.m.ComboBox(FORMS.buildElementFieldID(element), {
             selectedKey: "{" + FORMS.bindingPath + element.id + "}",
@@ -539,31 +821,35 @@ const FORMS = {
     buildElementSingleChoice: function (element) {
         let newField;
 
-        if (element.horizontal) {
-            newField = new sap.m.HBox(FORMS.buildElementFieldID(element), {
-                wrap: "Wrap",
-                renderType: "Bare",
-            });
-        } else {
-            newField = new sap.m.VBox(FORMS.buildElementFieldID(element), {
-                wrap: "Wrap",
-                renderType: "Bare",
-            });
-        }
+        newField = new sap.m.RadioButtonGroup(FORMS.buildElementFieldID(element), {
+            selectedIndex: null,
+        });
+
+        if (element.horizontal) newField.setColumns(10);
 
         const formModel = FORMS.formParent.getModel();
 
         element.items.forEach(function (item, i) {
+            // Always set first field as default value, as the parent is RadioButtonGroup
+            if (i === 0 && !formModel.oData[element.id]) formModel.oData[element.id] = item.key;
+
             const elementRadio = new sap.m.RadioButton("item" + item.id, {
                 text: item.title,
-                groupName: element.id,
+                groupName: newField.sId,
                 editable: FORMS.editable,
                 select: function (oEvent) {
-                    const formModel = FORMS.formParent.getModel();
-                    formModel.oData[element.id] = item.key;
-                    formModel.refresh(true);
+                    const context = oEvent.oSource.getBindingContext();
+                    if (context) {
+                        const data = context.getObject();
+                        data[element.id] = item.key;
+                    } else {
+                        formModel.oData[element.id] = item.key;
+                        formModel.refresh();
+                    }
                 },
             });
+
+            elementRadio._keyValue = item.key;
 
             if (element.enableWidth && element.width) {
                 elementRadio.setWidth(element.width + "px");
@@ -574,8 +860,8 @@ const FORMS = {
                 elementRadio.setSelected(true);
             }
 
-            elementRadio.addStyleClass("sapUiTinyMarginBegin");
-            newField.addItem(elementRadio);
+            // elementRadio.addStyleClass("sapUiTinyMarginBegin");
+            newField.addButton(elementRadio);
         });
 
         return newField;
@@ -689,35 +975,29 @@ const FORMS = {
     },
 
     buildElementCheckList: function (element) {
-        const tabCheckList = new sap.m.Table({
+        const tabCheckList = new sap.m.Table(FORMS.buildElementFieldID(element), {
             showSeparators: sap.m.ListSeparators.None,
             backgroundDesign: "Transparent",
             contextualWidth: "Auto",
+            autoPopinMode: true,
         });
 
         // Columns
         const colQuestion = new sap.m.Column();
         tabCheckList.addColumn(colQuestion);
 
-        colQuestion.setHeader(
-            new sap.m.Text({
-                text: element.questionTitle,
-            })
-        );
+        colQuestion.setHeader(new sap.m.Text({ text: element.questionTitle }));
 
         const colAnswer = new sap.m.Column({
             demandPopin: true,
-            popinDisplay: "Block",
+            popinDisplay: "Inline",
             minScreenWidth: "Tablet",
             width: "30%",
         });
+
         tabCheckList.addColumn(colAnswer);
 
-        colAnswer.setHeader(
-            new sap.m.Text({
-                text: element.answerTitle,
-            })
-        );
+        colAnswer.setHeader(new sap.m.Text({ text: element.answerTitle }));
 
         // Items
         element.items.forEach(function (item, index) {
@@ -776,38 +1056,35 @@ const FORMS = {
 
     getData: function () {
         const formModel = FORMS.formParent.getModel();
-
         const outputData = {};
+
+        const getElementData = function (element) {
+            if (formModel.oData[element.id]) {
+                outputData[element.id] = formModel.oData[element.id];
+            }
+
+            if (element.type === "CheckList") {
+                element.items.forEach(function (item) {
+                    if (formModel.oData[item.id]) {
+                        outputData[item.id] = formModel.oData[item.id];
+                    }
+                });
+            }
+        };
 
         FORMS.config.setup.forEach(function (section) {
             if (section.type === "Table") {
                 const tabObject = sap.ui.getCore().byId("field" + section.id);
                 const tabModel = tabObject.getModel();
-                if (tabModel) {
-                    outputData[section.id] = tabModel.oData;
-                }
+                if (tabModel) outputData[section.id] = tabModel.oData;
                 return;
             }
 
             section.elements.forEach(function (element) {
-                if (formModel.oData[element.id]) {
-                    // if (element.fieldName) {
-                    //     outputData[element.fieldName] = formModel.oData[element.id]; // TODO - Need in/out handling for fieldnames
-                    // } else {
-                    outputData[element.id] = formModel.oData[element.id];
-                    // }
-                }
-
-                // CheckList
-                if (element.type === "CheckList") {
-                    element.items.forEach(function (item) {
-                        if (formModel.oData[item.id]) {
-                            // if (item.fieldName) {
-                            //     outputData[item.fieldName] = formModel.oData[item.id]; // TODO - Need in/out handling for fieldnames
-                            // } else {
-                            outputData[item.id] = formModel.oData[item.id];
-                            // }
-                        }
+                getElementData(element);
+                if (element.elements) {
+                    element.elements.forEach(function (element) {
+                        getElementData(element);
                     });
                 }
             });
@@ -820,6 +1097,10 @@ const FORMS = {
         };
 
         return formData;
+
+        // if (element.fieldName) {
+        //     outputData[element.fieldName] = formModel.oData[element.id]; // TODO - Need in/out handling for fieldnames
+        // } else {
     },
 
     setData: function (data) {
@@ -864,35 +1145,22 @@ const FORMS = {
                 }
 
                 // MultipleSelect/MultipleChoice
-                if (
-                    formModel.oData[element.id] &&
-                    element.validationType !== "noLimit" &&
-                    (element.type === "MultipleChoice" || element.type === "MultipleSelect")
-                ) {
+                if (formModel.oData[element.id] && element.validationType !== "noLimit" && (element.type === "MultipleChoice" || element.type === "MultipleSelect")) {
                     switch (element.validationType) {
                         case "equalTo":
-                            if (
-                                formModel.oData[element.id].length !==
-                                parseInt(element.validationParam)
-                            ) {
+                            if (formModel.oData[element.id].length !== parseInt(element.validationParam)) {
                                 FORMS.validateMarkField(element.id, false, process);
                             }
                             break;
 
                         case "atMost":
-                            if (
-                                formModel.oData[element.id].length >
-                                parseInt(element.validationParam)
-                            ) {
+                            if (formModel.oData[element.id].length > parseInt(element.validationParam)) {
                                 FORMS.validateMarkField(element.id, false, process);
                             }
                             break;
 
                         case "atLeast":
-                            if (
-                                formModel.oData[element.id].length <
-                                parseInt(element.validationParam)
-                            ) {
+                            if (formModel.oData[element.id].length < parseInt(element.validationParam)) {
                                 FORMS.validateMarkField(element.id, false, process);
                             }
                             break;
@@ -983,25 +1251,26 @@ const FORMS = {
             console.log(e);
         }
     },
+
+    getObjectFromId: function (id) {
+        let elementData = null;
+
+        FORMS.config.setup.forEach(function (section, i) {
+            if (section.id === id) elementData = section;
+
+            section.elements.forEach(function (element, i) {
+                if (element.id === id) elementData = element;
+
+                if (element.elements) {
+                    element.elements.forEach(function (element, i) {
+                        if (element.id === id) elementData = element;
+                    });
+                }
+            });
+        });
+
+        return elementData;
+    },
 };
 
 window.importImage = FORMS.importImage;
-
-// // TODO - Implement generic if we should have conditional visibility
-// if (element.condField) {
-//     const formatParts = "/" + element.id;
-
-//     elementField.bindProperty("visible", {
-//         parts: [formatParts],
-//         formatter: function () {
-//             const formModel = FORMS.formParent.getModel();
-//             if (formModel.oData[element.condField] === element.condValue) {
-//                 return true;
-//             } else {
-//                 return false;
-//             }
-//         },
-//     });
-// }
-
-//

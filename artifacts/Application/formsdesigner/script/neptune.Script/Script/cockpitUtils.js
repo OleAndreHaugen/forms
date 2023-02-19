@@ -55,6 +55,13 @@ const cockpitUtils = {
             butDetailDelete.setVisible(false);
         }
 
+        // // Outline Context Menu
+        // if (editable) {
+        //     treeOutline.setContextMenu(controller.buildContextMenu);
+        // } else {
+        //     treeOutline.setContextMenu(controller.buildContextMenuReadOnly);
+        // }
+
         // Cockpit Action
         sap.n.Planet9.setToolbarButton(editable);
         sap.n.Planet9.requiredFieldsClear(cockpitUtils.requiredFields);
@@ -126,9 +133,7 @@ const cockpitUtils = {
                 error: (error) => {
                     toggleDisplay();
                     if (error.status !== 403) {
-                        sap.m.MessageBox.error(
-                            error?.responseJSON?.status || error.status || "An error has ocurred"
-                        );
+                        sap.m.MessageBox.error(error?.responseJSON?.status || error.status || "An error has ocurred");
                     }
                 },
             });
@@ -161,11 +166,7 @@ const cockpitUtils = {
                     success: function (data) {},
                     error: (error) => {
                         if (error.status !== 403) {
-                            sap.m.MessageBox.error(
-                                error?.responseJSON?.status ||
-                                    error.status ||
-                                    "An error has ocurred"
-                            );
+                            sap.m.MessageBox.error(error?.responseJSON?.status || error.status || "An error has ocurred");
                         }
                     },
                 });

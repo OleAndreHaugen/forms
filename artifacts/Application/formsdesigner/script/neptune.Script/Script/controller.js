@@ -3,26 +3,56 @@ const controller = {
     currentObject: null,
     currentFilter: null,
     previewData: null,
+    markedElement: {
+        elemDom: null,
+        elemId: null,
+    },
+    pressedPreview: false,
+
+    // elementTypes: [
+    //     { icon: "/public/icons/s_vwform.gif", text: "Form", type: "Form", parent: true, descripton: "Present the data in Form layout" },
+    //     { icon: "/public/icons/s_wdvtbl.gif", text: "Table", type: "Table", parent: true, descripton: "Present the data in Table layout" },
+    //     { icon: "/public/icons/s_txtfld.gif", text: "Form Title", type: "FormTitle", parent: false },
+    //     { icon: "/public/icons/s_t_date.gif", text: "Date Picker", type: "DatePicker", parent: false },
+    //     { icon: "/public/icons/s_b_ticl.gif", text: "Date Time Picker", type: "DateTimePicker", parent: false },
+    //     { icon: "/public/icons/s_wdvcbx.gif", text: "Check Box", type: "CheckBox", parent: false },
+    //     { icon: "/public/icons/s_objeli.gif", text: "Check List", type: "CheckList", parent: false },
+    //     { icon: "/public/icons/s_wdvipf.gif", text: "Input", type: "Input", parent: false },
+    //     { icon: "/public/icons/s_b_uplo.gif", text: "Image", type: "Image", parent: false },
+    //     { icon: "/public/icons/s_n_info.gif", text: "Message Strip", type: "MessageStrip", parent: false },
+    //     { icon: "/public/icons/s_wdvipf.gif", text: "Step Input", type: "StepInput", parent: false },
+    //     { icon: "/public/icons/s_transl.gif", text: "Switch", type: "Switch", parent: false },
+    //     { icon: "/public/icons/s_esirep.gif", text: "Segmented Button", type: "SegmentedButton", parent: false },
+    //     { icon: "/public/icons/s_drpdwl.gif", text: "Single Select", type: "SingleSelect", parent: false },
+    //     { icon: "/public/icons/s_drpdwl.gif", text: "Single Choice", type: "SingleChoice", parent: false },
+    //     { icon: "/public/icons/s_wdvddk.gif", text: "Multiple Select", type: "MultipleSelect", parent: false },
+    //     { icon: "/public/icons/s_wdvddk.gif", text: "Multiple Choice", type: "MultipleChoice", parent: false },
+    //     { icon: "/public/icons/s_wdvcap.gif", text: "Text", type: "Text", parent: false },
+    //     { icon: "/public/icons/s_wdvtxe.gif", text: "Text Area", type: "TextArea", parent: false },
+    // ],
 
     elementTypes: [
-        { icon: "sap-icon://form", text: "Form", type: "Form", parent: true },
-        { icon: "sap-icon://table-view", text: "Table", type: "Table", parent: true },
-        { icon: "sap-icon://header", text: "Form Title", type: "FormTitle", parent: false },
-        { icon: "sap-icon://calendar", text: "Date Picker", type: "DatePicker", parent: false },
-        { icon: "sap-icon://date-time", text: "Date Time Picker", type: "DateTimePicker", parent: false },
-        { icon: "sap-icon://fa-regular/check-square", text: "Check Box", type: "CheckBox", parent: false },
-        { icon: "sap-icon://checklist", text: "Check List", type: "CheckList", parent: false },
-        { icon: "sap-icon://request", text: "Input", type: "Input", parent: false },
-        { icon: "sap-icon://fa-solid/image", text: "Image", type: "Image", parent: false },
-        { icon: "sap-icon://message-information", text: "Message Strip", type: "MessageStrip", parent: false },
-        { icon: "sap-icon://number-sign", text: "Step Input", type: "StepInput", parent: false },
-        { icon: "sap-icon://switch-views", text: "Switch", type: "Switch", parent: false },
-        { icon: "sap-icon://fa-regular/circle", text: "Single Select", type: "SingleSelect", parent: false },
-        { icon: "sap-icon://fa-regular/circle", text: "Single Choice", type: "SingleChoice", parent: false },
-        { icon: "sap-icon://multi-select", text: "Multiple Select", type: "MultipleSelect", parent: false },
-        { icon: "sap-icon://multi-select", text: "Multiple Choice", type: "MultipleChoice", parent: false },
-        { icon: "sap-icon://text", text: "Text", type: "Text", parent: false },
-        { icon: "sap-icon://document-text", text: "Text Area", type: "TextArea", parent: false },
+        { icon: "sap-icon://form", text: "Form", type: "Form", parent: true, descripton: "Present the data in Form layout" },
+        { icon: "sap-icon://table-view", text: "Table", type: "Table", parent: true, descripton: "Present the data in Table layout" },
+        { icon: "sap-icon://header", text: "Form Title", type: "FormTitle", parent: false, table: false },
+        { icon: "sap-icon://calendar", text: "Date Picker", type: "DatePicker", parent: false, table: true },
+        { icon: "sap-icon://date-time", text: "Date Time Picker", type: "DateTimePicker", parent: false, table: true },
+        { icon: "sap-icon://fa-regular/check-square", text: "Check Box", type: "CheckBox", parent: false, table: true },
+        { icon: "sap-icon://checklist", text: "Check List", type: "CheckList", parent: false, table: false, table: true },
+        { icon: "sap-icon://request", text: "Input", type: "Input", parent: false, table: true },
+        { icon: "sap-icon://fa-regular/file-image", text: "Image Upload", type: "Image", parent: false, table: false },
+        { icon: "sap-icon://message-information", text: "Message Strip", type: "MessageStrip", parent: false, table: true },
+        { icon: "sap-icon://number-sign", text: "Numeric", type: "Numeric", parent: false, table: true },
+        { icon: "sap-icon://picture", text: "Picture", type: "Picture", parent: false, table: false },
+        { icon: "sap-icon://numbered-text", text: "Step Input", type: "StepInput", parent: false, table: true },
+        { icon: "sap-icon://switch-views", text: "Switch", type: "Switch", parent: false, table: true },
+        { icon: "sap-icon://activities", text: "Segmented Button", type: "SegmentedButton", parent: false, table: true },
+        { icon: "sap-icon://fa-regular/circle", text: "Single Select", type: "SingleSelect", parent: false, table: true },
+        { icon: "sap-icon://fa-regular/circle", text: "Single Choice", type: "SingleChoice", parent: false, table: false },
+        { icon: "sap-icon://multi-select", text: "Multiple Select", type: "MultipleSelect", parent: false, table: true },
+        { icon: "sap-icon://multi-select", text: "Multiple Choice", type: "MultipleChoice", parent: false, table: false },
+        { icon: "sap-icon://text", text: "Text", type: "Text", parent: false, table: true },
+        { icon: "sap-icon://document-text", text: "Text Area", type: "TextArea", parent: false, table: true },
     ],
 
     init: function () {
@@ -32,69 +62,8 @@ const controller = {
 
         treeOutline.getBinding("items").filter([new sap.ui.model.Filter("option", "NE", "I")]);
 
-        const outlineMenu = new sap.m.Menu();
-
-        outlineMenu.addItem(
-            new sap.m.MenuItem({
-                text: "Copy",
-                icon: "sap-icon://copy",
-                press: function (oEvent) {
-                    controller.handleContextMenu(oEvent, "copy");
-                },
-            })
-        );
-
-        outlineMenu.addItem(
-            new sap.m.MenuItem({
-                text: "Enable",
-                icon: "sap-icon://fa-solid/toggle-on",
-                press: function (oEvent) {
-                    controller.handleContextMenu(oEvent, "enable");
-                },
-            })
-        );
-
-        outlineMenu.addItem(
-            new sap.m.MenuItem({
-                text: "Disable",
-                icon: "sap-icon://fa-solid/toggle-off",
-                press: function (oEvent) {
-                    controller.handleContextMenu(oEvent, "disable");
-                },
-            })
-        );
-
-        outlineMenu.addItem(
-            new sap.m.MenuItem({
-                text: "Delete",
-                icon: "sap-icon://delete",
-                press: function (oEvent) {
-                    controller.handleContextMenu(oEvent, "delete");
-                },
-            })
-        );
-
-        const outlineMenuSub = new sap.m.MenuItem({
-            text: "Add Element",
-        });
-
-        controller.elementTypes.forEach(function (item) {
-            if (!item.parent) {
-                outlineMenuSub.addItem(
-                    new sap.m.MenuItem({
-                        text: item.text,
-                        icon: item.icon,
-                        press: function (oEvent) {
-                            controller.handleContextMenu(oEvent, "add", item);
-                        },
-                    })
-                );
-            }
-        });
-
-        outlineMenu.addItem(outlineMenuSub);
-
-        treeOutline.setContextMenu(outlineMenu);
+        // Context Menu
+        treeOutline.setContextMenu(controller.buildContextMenu());
 
         // ClickToPreview
         panPreview.attachBrowserEvent("click", function (e) {
@@ -106,11 +75,18 @@ const controller = {
                 target = e.target.parentElement.id.split("--")[0];
             } else if (e.target.parentElement.parentElement.id.indexOf("field") > -1) {
                 target = e.target.parentElement.parentElement.id.split("--")[0];
+            } else if (e.target.parentElement.parentElement.parentElement.id.indexOf("field") > -1) {
+                target = e.target.parentElement.parentElement.parentElement.id.split("--")[0];
+            } else if (e.target.parentElement.parentElement.parentElement.parentElement.id.indexOf("field") > -1) {
+                target = e.target.parentElement.parentElement.parentElement.parentElement.id.split("--")[0];
+            } else if (e.target.parentElement.parentElement.parentElement.parentElement.parentElement.id.indexOf("field") > -1) {
+                target = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.id.split("--")[0];
             }
 
             if (target) {
                 target = target.split("field")[1];
                 if (target && target.substring) {
+                    controller.pressedPreview = true;
                     controller.selectObjectFromId(target.substring(0, 36));
                 }
             }
@@ -129,7 +105,93 @@ const controller = {
             }
         });
 
+        // Get FORMS
         this.list();
+    },
+
+    buildContextMenu: function () {
+        const outlineMenu = new sap.m.Menu();
+
+        outlineMenu.addItem(
+            new sap.m.MenuItem({
+                text: "Copy",
+                icon: "sap-icon://copy",
+                enabled: "{appControl>/enableEdit}",
+                press: function (oEvent) {
+                    controller.handleContextMenu(oEvent, "copy");
+                },
+            })
+        );
+
+        outlineMenu.addItem(
+            new sap.m.MenuItem({
+                text: "Enable",
+                // enabled: "{= ${appControl>/enableEdit} && ${appControl>/isForm}}",
+                enabled: "{appControl>/enableEdit}",
+                icon: "sap-icon://fa-solid/toggle-on",
+                press: function (oEvent) {
+                    controller.handleContextMenu(oEvent, "enable");
+                },
+            })
+        );
+
+        outlineMenu.addItem(
+            new sap.m.MenuItem({
+                text: "Disable",
+                enabled: "{appControl>/enableEdit}",
+                icon: "sap-icon://fa-solid/toggle-off",
+                press: function (oEvent) {
+                    controller.handleContextMenu(oEvent, "disable");
+                },
+            })
+        );
+
+        outlineMenu.addItem(
+            new sap.m.MenuItem({
+                text: "Delete",
+                enabled: "{appControl>/enableEdit}",
+                icon: "sap-icon://delete",
+                press: function (oEvent) {
+                    controller.handleContextMenu(oEvent, "delete");
+                },
+            })
+        );
+
+        const outlineMenuSubElement = new sap.m.MenuItem({
+            text: "Add Element",
+            enabled: "{appControl>/enableEdit}",
+        });
+
+        controller.elementTypes.forEach(function (item) {
+            if (!item.parent) {
+                if (item.table) {
+                    outlineMenuSubElement.addItem(
+                        new sap.m.MenuItem({
+                            text: item.text,
+                            icon: item.icon,
+                            press: function (oEvent) {
+                                controller.handleContextMenu(oEvent, "add", item);
+                            },
+                        })
+                    );
+                } else {
+                    outlineMenuSubElement.addItem(
+                        new sap.m.MenuItem({
+                            visible: "{= ${appControl>/table} ? false:true}",
+                            text: item.text,
+                            icon: item.icon,
+                            press: function (oEvent) {
+                                controller.handleContextMenu(oEvent, "add", item);
+                            },
+                        })
+                    );
+                }
+            }
+        });
+
+        outlineMenu.addItem(outlineMenuSubElement);
+
+        return outlineMenu;
     },
 
     handleContextMenu: function (oEvent, key, item) {
@@ -245,8 +307,9 @@ const controller = {
             modeloPageDetail.setData(req);
             controller.preview();
 
-            if (oApp.getCurrentPage === oPageStart) {
+            if (oApp.getCurrentPage() === oPageStart) {
                 tabDetail.setSelectedItem(tabDetailInfo);
+                treeOutline.expandToLevel(99);
             } else {
                 treeOutline.fireItemPress();
             }
@@ -345,22 +408,60 @@ const controller = {
 
     getParentFromId: function (id) {
         let parentData = null;
-        modeloPageDetail.oData.setup.forEach(function (section, i) {
-            section.elements.forEach(function (element, i) {
+
+        modeloPageDetail.oData.setup.forEach(function (section) {
+            if (section.id === id) parentData = section;
+
+            section.elements.forEach(function (element) {
                 if (element.id === id) parentData = section;
+
+                if (element.elements) {
+                    if (!parentData && element.id === id) parentData = element;
+                    element.elements.forEach(function (subElement) {
+                        if (subElement.id === id) parentData = element;
+                    });
+                }
             });
         });
 
         return parentData;
     },
 
+    getIndexFromId: function (id) {
+        let index = null;
+
+        modeloPageDetail.oData.setup.forEach(function (section, iSec) {
+            if (section.id === id) index = iSec;
+
+            section.elements.forEach(function (element, iEle) {
+                if (element.id === id) index = iEle;
+
+                if (element.elements) {
+                    // if (!parentData && element.id === id) parentData = element;
+                    element.elements.forEach(function (subElement, iSub) {
+                        if (subElement.id === id) index = iSub;
+                    });
+                }
+            });
+        });
+
+        return index;
+    },
+
     getObjectFromId: function (id) {
         let elementData = null;
+
         modeloPageDetail.oData.setup.forEach(function (section, i) {
             if (section.id === id) elementData = section;
 
             section.elements.forEach(function (element, i) {
                 if (element.id === id) elementData = element;
+
+                if (element.elements) {
+                    element.elements.forEach(function (element, i) {
+                        if (element.id === id) elementData = element;
+                    });
+                }
             });
         });
 
@@ -387,7 +488,12 @@ const controller = {
 
             if (data.id === id) {
                 treeOutline.setSelectedItemById(item.sId);
-                treeOutline.fireItemPress();
+
+                modelpanTopProperties.setData(data);
+                modelpanTopProperties.refresh();
+
+                controller.pressedPreview = true;
+                controller.pressOutlineItem();
             }
         });
     },
@@ -414,6 +520,10 @@ const controller = {
             data: null,
             config: modeloPageDetail.oData,
         });
+
+        panPreview.onAfterRendering = function (oEvent) {
+            controller.markElement();
+        };
     },
 
     addElement: function (elementData) {
@@ -440,6 +550,7 @@ const controller = {
             case "Table":
                 newElement.option = "P";
                 newElement.elements = [];
+                newElement.widths = [];
                 newElement.rows = 5;
                 break;
 
@@ -451,7 +562,16 @@ const controller = {
                 newElement.layout = "ResponsiveGridLayout";
                 break;
 
+            case "FormTitle":
+                newElement.option = "P";
+                newElement.elements = [];
+                break;
+
             // Elements
+            case "Numeric":
+                newElement.decimals = 2;
+                break;
+
             case "Text":
                 newElement.titleStyle = "Auto";
                 break;
@@ -472,49 +592,34 @@ const controller = {
                 newElement.answerTitle = "Answer";
 
                 newElement.items = [
-                    {
-                        id: ModelData.genID(),
-                        question: "Question 1",
-                        type: "Switch",
-                        option: "I",
-                    },
-                    {
-                        id: ModelData.genID(),
-                        question: "Question 2",
-                        type: "Switch",
-                        option: "I",
-                    },
-                    {
-                        id: ModelData.genID(),
-                        question: "Question 3",
-                        type: "Switch",
-                        option: "I",
-                    },
+                    { id: ModelData.genID(), question: "Question1", type: "Switch", option: "I" },
+                    { id: ModelData.genID(), question: "Question2", type: "Switch", option: "I" },
+                    { id: ModelData.genID(), question: "Question3", type: "Switch", option: "I" },
                 ];
                 break;
 
             case "SingleChoice":
                 newElement.items = [
-                    { id: ModelData.genID(), title: "", key: "key1", option: "I" },
-                    { id: ModelData.genID(), title: "", key: "key2", option: "I" },
-                    { id: ModelData.genID(), title: "", key: "key3", option: "I" },
+                    { id: ModelData.genID(), title: "Option1", key: "key1", option: "I" },
+                    { id: ModelData.genID(), title: "Option2", key: "key2", option: "I" },
+                    { id: ModelData.genID(), title: "Option3", key: "key3", option: "I" },
                 ];
                 newElement.horizontal = false;
                 break;
 
             case "SingleSelect":
                 newElement.items = [
-                    { id: ModelData.genID(), title: "", key: "key1", option: "I" },
-                    { id: ModelData.genID(), title: "", key: "key2", option: "I" },
-                    { id: ModelData.genID(), title: "", key: "key3", option: "I" },
+                    { id: ModelData.genID(), title: "Option1", key: "key1", option: "I" },
+                    { id: ModelData.genID(), title: "Option2", key: "key2", option: "I" },
+                    { id: ModelData.genID(), title: "Option3", key: "key3", option: "I" },
                 ];
                 break;
 
             case "MultipleChoice":
                 newElement.items = [
-                    { id: ModelData.genID(), title: "", key: "key1", option: "I" },
-                    { id: ModelData.genID(), title: "", key: "key2", option: "I" },
-                    { id: ModelData.genID(), title: "", key: "key3", option: "I" },
+                    { id: ModelData.genID(), title: "Option1", key: "key1", option: "I" },
+                    { id: ModelData.genID(), title: "Option2", key: "key2", option: "I" },
+                    { id: ModelData.genID(), title: "Option3", key: "key3", option: "I" },
                 ];
                 newElement.validationParam = 1;
                 newElement.validationType = "noLimit";
@@ -523,12 +628,20 @@ const controller = {
 
             case "MultipleSelect":
                 newElement.items = [
-                    { id: ModelData.genID(), title: "", key: "key1", option: "I" },
-                    { id: ModelData.genID(), title: "", key: "key2", option: "I" },
-                    { id: ModelData.genID(), title: "", key: "key3", option: "I" },
+                    { id: ModelData.genID(), title: "Option1", key: "key1", option: "I" },
+                    { id: ModelData.genID(), title: "Option2", key: "key2", option: "I" },
+                    { id: ModelData.genID(), title: "Option3", key: "key3", option: "I" },
                 ];
                 newElement.validationParam = 1;
                 newElement.validationType = "noLimit";
+                break;
+
+            case "SegmentedButton":
+                newElement.items = [
+                    { id: ModelData.genID(), title: "Option1", key: "key1", option: "I" },
+                    { id: ModelData.genID(), title: "Option2", key: "key2", option: "I" },
+                    { id: ModelData.genID(), title: "Option3", key: "key3", option: "I" },
+                ];
                 break;
         }
 
@@ -547,8 +660,92 @@ const controller = {
         controller.selectObjectFromId(newElement.id);
     },
 
+    markElement: function () {
+        const element = modelpanTopProperties.oData;
+
+        if (!element.id) return;
+
+        let fieldPrefix = "field";
+        if (["Table"].includes(element.type)) fieldPrefix = "section";
+
+        let elementPreview = sap.ui.getCore().byId(fieldPrefix + element.id);
+        let elementDom;
+
+        if (elementPreview) {
+            switch (element.type) {
+                case "Form":
+                case "Table":
+                    elementDom = elementPreview.getDomRef();
+                    break;
+
+                case "FormTitle":
+                    elementDom = elementPreview.getDomRef().parentElement;
+                    break;
+                default:
+                    elementDom = elementPreview.oParent.getDomRef();
+                    break;
+            }
+
+            if (!elementDom) return;
+
+            // Remove Mark from Current Selected Element in Preview
+            if (controller.markedElement.elemDom !== elementDom) {
+                if (controller.markedElement.elemDom) controller.markedElement.elemDom.classList.remove("previewMarked");
+
+                if (!elementDom || !elementDom.classList) {
+                    debugger;
+                } else {
+                    elementDom.classList.add("previewMarked");
+                }
+
+                controller.markedElement.elemDom = elementDom;
+                controller.markedElement.elemId = element.id;
+            }
+
+            // Navigate to Element
+            if (!controller.pressedPreview) {
+                scrollPreview.scrollToElement(elementPreview, 0);
+                let position = scrollPreview._oScroller._scrollY - 300;
+                if (position < 0) position = 0;
+                scrollPreview.scrollTo(0, position);
+            } else {
+                controller.pressedPreview = false;
+            }
+        }
+    },
+
     pressOutlineItem: function () {
-        if (modelpanTopProperties.oData.elements) {
+        const element = modelpanTopProperties.oData;
+
+        controller.markElement();
+
+        // Build Table widths
+        if (element.type === "Table") {
+            let newWidths = [];
+            let existingWidths = [];
+            if (element.widths) existingWidths = JSON.parse(JSON.stringify(element.widths));
+
+            element.elements.forEach(function (element) {
+                let newWidth = {
+                    id: element.id,
+                    title: element.title,
+                    width: null,
+                };
+
+                const existingWidth = ModelData.FindFirst(existingWidths, "id", element.id);
+
+                if (existingWidth && existingWidth.width) newWidth.width = existingWidth.width;
+                if (existingWidth && existingWidth.widthMetric) newWidth.widthMetric = existingWidth.widthMetric;
+
+                newWidths.push(newWidth);
+            });
+
+            modelpanTopProperties.oData.widths = newWidths;
+            modelpanTopProperties.refresh();
+        }
+
+        // Do not change type on parents
+        if (element.elements) {
             elementToolbarType.setVisible(false);
             elementToolbarTypeText.setVisible(true);
         } else {
@@ -613,6 +810,25 @@ const controller = {
                 break;
         }
     },
+
+    importPicture: function (oEvent) {
+        try {
+            const file = oEvent.target.files[0];
+            const fileReader = new FileReader();
+
+            fileReader.onload = function (fileLoadedEvent) {
+                modelpanTopProperties.oData.imageSrc = fileLoadedEvent.target.result;
+                modelpanTopProperties.refresh();
+                document.getElementById("pictureUploader").value = "";
+            };
+
+            fileReader.readAsDataURL(file);
+        } catch (e) {
+            console.log(e);
+        }
+    },
 };
 
 controller.init();
+
+window.importPicture = controller.importPicture;

@@ -11,46 +11,38 @@ const position = oEvent.getParameter("dropPosition");
 let oDraggedData = oDraggedContext.getObject();
 let oDroppedData = oDroppedContext.getObject();
 
-let indexDrag = 0;
-let indexDrop = 0;
-
 let oDraggedParent;
 let oDroppedParent;
 
-modeloPageDetail.oData.setup.forEach(function (section, i) {
-    if (section.id === oDraggedData.id) {
-        oDraggedParent = section;
-        indexDrag = i;
+if (["Form", "Table"].includes(oDraggedData.type)) {
+    oDraggedParent = oDraggedData;
+    oDroppedParent = controller.getParentFromId(oDroppedData.id);
+} else {
+    oDraggedParent = controller.getParentFromId(oDraggedData.id);
+
+    if (["Form", "Table", "FormTitle"].includes(oDroppedData.type)) {
+        oDroppedParent = oDroppedData;
+    } else {
+        oDroppedParent = controller.getParentFromId(oDroppedData.id);
     }
+}
 
-    if (section.id === oDroppedData.id) {
-        oDroppedParent = section;
-        indexDrop = i;
-    }
+let indexDrag = controller.getIndexFromId(oDraggedData.id);
+let indexDrop = controller.getIndexFromId(oDroppedData.id);
 
-    section.elements.forEach(function (element, i) {
-        if (element.id === oDraggedData.id) {
-            oDraggedParent = section;
-            indexDrag = i;
-        }
-
-        if (element.id === oDroppedData.id) {
-            oDroppedParent = section;
-            indexDrop = i;
-        }
-    });
-});
+const rootType = ["Form", "Table"];
 
 // FORM - TOP
-if (oDraggedData.elements && oDroppedData.elements) {
+if (rootType.includes(oDraggedData.type) && rootType.includes(oDroppedData.type)) {
     Utils.arrayMove(modeloPageDetail.oData.setup, indexDrag, indexDrop);
 }
 
-if (oDraggedData.elements && !oDroppedData.elements) {
+// Prevent Parents to be Dropped wrong
+if (rootType.includes(oDraggedData.type) && !oDroppedData.elements) {
     return;
 }
 
-if (!oDraggedData.elements && oDroppedData.elements) {
+if (!rootType.includes(oDraggedData.type) && rootType.includes(oDroppedData.type)) {
     if (oDraggedParent.id === oDroppedParent.id) {
         Utils.arrayMove(oDroppedParent.elements, indexDrag, 0);
     } else {
@@ -59,7 +51,7 @@ if (!oDraggedData.elements && oDroppedData.elements) {
     }
 }
 
-if (!oDraggedData.elements && !oDroppedData.elements) {
+if (!rootType.includes(oDraggedData.type) && !rootType.includes(oDroppedData.type)) {
     if (oDraggedParent.id === oDroppedParent.id) {
         Utils.arrayMove(oDroppedParent.elements, indexDrag, indexDrop);
     } else {

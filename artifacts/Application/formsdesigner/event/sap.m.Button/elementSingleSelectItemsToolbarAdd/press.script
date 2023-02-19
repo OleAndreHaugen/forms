@@ -1,6 +1,6 @@
 modelpanTopProperties.oData.items.push({
     id: ModelData.genID(),
-    title: "", //"Option " + (modelpanTopProperties.oData.items.length + 1),
+    title: "Option" + (modelpanTopProperties.oData.items.length + 1),
     key: "key" + (modelpanTopProperties.oData.items.length + 1),
     option: "I",
 });

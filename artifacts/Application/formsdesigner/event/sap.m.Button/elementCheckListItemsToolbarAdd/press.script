@@ -1,6 +1,6 @@
 modelpanTopProperties.oData.items.push({
     id: ModelData.genID(),
-    question: "Question " + (modelpanTopProperties.oData.items.length + 1),
+    question: "Question" + (modelpanTopProperties.oData.items.length + 1),
     type: "Switch",
     option: "I",
 });
