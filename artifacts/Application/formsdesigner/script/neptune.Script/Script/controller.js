@@ -2,6 +2,7 @@ const controller = {
     currentIndex: null,
     currentObject: null,
     currentFilter: null,
+    enableMarker: true,
     previewData: null,
     markedElement: {
         elemDom: null,
@@ -701,7 +702,7 @@ const controller = {
             if (!elementDom) return;
 
             // Remove Mark from Current Selected Element in Preview
-            if (controller.markedElement.elemDom !== elementDom) {
+            if (controller.enableMarker && controller.markedElement.elemDom !== elementDom) {
                 if (controller.markedElement.elemDom) controller.markedElement.elemDom.classList.remove("previewMarked");
 
                 if (!elementDom || !elementDom.classList) {

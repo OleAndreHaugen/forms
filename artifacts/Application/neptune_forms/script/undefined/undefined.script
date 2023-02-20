@@ -11,7 +11,7 @@
 }
 
 .notValid {
-  border-left: 4px solid #f53232 !important;
+  border-left: 4px solid #f53232;
 }
 
 .sapUiRespGridMedia-Std-Phone.sapUiFormResGridCont > .sapUiFormElementLbl:not(.sapUiRespGridSpanS12) > .nepLabelLeftAlign,

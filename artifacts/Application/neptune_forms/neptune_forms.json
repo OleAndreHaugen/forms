@@ -71,7 +71,6 @@
 					"fieldType": "sap.ui.core.HTML",
 					"script": "",
 					"customComponent": false,
-					"disabled": true,
 					"request": [],
 					"response": [],
 					"attributes": [],
@@ -83,7 +82,6 @@
 							"fieldType": "neptune.Html",
 							"script": "file://script/neptune.Html/oHTML.script",
 							"customComponent": false,
-							"disabled": true,
 							"request": [],
 							"response": [],
 							"attributes": [],
@@ -104,7 +102,7 @@
 			"sap.m.Panel"
 		]
 	},
-	"ver": "23.2.20.1311",
+	"ver": "23.2.20.158",
 	"application": "neptune_forms",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",

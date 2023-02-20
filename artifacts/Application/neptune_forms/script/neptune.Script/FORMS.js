@@ -133,6 +133,7 @@ const FORMS = {
                             section.elements.forEach(function (element, i) {
                                 switch (element.type) {
                                     case "SingleChoice":
+                                    case "SegmentedButton":
                                         const firstItem = element.items[0];
                                         newRec[element.id] = firstItem.key;
                                         break;
@@ -346,7 +347,10 @@ const FORMS = {
 
         if (section.enableCompact) sectionTable.addStyleClass("sapUiSizeCompact");
 
-        const columListItem = new sap.m.ColumnListItem();
+        const columListItem = new sap.m.ColumnListItem({
+            highlight: "{highlight}",
+        });
+
         if (section.vAlign) columListItem.setVAlign(section.vAlign);
 
         // Enable Copy
@@ -822,6 +826,10 @@ const FORMS = {
             newField.addItem(new sap.m.SegmentedButtonItem({ key: item.key, text: item.title, icon: item.icon }));
         });
 
+        // Set Default Item 1 as Selected
+        const formModel = FORMS.formParent.getModel();
+        if (!formModel.oData[element.id]) formModel.oData[element.id] = element.items[0].key;
+
         return newField;
     },
 
@@ -881,7 +889,6 @@ const FORMS = {
                 elementRadio.setSelected(true);
             }
 
-            // elementRadio.addStyleClass("sapUiTinyMarginBegin");
             newField.addButton(elementRadio);
         });
 
@@ -1099,7 +1106,16 @@ const FORMS = {
             if (section.type === "Table") {
                 const tabObject = sap.ui.getCore().byId("field" + section.id);
                 const tabModel = tabObject.getModel();
-                if (tabModel) outputData[section.id] = tabModel.oData;
+                if (tabModel) {
+                    outputData[section.id] = tabModel.oData;
+
+                    // Cleanup validation fields
+                    if (outputData[section.id].forEach) {
+                        outputData[section.id].forEach(function (data) {
+                            delete data.highlight;
+                        });
+                    }
+                }
                 return;
             }
 
@@ -1208,17 +1224,50 @@ const FORMS = {
         };
 
         FORMS.config.setup.forEach(function (section) {
-            section.elements.forEach(function (element) {
-                validateElement(element);
-                if (element.elements) {
-                    element.elements.forEach(function (subElement) {
-                        validateElement(subElement);
-                    });
+            if (section.type === "Table") {
+                const validTable = FORMS.validateTableContentRequired(section);
+                if (!validTable) validForm = false;
+            } else {
+                section.elements.forEach(function (element) {
+                    validateElement(element);
+
+                    if (element.elements) {
+                        element.elements.forEach(function (subElement) {
+                            validateElement(subElement);
+                        });
+                    }
+                });
+            }
+        });
+
+        return validForm;
+    },
+
+    validateTableContentRequired: function (section) {
+        const table = sap.ui.getCore().byId("field" + section.id);
+        const model = table.getModel();
+
+        let validTable = true;
+        let requiredFields = [];
+
+        section.elements.forEach(function (element) {
+            if (element.required) requiredFields.push(element.id);
+        });
+
+        model.oData.forEach(function (rowData) {
+            delete rowData.highlight;
+
+            requiredFields.forEach(function (requiredField) {
+                if (!rowData[requiredField]) {
+                    validTable = false;
+                    rowData.highlight = "Error";
                 }
             });
         });
 
-        return validForm;
+        model.refresh();
+
+        return validTable;
     },
 
     validateMarkField: function (id, valid, process) {
