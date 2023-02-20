@@ -44,6 +44,7 @@ const controller = {
         { icon: "sap-icon://message-information", text: "Message Strip", type: "MessageStrip", parent: false, table: true },
         { icon: "sap-icon://number-sign", text: "Numeric", type: "Numeric", parent: false, table: true },
         { icon: "sap-icon://picture", text: "Picture", type: "Picture", parent: false, table: false },
+        { icon: "sap-icon://feedback", text: "Rating", type: "Rating", parent: false, table: true },
         { icon: "sap-icon://numbered-text", text: "Step Input", type: "StepInput", parent: false, table: true },
         { icon: "sap-icon://switch-views", text: "Switch", type: "Switch", parent: false, table: true },
         { icon: "sap-icon://activities", text: "Segmented Button", type: "SegmentedButton", parent: false, table: true },
@@ -476,7 +477,7 @@ const controller = {
         });
     },
 
-    selectObjectFromId: function (id) {
+    selectObjectFromId: function (id, forceMarking) {
         const parent = controller.getParentFromId(id);
         if (parent) controller.expandParent(parent.id);
 
@@ -492,7 +493,10 @@ const controller = {
                 modelpanTopProperties.setData(data);
                 modelpanTopProperties.refresh();
 
-                controller.pressedPreview = true;
+                if (!forceMarking) {
+                    controller.pressedPreview = true;
+                }
+
                 controller.pressOutlineItem();
             }
         });
@@ -570,6 +574,10 @@ const controller = {
             // Elements
             case "Numeric":
                 newElement.decimals = 2;
+                break;
+
+            case "Rating":
+                newElement.maxValue = 5;
                 break;
 
             case "Text":
@@ -657,7 +665,10 @@ const controller = {
         }
 
         modeloPageDetail.refresh(true);
-        controller.selectObjectFromId(newElement.id);
+
+        setTimeout(function () {
+            controller.selectObjectFromId(newElement.id, true);
+        }, 100);
     },
 
     markElement: function () {
@@ -671,7 +682,7 @@ const controller = {
         let elementPreview = sap.ui.getCore().byId(fieldPrefix + element.id);
         let elementDom;
 
-        if (elementPreview) {
+        if (elementPreview && elementPreview.getDomRef()) {
             switch (element.type) {
                 case "Form":
                 case "Table":
@@ -681,6 +692,7 @@ const controller = {
                 case "FormTitle":
                     elementDom = elementPreview.getDomRef().parentElement;
                     break;
+
                 default:
                     elementDom = elementPreview.oParent.getDomRef();
                     break;

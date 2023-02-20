@@ -335,8 +335,8 @@
 									],
 									"data": [
 										{
-											"fieldNo": "f421cb2e-9513-4110-e56d-6385c9dbf520",
-											"fieldName": "toolHeaderCheck",
+											"fieldNo": "d29963e0-a8ec-4e5c-c089-544f679b3df9",
+											"fieldName": "toolHeaderDraft",
 											"fieldParent": "fc9d89ea-1ada-447f-fe33-672a58bdb137",
 											"fieldType": "sap.m.Button",
 											"script": "",
@@ -347,21 +347,28 @@
 												{
 													"attribute": "visible",
 													"grouping": "Properties",
-													"value": "{AppConfig>/settings/properties/report/enableTabF}",
+													"value": "{AppConfig>/settings/properties/report/enableDraft}",
 													"script": "",
 													"translation": []
 												},
 												{
 													"attribute": "type",
 													"grouping": "Properties",
-													"value": "Attention",
+													"value": "{AppConfig>/settings/properties/report/typeButtonDraft}",
 													"script": "",
 													"translation": []
 												},
 												{
 													"attribute": "text",
 													"grouping": "Properties",
-													"value": "Validate",
+													"value": "{AppConfig>/settings/properties/report/textButtonDraft}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "icon",
+													"grouping": "Properties",
+													"value": "{AppConfig>/settings/properties/report/iconButtonDraft}",
 													"script": "",
 													"translation": []
 												},
@@ -375,8 +382,8 @@
 												{
 													"attribute": "press",
 													"grouping": "Events",
-													"value": "FORMS.validate();",
-													"script": "FORMS.validate();",
+													"value": "report.save();",
+													"script": "report.save();",
 													"translation": []
 												}
 											],
@@ -430,8 +437,8 @@
 												{
 													"attribute": "press",
 													"grouping": "Events",
-													"value": "report.save();",
-													"script": "report.save();",
+													"value": "report.save(true);",
+													"script": "report.save(true);",
 													"translation": []
 												}
 											],
@@ -1648,11 +1655,11 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.2.2.1432",
+	"ver": "23.2.20.1231",
 	"application": "planet9_adaptive_forms",
 	"title": "Adaptive FORMS",
 	"description": "Adaptive FORMS",
-	"enableFileStorage": true,
+	"enableFileStorage": false,
 	"enableManifest": false,
 	"enableStylesheet": true,
 	"enableObfuscate": false,
@@ -1673,7 +1680,7 @@
 	"ui5_url": "",
 	"cus_theme": "",
 	"css": "file:///css.css",
-	"compiledCss": null,
+	"compiledCss": "file://script/undefined/undefined.script",
 	"header": "",
 	"manifest": "",
 	"globalScript": null,
@@ -1686,7 +1693,7 @@
 	"useV2AppHandler": false,
 	"compilerTarget": 3,
 	"tabWidth": null,
-	"printWidth": null,
+	"printWidth": 200,
 	"apis": [],
 	"package": "a313322e-f024-45f1-960f-b90081757b85"
 }

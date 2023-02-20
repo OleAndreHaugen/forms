@@ -219,7 +219,7 @@ const FORMS = {
         }
 
         // Duplicate
-        if (element.enableDuplicate) {
+        if (element.enableDuplicate && FORMS.editable) {
             if (element.isDuplicate) {
                 elementParent.addItem(
                     new sap.m.Button({
@@ -321,7 +321,7 @@ const FORMS = {
         );
 
         // Enable Create
-        if (section.enableCreate) {
+        if (section.enableCreate && FORMS.editable) {
             sectionToolbar.addContent(new sap.m.ToolbarSpacer());
 
             sectionToolbar.addContent(
@@ -340,7 +340,7 @@ const FORMS = {
         sectionPanel.setHeaderToolbar(sectionToolbar);
 
         // Enable Delete
-        if (section.enableDelete) {
+        if (section.enableDelete && FORMS.editable) {
             sectionTable.setMode("Delete");
         }
 
@@ -350,7 +350,7 @@ const FORMS = {
         if (section.vAlign) columListItem.setVAlign(section.vAlign);
 
         // Enable Copy
-        if (section.enableCopy) {
+        if (section.enableCopy && FORMS.editable) {
             const newColumn = new sap.m.Column({ width: "50px" });
 
             sectionTable.addColumn(newColumn);
@@ -581,6 +581,10 @@ const FORMS = {
                 elementField = FORMS.buildElementSwitch(element);
                 break;
 
+            case "Rating":
+                elementField = FORMS.buildElementRating(element);
+                break;
+
             case "CheckBox":
                 elementField = FORMS.buildElementCheckBox(element);
                 break;
@@ -727,6 +731,23 @@ const FORMS = {
             width: "100%",
         });
         if (element.rows) newField.setRows(parseInt(element.rows));
+
+        return newField;
+    },
+
+    buildElementRating: function (element) {
+        const newField = new sap.m.RatingIndicator(FORMS.buildElementFieldID(element), {
+            value: "{" + FORMS.bindingPath + element.id + "}",
+            editable: FORMS.editable,
+            maxValue: element.maxValue,
+        });
+
+        if (element.iconSelected) {
+            newField.setIconSelected(element.iconSelected);
+            newField.setIconHovered(element.iconSelected);
+            newField.setIconUnselected(element.iconSelected);
+        }
+        if (element.iconSize) newField.setIconSize(element.iconSize + "px");
 
         return newField;
     },
@@ -1054,9 +1075,11 @@ const FORMS = {
         return FORMS.validate("OnlyCheck");
     },
 
-    getData: function () {
+    getData: function (complete) {
         const formModel = FORMS.formParent.getModel();
         const outputData = {};
+
+        let completed = false;
 
         const getElementData = function (element) {
             if (formModel.oData[element.id]) {
@@ -1090,10 +1113,14 @@ const FORMS = {
             });
         });
 
+        if (complete) {
+            if (FORMS.validate()) completed = true;
+        }
+
         const formData = {
             data: outputData,
             config: FORMS.config,
-            completed: FORMS.validate("OnlyCheck"),
+            completed: completed,
         };
 
         return formData;
@@ -1103,11 +1130,11 @@ const FORMS = {
         // } else {
     },
 
-    setData: function (data) {
-        const formModel = FORMS.formParent.getModel();
-        formModel.setData(data);
-        formModel.refresh();
-    },
+    // setData: function (data) {
+    //     const formModel = FORMS.formParent.getModel();
+    //     formModel.setData(data);
+    //     formModel.refresh();
+    // },
 
     clear: function () {
         // Model
@@ -1136,47 +1163,56 @@ const FORMS = {
         let fieldCompleted;
         const formModel = FORMS.formParent.getModel();
 
-        FORMS.config.setup.forEach(function (section, i) {
-            section.elements.forEach(function (element, i) {
-                if (element.required) {
-                    fieldCompleted = formModel.oData[element.id] ? true : false;
-                    if (validForm) validForm = fieldCompleted;
-                    FORMS.validateMarkField(element.id, fieldCompleted, process);
-                }
+        const validateElement = function (element) {
+            if (element.required) {
+                fieldCompleted = formModel.oData[element.id] ? true : false;
+                if (validForm) validForm = fieldCompleted;
+                FORMS.validateMarkField(element.id, fieldCompleted, process);
+            }
 
-                // MultipleSelect/MultipleChoice
-                if (formModel.oData[element.id] && element.validationType !== "noLimit" && (element.type === "MultipleChoice" || element.type === "MultipleSelect")) {
-                    switch (element.validationType) {
-                        case "equalTo":
-                            if (formModel.oData[element.id].length !== parseInt(element.validationParam)) {
-                                FORMS.validateMarkField(element.id, false, process);
-                            }
-                            break;
-
-                        case "atMost":
-                            if (formModel.oData[element.id].length > parseInt(element.validationParam)) {
-                                FORMS.validateMarkField(element.id, false, process);
-                            }
-                            break;
-
-                        case "atLeast":
-                            if (formModel.oData[element.id].length < parseInt(element.validationParam)) {
-                                FORMS.validateMarkField(element.id, false, process);
-                            }
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
-
-                if (element.type === "CheckList") {
-                    element.items.forEach(function (item, i) {
-                        if (item.required) {
-                            const fieldCompleted = formModel.oData[item.id] ? true : false;
-                            if (validForm) validForm = fieldCompleted;
-                            FORMS.validateMarkField(item.id, fieldCompleted, process);
+            // MultipleSelect/MultipleChoice
+            if (formModel.oData[element.id] && element.validationType !== "noLimit" && (element.type === "MultipleChoice" || element.type === "MultipleSelect")) {
+                switch (element.validationType) {
+                    case "equalTo":
+                        if (formModel.oData[element.id].length !== parseInt(element.validationParam)) {
+                            FORMS.validateMarkField(element.id, false, process);
                         }
+                        break;
+
+                    case "atMost":
+                        if (formModel.oData[element.id].length > parseInt(element.validationParam)) {
+                            FORMS.validateMarkField(element.id, false, process);
+                        }
+                        break;
+
+                    case "atLeast":
+                        if (formModel.oData[element.id].length < parseInt(element.validationParam)) {
+                            FORMS.validateMarkField(element.id, false, process);
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            if (element.type === "CheckList") {
+                element.items.forEach(function (item, i) {
+                    if (item.required) {
+                        const fieldCompleted = formModel.oData[item.id] ? true : false;
+                        if (validForm) validForm = fieldCompleted;
+                        FORMS.validateMarkField(item.id, fieldCompleted, process);
+                    }
+                });
+            }
+        };
+
+        FORMS.config.setup.forEach(function (section) {
+            section.elements.forEach(function (element) {
+                validateElement(element);
+                if (element.elements) {
+                    element.elements.forEach(function (subElement) {
+                        validateElement(subElement);
                     });
                 }
             });

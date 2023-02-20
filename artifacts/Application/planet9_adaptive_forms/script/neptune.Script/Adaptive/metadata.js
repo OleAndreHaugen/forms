@@ -8,27 +8,14 @@ const vb = {
 
     reportEnableDelete: "{= ${appData>/settings/properties/report/enableDelete} ? true : false }",
     reportEnableSave: "{= ${appData>/settings/properties/report/enableSave} ? true : false }",
+    reportEnableDraft: "{= ${appData>/settings/properties/report/enableDraft} ? true : false }",
     reportEnableClose: "{= ${appData>/settings/properties/report/enableClose} ? true : false }",
-    reportEnableAttachment:
-        "{= ${appData>/settings/properties/report/enableAttachment} ? true : false }",
+    reportEnableAttachment: "{= ${appData>/settings/properties/report/enableAttachment} ? true : false }",
 
     enableTab0:
         "{= ${appData>/settings/properties/report/enableTab1} || ${appData>/settings/properties/report/enableTab2} || ${appData>/settings/properties/report/enableTab3} || ${appData>/settings/properties/report/enableTab4} || ${appData>/settings/properties/report/enableTab5 || ${appData>/settings/properties/report/enableTabF} ? true : false }",
 
-    buttonTypes: [
-        "Accept",
-        "Attention",
-        "Critical",
-        "Back",
-        "Default",
-        "Emphasized",
-        "Ghost",
-        "Neutral",
-        "Reject",
-        "Transparent",
-        "Unstyled",
-        "Up",
-    ],
+    buttonTypes: ["Accept", "Attention", "Critical", "Back", "Default", "Emphasized", "Ghost", "Neutral", "Reject", "Transparent", "Unstyled", "Up"],
 
     type: "{= ${/type} ? false : true }",
     editor: "{= ${/type} === 'Editor' ? true : false }",
@@ -36,8 +23,7 @@ const vb = {
     valueHelp: "{= ${/type} === 'ValueHelp' ? true : false }",
     stepInput: "{= ${/type} === 'StepInput' ? true : false }",
     dateTimePicker: "{= ${/type} === 'DateTimePicker' ? true : false }",
-    multiOrSingleSelectLookup:
-        "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true : false }",
+    multiOrSingleSelectLookup: "{= ${/type} === 'MultiSelectLookup' || ${/type} === 'SingleSelectLookup' ? true : false }",
     placeholder:
         "{= ${/type} === 'CheckBox'  || ${/type} === 'DatePicker' || ${/type} === 'DateTimePicker' || ${/type} === 'Editor' || ${/type} === 'Switch' || ${/type} === 'StepInput' ? false : true }",
 };
@@ -60,20 +46,7 @@ const metadata = {
             avatarBackgroundColor: {
                 type: "SingleSelect",
                 label: "Icon Color",
-                items: valuesToKeyText([
-                    "",
-                    "Accent1",
-                    "Accent2",
-                    "Accent3",
-                    "Accent4",
-                    "Accent5",
-                    "Accent6",
-                    "Accent7",
-                    "Accent8",
-                    "Accent9",
-                    "Accent10",
-                    "Random",
-                ]),
+                items: valuesToKeyText(["", "Accent1", "Accent2", "Accent3", "Accent4", "Accent5", "Accent6", "Accent7", "Accent8", "Accent9", "Accent10", "Random"]),
             },
             showIcon: { type: "CheckBox", label: "Icon Visible", default: true },
             actionButtonLeft: { type: "CheckBox", label: "Action Button Left", default: false },
@@ -81,119 +54,33 @@ const metadata = {
             textGeneral: { type: "Title", label: "Texts" },
             textUnique: { type: "Input", label: "Unique Error", translate: true },
 
-            titleButtonClose: {
-                type: "Title",
-                label: "Button Close",
-                visible: vb.reportEnableClose,
-            },
-            iconButtonClose: {
-                type: "Icon",
-                label: "Icon",
-                default: "",
-                visible: vb.reportEnableClose,
-            },
-            textButtonClose: {
-                type: "Input",
-                label: "Text",
-                default: "Close",
-                translate: true,
-                visible: vb.reportEnableClose,
-            },
-            typeButtonClose: {
-                type: "SingleSelect",
-                label: "Type",
-                default: "Transparent",
-                visible: vb.reportEnableClose,
-                items: valuesToKeyText(vb.buttonTypes),
-            },
+            titleButtonClose: { type: "Title", label: "Button Close", visible: vb.reportEnableClose },
+            iconButtonClose: { type: "Icon", label: "Icon", default: "", visible: vb.reportEnableClose },
+            textButtonClose: { type: "Input", label: "Text", default: "Close", translate: true, visible: vb.reportEnableClose },
+            typeButtonClose: { type: "SingleSelect", label: "Type", default: "Transparent", visible: vb.reportEnableClose, items: valuesToKeyText(vb.buttonTypes) },
 
             titleButtonSave: { type: "Title", label: "Button Save", visible: vb.reportEnableSave },
-            iconButtonSave: {
-                type: "Icon",
-                label: "Icon",
-                default: "",
-                visible: vb.reportEnableSave,
-            },
-            textButtonSave: {
-                type: "Input",
-                label: "Text",
-                default: "Save",
-                translate: true,
-                visible: vb.reportEnableSave,
-            },
-            textToastSave: {
-                type: "Input",
-                label: "Message",
-                default: "Saved",
-                translate: true,
-                visible: vb.reportEnableSave,
-            },
-            typeButtonSave: {
-                type: "SingleSelect",
-                label: "Type",
-                default: "Emphasized",
-                visible: vb.reportEnableSave,
-                items: valuesToKeyText(vb.buttonTypes),
-            },
+            iconButtonSave: { type: "Icon", label: "Icon", default: "", visible: vb.reportEnableSave },
+            textButtonSave: { type: "Input", label: "Text", default: "Save", translate: true, visible: vb.reportEnableSave },
+            textToastSave: { type: "Input", label: "Message", default: "Saved", translate: true, visible: vb.reportEnableSave },
+            typeButtonSave: { type: "SingleSelect", label: "Type", default: "Emphasized", visible: vb.reportEnableSave, items: valuesToKeyText(vb.buttonTypes) },
 
-            titleButtonDelete: {
-                type: "Title",
-                label: "Button Delete",
-                visible: vb.reportEnableDelete,
-            },
-            iconButtonDelete: {
-                type: "Icon",
-                label: "Icon",
-                default: "",
-                visible: vb.reportEnableDelete,
-            },
-            textButtonDelete: {
-                type: "Input",
-                label: "Text",
-                default: "Delete",
-                translate: true,
-                visible: vb.reportEnableDelete,
-            },
-            textToastDelete: {
-                type: "Input",
-                label: "Message",
-                default: "Deleted",
-                translate: true,
-                visible: vb.reportEnableDelete,
-            },
-            typeButtonDelete: {
-                type: "SingleSelect",
-                label: "Type",
-                default: "Reject",
-                visible: vb.reportEnableDelete,
-                items: valuesToKeyText(vb.buttonTypes),
-            },
+            titleButtonDraft: { type: "Title", label: "Button Draft", visible: vb.reportEnableDraft },
+            iconButtonDraft: { type: "Icon", label: "Icon", default: "", visible: vb.reportEnableDraft },
+            textButtonDraft: { type: "Input", label: "Text", default: "Save as draft", translate: true, visible: vb.reportEnableDraft },
+            textToastDraft: { type: "Input", label: "Message", default: "Saved as draft", translate: true, visible: vb.reportEnableDraft },
+            typeButtonDraft: { type: "SingleSelect", label: "Type", default: "Attention", visible: vb.reportEnableDraft, items: valuesToKeyText(vb.buttonTypes) },
 
-            titleButtonAttachment: {
-                type: "Title",
-                label: "Button Attachment",
-                visible: vb.reportEnableAttachment,
-            },
-            iconButtonAttachment: {
-                type: "Icon",
-                label: "Icon",
-                default: "",
-                visible: vb.reportEnableAttachment,
-            },
-            textButtonAttachment: {
-                type: "Input",
-                label: "Text",
-                default: "Add Attachment",
-                translate: true,
-                visible: vb.reportEnableAttachment,
-            },
-            typeButtonAttachment: {
-                type: "SingleSelect",
-                label: "Type",
-                default: "Transparent",
-                visible: vb.reportEnableAttachment,
-                items: valuesToKeyText(vb.buttonTypes),
-            },
+            titleButtonDelete: { type: "Title", label: "Button Delete", visible: vb.reportEnableDelete },
+            iconButtonDelete: { type: "Icon", label: "Icon", default: "", visible: vb.reportEnableDelete },
+            textButtonDelete: { type: "Input", label: "Text", default: "Delete", translate: true, visible: vb.reportEnableDelete },
+            textToastDelete: { type: "Input", label: "Message", default: "Deleted", translate: true, visible: vb.reportEnableDelete },
+            typeButtonDelete: { type: "SingleSelect", label: "Type", default: "Reject", visible: vb.reportEnableDelete, items: valuesToKeyText(vb.buttonTypes) },
+
+            titleButtonAttachment: { type: "Title", label: "Button Attachment", visible: vb.reportEnableAttachment },
+            iconButtonAttachment: { type: "Icon", label: "Icon", default: "", visible: vb.reportEnableAttachment },
+            textButtonAttachment: { type: "Input", label: "Text", default: "Add Attachment", translate: true, visible: vb.reportEnableAttachment },
+            typeButtonAttachment: { type: "SingleSelect", label: "Type", default: "Transparent", visible: vb.reportEnableAttachment, items: valuesToKeyText(vb.buttonTypes) },
 
             titleTabF: { type: "Title", label: "Tab Forms", visible: vb.enableTabF },
             tabFText: {
@@ -207,7 +94,11 @@ const metadata = {
 
             fieldFormId: { type: "TableFieldLocal", label: "Form ID", visible: vb.enableTabF },
             fieldFormData: { type: "TableFieldLocal", label: "Form Data", visible: vb.enableTabF },
-            fieldFormStatus: { type: "TableFieldLocal", label: "Form Status", visible: vb.enableTabF },
+            fieldFormStatus: {
+                type: "TableFieldLocal",
+                label: "Form Status",
+                visible: vb.enableTabF,
+            },
 
             titleTab0: { type: "Title", label: "Tab Main", visible: vb.enableTab0 },
             tab0Text: {
@@ -290,6 +181,7 @@ const metadata = {
 
             titleProperties: { type: "Title", label: "Properties" },
             enableClose: { type: "CheckBox", label: "Enable Close", default: true },
+            enableDraft: { type: "CheckBox", label: "Enable Draft", default: true },
             enableSave: { type: "CheckBox", label: "Enable Save", default: true },
             enableDelete: { type: "CheckBox", label: "Enable Delete", default: false },
             enableAttachment: { type: "CheckBox", label: "Enable Attachment", default: false },
@@ -309,13 +201,7 @@ const metadata = {
             formLayout: {
                 type: "SingleSelect",
                 label: "Layout",
-                items: valuesToKeyText([
-                    "",
-                    "ColumnLayout",
-                    "GridLayout",
-                    "ResponsiveGridLayout",
-                    "ResponsiveLayout",
-                ]),
+                items: valuesToKeyText(["", "ColumnLayout", "GridLayout", "ResponsiveGridLayout", "ResponsiveLayout"]),
             },
 
             columnsL: {
@@ -333,41 +219,13 @@ const metadata = {
             labelSpanL: {
                 type: "SingleSelect",
                 label: "LabelSpan L",
-                items: valuesToKeyText([
-                    "",
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "10",
-                    "11",
-                    "12",
-                ]),
+                items: valuesToKeyText(["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]),
             },
 
             labelSpanM: {
                 type: "SingleSelect",
                 label: "LabelSpan M",
-                items: valuesToKeyText([
-                    "",
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "10",
-                    "11",
-                    "12",
-                ]),
+                items: valuesToKeyText(["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]),
             },
 
             titleLevel: {
@@ -559,42 +417,14 @@ const metadata = {
             type: "SingleSelect",
             label: "LabelSpan L",
             visible: "{= ${/enableNewForm} ? true: false }",
-            items: valuesToKeyText([
-                "",
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9",
-                "10",
-                "11",
-                "12",
-            ]),
+            items: valuesToKeyText(["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]),
         },
 
         labelSpanM: {
             type: "SingleSelect",
             label: "LabelSpan M",
             visible: "{= ${/enableNewForm} ? true: false }",
-            items: valuesToKeyText([
-                "",
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9",
-                "10",
-                "11",
-                "12",
-            ]),
+            items: valuesToKeyText(["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]),
         },
 
         titleSettings: { type: "Title", label: "Properties" },

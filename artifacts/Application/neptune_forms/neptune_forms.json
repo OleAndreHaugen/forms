@@ -63,6 +63,33 @@
 					"response": [],
 					"attributes": [],
 					"data": []
+				},
+				{
+					"fieldNo": "fbaa2d51-a998-44e8-e0c4-939e31e89cd9",
+					"fieldName": "oHTMLObject",
+					"fieldParent": 99999,
+					"fieldType": "sap.ui.core.HTML",
+					"script": "",
+					"customComponent": false,
+					"disabled": true,
+					"request": [],
+					"response": [],
+					"attributes": [],
+					"data": [
+						{
+							"fieldNo": "6892aea9-991c-43aa-834b-e5571cb6f41e",
+							"fieldName": "oHTML",
+							"fieldParent": "fbaa2d51-a998-44e8-e0c4-939e31e89cd9",
+							"fieldType": "neptune.Html",
+							"script": "file://script/neptune.Html/oHTML.script",
+							"customComponent": false,
+							"disabled": true,
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						}
+					]
 				}
 			]
 		},
@@ -77,7 +104,7 @@
 			"sap.m.Panel"
 		]
 	},
-	"ver": "23.2.19.1659",
+	"ver": "23.2.20.1311",
 	"application": "neptune_forms",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
