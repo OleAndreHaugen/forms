@@ -9,11 +9,21 @@
 			"id": "29f811fe-1310-4769-a00f-c27cd73d7f21",
 			"name": "forms_design",
 			"contextname": "forms_design"
+		},
+		{
+			"id": "4a9e3232-70e5-4f49-9b63-4104044f5642",
+			"name": "forms_group",
+			"contextname": "forms_group"
+		},
+		{
+			"id": "78f60bae-e2ca-4d4a-ae6e-170ac0f67296",
+			"name": "forms_subgroup",
+			"contextname": "forms_subgroup"
 		}
 	],
 	"apis": [],
 	"name": "formList",
-	"ver": "23.1.17.1438",
+	"ver": "23.2.21.1115",
 	"description": null,
 	"content": "file:///content.js",
 	"useAsGlobalScript": false,

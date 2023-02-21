@@ -107,7 +107,7 @@ const report = {
                 const r = s.properties.report;
 
                 if (runtime) {
-                    s.fieldsSels.fieldsSel = data.fieldsSelection;
+                    s.fieldsSel = data.fieldsSelection;
                     s.fieldsRun = data.fieldsReport;
 
                     // Fields Sorting
@@ -326,17 +326,25 @@ const report = {
 
         // FORMS
         if (modelAppConfig.oData.settings.properties.report.enableTabF) {
-            
             if (modelAppConfig.oData.settings.properties.report.fieldFormData && data[modelAppConfig.oData.settings.properties.report.fieldFormData]) {
-
                 const formData = data[modelAppConfig.oData.settings.properties.report.fieldFormData];
-                FORMS.build(panItemForms, formData);
 
                 if (formData.completed) {
                     toolHeaderDraft.setVisible(false);
                     toolHeaderSave.setVisible(false);
+                } else {
+                    if (modelAppConfig.oData.settings.properties.report.fieldFormFetch) {
+                        formData.id = formData.config.id;
+                        formData.config = null;
+                    }
                 }
 
+                // No Save button, force complete state for readonly
+                if (!modelAppConfig.oData.settings.properties.report.enableDraft && !modelAppConfig.oData.settings.properties.report.enableSave) {
+                    formData.completed = true;
+                }
+
+                FORMS.build(panItemForms, formData);
             } else if (modelAppConfig.oData.settings.properties.report.fieldFormId && data[modelAppConfig.oData.settings.properties.report.fieldFormId]) {
                 FORMS.build(panItemForms, data[modelAppConfig.oData.settings.properties.report.fieldFormId]);
             }
@@ -377,7 +385,7 @@ const report = {
             }
 
             if (modelAppConfig.oData.settings.properties.report.fieldFormStatus) {
-                saveData[modelAppConfig.oData.settings.properties.report.fieldFormStatus] = (formData.completed ? "Completed" : "Draft");
+                saveData[modelAppConfig.oData.settings.properties.report.fieldFormStatus] = formData.completed ? "Completed" : "Draft";
             }
 
             if (complete && !formData.completed) formValid = false;
@@ -463,10 +471,13 @@ const report = {
 
         if (isDialog) {
             oApp.getParent().getParent().close();
+            return;
         } else if (s.events && s.events.onChildBack) {
             s.events.onChildBack();
+            return;
         } else if (sap.n.Shell && sap.n.Shell.closeTile && sap.n.Launchpad && sap.n.Launchpad.currentTile && sap.n.Launchpad.currentTile.id) {
             sap.n.Shell.closeTile(sap.n.Launchpad.currentTile);
+            return;
         }
 
         if (!isDialog && sap.n.HashNavigation && sap.n.HashNavigation.deleteNavItem) {

@@ -83,31 +83,16 @@ const metadata = {
             typeButtonAttachment: { type: "SingleSelect", label: "Type", default: "Transparent", visible: vb.reportEnableAttachment, items: valuesToKeyText(vb.buttonTypes) },
 
             titleTabF: { type: "Title", label: "Tab Forms", visible: vb.enableTabF },
-            tabFText: {
-                type: "Input",
-                label: "Text",
-                default: "FORM",
-                visible: vb.enableTabF,
-                translate: true,
-            },
+            tabFText: { type: "Input", label: "Text", default: "FORM", visible: vb.enableTabF, translate: true },
             tabFIcon: { type: "Icon", label: "Icon", visible: vb.enableTabF },
 
             fieldFormId: { type: "TableFieldLocal", label: "Form ID", visible: vb.enableTabF },
             fieldFormData: { type: "TableFieldLocal", label: "Form Data", visible: vb.enableTabF },
-            fieldFormStatus: {
-                type: "TableFieldLocal",
-                label: "Form Status",
-                visible: vb.enableTabF,
-            },
+            fieldFormStatus: { type: "TableFieldLocal", label: "Form Status", visible: vb.enableTabF },
+            fieldFormFetch: { type: "CheckBox", label: "Always fetch Form", visible: vb.enableTabF },
 
             titleTab0: { type: "Title", label: "Tab Main", visible: vb.enableTab0 },
-            tab0Text: {
-                type: "Input",
-                label: "Text",
-                default: "General",
-                visible: vb.enableTab0,
-                translate: true,
-            },
+            tab0Text: { type: "Input", label: "Text", default: "General", visible: vb.enableTab0, translate: true },
             tab0Icon: { type: "Icon", label: "Icon", visible: vb.enableTab0 },
 
             titleTabA: {
@@ -297,7 +282,6 @@ const metadata = {
                 "DatePicker",
                 "DateTimePicker",
                 "Editor",
-                "FORMS",
                 "MultiSelect",
                 "MultiSelectLookup",
                 "SingleSelect",

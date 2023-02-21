@@ -7,11 +7,11 @@
 		"hasDocumentation": false
 	},
 	"documentation": {},
-	"name": "Neptune FORMS ",
-	"description": "Neptune FORMS",
+	"name": "Neptune FORMS: Design",
+	"description": "Neptune FORMS: Design",
 	"group": null,
 	"type": "T",
-	"ver": "23.1.17.1452",
+	"ver": "23.2.21.938",
 	"disabled": false,
 	"package": "a313322e-f024-45f1-960f-b90081757b85"
 }

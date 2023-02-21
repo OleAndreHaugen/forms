@@ -34,13 +34,37 @@
 			"isUnique": false,
 			"description": "Is FORM Released",
 			"isNullable": true
+		},
+		{
+			"id": "bc67111e-a433-4a57-eee9-22e18b7263d1",
+			"fieldName": "groupid",
+			"fieldType": "smalltext",
+			"isUnique": false,
+			"description": "Classification Group",
+			"isNullable": true
+		},
+		{
+			"id": "5305aafd-0ca9-43dd-c19e-41f99c20de0d",
+			"fieldName": "subgroupid",
+			"fieldType": "smalltext",
+			"isUnique": false,
+			"isNullable": true,
+			"description": "Classification Sub Group"
+		},
+		{
+			"id": "e3cde399-0bd1-475d-f679-ee957650c67f",
+			"fieldName": "savedata",
+			"fieldType": "boolean",
+			"isUnique": false,
+			"description": "Enable Reporting",
+			"isNullable": true
 		}
 	],
 	"indices": [],
 	"foreignKeys": [],
 	"name": "forms_design",
 	"description": "FORMS: Design",
-	"ver": "23.1.17.1417",
+	"ver": "23.2.20.2352",
 	"enableAudit": false,
 	"includeDataInPackage": false,
 	"package": "a313322e-f024-45f1-960f-b90081757b85",

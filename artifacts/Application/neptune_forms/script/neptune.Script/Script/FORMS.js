@@ -8,6 +8,7 @@ const FORMS = {
     editable: true,
     bindingPath: "",
     columnTemplate: null,
+    sessionid: null,
 
     build: function (parent, options) {
         let formOptions;
@@ -50,6 +51,7 @@ const FORMS = {
         FORMS.editable = true;
         FORMS.formTitleHide = [];
         FORMS.config = options.config;
+        FORMS.sessionid = options.sessionid;
 
         // Parent
         if (!FORMS.formParent) {
@@ -162,7 +164,7 @@ const FORMS = {
             // expandable: section.expandable,
             // expanded: section.expanded,
             visible: FORMS.buildVisibleCond(section),
-        });
+        }).addStyleClass("sapUiSmallMarginBottom");
 
         const sectionForm = new sap.ui.layout.form.SimpleForm({
             layout: "ResponsiveGridLayout",
@@ -311,7 +313,7 @@ const FORMS = {
             // expandable: section.expandable,
             // expanded: section.expanded,
             visible: FORMS.buildVisibleCond(section),
-        });
+        }).addStyleClass("sapUiSmallMarginBottom");
 
         const sectionToolbar = new sap.m.Toolbar();
 
@@ -1082,7 +1084,9 @@ const FORMS = {
         return FORMS.validate("OnlyCheck");
     },
 
-    getData: function (complete) {
+    getData: function (complete, isDesigner) {
+        if (!FORMS.formParent) return null;
+
         const formModel = FORMS.formParent.getModel();
         const outputData = {};
 
@@ -1129,15 +1133,30 @@ const FORMS = {
             });
         });
 
-        if (complete) {
-            if (FORMS.validate()) completed = true;
-        }
+        const process = complete ? "" : "OnlyCheck";
+
+        const valid = FORMS.validate(process);
+
+        if (complete && valid) completed = true;
 
         const formData = {
             data: outputData,
             config: FORMS.config,
             completed: completed,
+            valid: valid,
         };
+
+        // Logging
+        if (FORMS.config.savedata && !isDesigner) {
+            if (FORMS.sessionid) {
+                formData.sessionid = FORMS.sessionid;
+            } else {
+                formData.sessionid = ModelData.genID();
+            }
+            apiSaveLog({
+                data: formData,
+            });
+        }
 
         return formData;
 
@@ -1145,12 +1164,6 @@ const FORMS = {
         //     outputData[element.fieldName] = formModel.oData[element.id]; // TODO - Need in/out handling for fieldnames
         // } else {
     },
-
-    // setData: function (data) {
-    //     const formModel = FORMS.formParent.getModel();
-    //     formModel.setData(data);
-    //     formModel.refresh();
-    // },
 
     clear: function () {
         // Model
@@ -1161,13 +1174,28 @@ const FORMS = {
         // Fields
         FORMS.validate("Reset");
 
+        const clearChoice = function (element) {
+            if (element.type === "SingleChoice" || element.type === "MultipleChoice") {
+                element.items.forEach(function (item, i) {
+                    const field = sap.ui.getCore().byId("item" + item.id);
+                    if (field) {
+                        if (element.type === "SingleChoice" && i === 0) {
+                            field.setSelected(true);
+                        } else {
+                            field.setSelected(false);
+                        }
+                    }
+                });
+            }
+        };
+
         // Single/MultiChoice
-        FORMS.config.setup.forEach(function (section, i) {
-            section.elements.forEach(function (element, i) {
-                if (element.type === "SingleChoice" || element.type === "MultipleChoice") {
-                    element.items.forEach(function (item, i) {
-                        const field = sap.ui.getCore().byId("item" + item.id);
-                        if (field) field.setSelected(false);
+        FORMS.config.setup.forEach(function (section) {
+            section.elements.forEach(function (element) {
+                clearChoice(element);
+                if (element.elements) {
+                    element.elements.forEach(function (subElement) {
+                        clearChoice(subElement);
                     });
                 }
             });
@@ -1180,7 +1208,9 @@ const FORMS = {
         const formModel = FORMS.formParent.getModel();
 
         const validateElement = function (element) {
-            if (element.required) {
+            const field = sap.ui.getCore().byId("field" + element.id);
+
+            if (element.required && !element.disabled && field.getDomRef()) {
                 fieldCompleted = formModel.oData[element.id] ? true : false;
                 if (validForm) validForm = fieldCompleted;
                 FORMS.validateMarkField(element.id, fieldCompleted, process);

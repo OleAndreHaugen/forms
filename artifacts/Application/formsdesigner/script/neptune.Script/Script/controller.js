@@ -10,28 +10,6 @@ const controller = {
     },
     pressedPreview: false,
 
-    // elementTypes: [
-    //     { icon: "/public/icons/s_vwform.gif", text: "Form", type: "Form", parent: true, descripton: "Present the data in Form layout" },
-    //     { icon: "/public/icons/s_wdvtbl.gif", text: "Table", type: "Table", parent: true, descripton: "Present the data in Table layout" },
-    //     { icon: "/public/icons/s_txtfld.gif", text: "Form Title", type: "FormTitle", parent: false },
-    //     { icon: "/public/icons/s_t_date.gif", text: "Date Picker", type: "DatePicker", parent: false },
-    //     { icon: "/public/icons/s_b_ticl.gif", text: "Date Time Picker", type: "DateTimePicker", parent: false },
-    //     { icon: "/public/icons/s_wdvcbx.gif", text: "Check Box", type: "CheckBox", parent: false },
-    //     { icon: "/public/icons/s_objeli.gif", text: "Check List", type: "CheckList", parent: false },
-    //     { icon: "/public/icons/s_wdvipf.gif", text: "Input", type: "Input", parent: false },
-    //     { icon: "/public/icons/s_b_uplo.gif", text: "Image", type: "Image", parent: false },
-    //     { icon: "/public/icons/s_n_info.gif", text: "Message Strip", type: "MessageStrip", parent: false },
-    //     { icon: "/public/icons/s_wdvipf.gif", text: "Step Input", type: "StepInput", parent: false },
-    //     { icon: "/public/icons/s_transl.gif", text: "Switch", type: "Switch", parent: false },
-    //     { icon: "/public/icons/s_esirep.gif", text: "Segmented Button", type: "SegmentedButton", parent: false },
-    //     { icon: "/public/icons/s_drpdwl.gif", text: "Single Select", type: "SingleSelect", parent: false },
-    //     { icon: "/public/icons/s_drpdwl.gif", text: "Single Choice", type: "SingleChoice", parent: false },
-    //     { icon: "/public/icons/s_wdvddk.gif", text: "Multiple Select", type: "MultipleSelect", parent: false },
-    //     { icon: "/public/icons/s_wdvddk.gif", text: "Multiple Choice", type: "MultipleChoice", parent: false },
-    //     { icon: "/public/icons/s_wdvcap.gif", text: "Text", type: "Text", parent: false },
-    //     { icon: "/public/icons/s_wdvtxe.gif", text: "Text Area", type: "TextArea", parent: false },
-    // ],
-
     elementTypes: [
         { icon: "sap-icon://form", text: "Form", type: "Form", parent: true, descripton: "Present the data in Form layout" },
         { icon: "sap-icon://table-view", text: "Table", type: "Table", parent: true, descripton: "Present the data in Table layout" },
@@ -59,6 +37,20 @@ const controller = {
 
     init: function () {
         jQuery.sap.require("sap.m.MessageBox");
+
+        if (!cockpitUtils.isCockpit) {
+            sap.m.MessageBox.confirm("Neptune FORMS is only supported to run inside our Cockpit. Press OK and we will guide to to the right place.", {
+                icon: sap.m.MessageBox.Icon.INFORMATION,
+                title: "System Information",
+                actions: [sap.m.MessageBox.Action.OK],
+                initialFocus: "Ok",
+                onClose: function (sAction) {
+                    if (sAction === "OK") {
+                        location.href = location.origin + "/cockpit.html#forms-designer";
+                    }
+                },
+            });
+        }
 
         modellistElementTypes.setData(this.elementTypes);
 
@@ -284,11 +276,13 @@ const controller = {
     },
 
     objectDelete: function () {
-        ModelData.Delete(modeloPageDetail.oData.setup, "id", modelpanTopProperties.oData.id);
+        const parent = controller.getParentFromId(modelpanTopProperties.oData.id);
 
-        modeloPageDetail.oData.setup.forEach(function (section, i) {
-            ModelData.Delete(section.elements, "id", modelpanTopProperties.oData.id);
-        });
+        if (parent.id === modelpanTopProperties.oData.id) {
+            ModelData.Delete(modeloPageDetail.oData.setup, "id", modelpanTopProperties.oData.id);
+        } else {
+            ModelData.Delete(parent.elements, "id", modelpanTopProperties.oData.id);
+        }
 
         modelpanTopProperties.setData({});
         modelpanTopProperties.refresh();
@@ -316,6 +310,8 @@ const controller = {
                 treeOutline.fireItemPress();
             }
 
+            controller.filterSubGroup();
+
             oApp.to(oPageDetail);
 
             cockpitUtils.toggleEdit(editable);
@@ -325,7 +321,7 @@ const controller = {
 
     save: function () {
         // Check Required Fields
-        if (cockpitUtils.isCockpit && !sap.n.Planet9.requiredFieldsCheck(cockpitUtils.requiredFields)) {
+        if (!sap.n.Planet9.requiredFieldsCheck(cockpitUtils.requiredFields)) {
             return;
         }
 
@@ -347,41 +343,19 @@ const controller = {
     },
 
     delete: function () {
-        if (cockpitUtils.isCockpit) {
-            sap.n.Planet9.objectDelete(function () {
-                oApp.setBusy(true);
-                sap.n.Planet9.setToolbarButton(false);
+        sap.n.Planet9.objectDelete(function () {
+            oApp.setBusy(true);
+            sap.n.Planet9.setToolbarButton(false);
 
-                apiDelete({
-                    parameters: { id: modeloPageDetail.oData.id },
-                }).then(function (req) {
-                    sap.m.MessageToast.show("Form Deleted");
-                    controller.list();
-                    oApp.setBusy(false);
-                    oApp.back();
-                });
-            }, "FORM");
-        } else {
-            sap.m.MessageBox.confirm("Delete this FORM ? This cannot be undone !", {
-                icon: sap.m.MessageBox.Icon.ERROR,
-                title: "Danger Zone",
-                actions: [sap.m.MessageBox.Action.DELETE, sap.m.MessageBox.Action.NO],
-                initialFocus: "No",
-                onClose: function (sAction) {
-                    if (sAction === "DELETE") {
-                        oApp.setBusy(true);
-                        apiDelete({
-                            parameters: { id: modeloPageDetail.oData.id },
-                        }).then(function (req) {
-                            sap.m.MessageToast.show("Form Deleted");
-                            controller.list();
-                            oApp.setBusy(false);
-                            oApp.back();
-                        });
-                    }
-                },
+            apiDelete({
+                parameters: { id: modeloPageDetail.oData.id },
+            }).then(function (req) {
+                sap.m.MessageToast.show("Form Deleted");
+                controller.list();
+                oApp.setBusy(false);
+                oApp.back();
             });
-        }
+        }, "FORM");
     },
 
     copy: function () {
@@ -512,6 +486,7 @@ const controller = {
         });
         tabDetail.setSelectedItem(tabDetailInfo);
         controller.preview();
+        controller.filterSubGroup();
         cockpitUtils.toggleCreate();
         cockpitUtils.dataSaved = modeloPageDetail.getJSON();
         oApp.to(oPageDetail);
@@ -520,9 +495,11 @@ const controller = {
     preview: function () {
         controller.previewData = modeloPageDetail.getJSON();
 
+        const formData = FORMS.getData(null, true);
+
         FORMS.build(panPreview, {
             id: modeloPageDetail.oData.id,
-            data: null,
+            data: formData ? formData.data : null,
             config: modeloPageDetail.oData,
         });
 
@@ -770,32 +747,41 @@ const controller = {
             elementToolbarTypeText.setVisible(false);
         }
 
+        const addConditionalField = function (element) {
+            switch (element.type) {
+                case "Image":
+                case "MultipleChoice":
+                case "MultipleSelect":
+                case "MessageStrip":
+                case "TextArea":
+                case "Input":
+                case "Text":
+                case "FormTitle":
+                case "Date":
+                    break;
+
+                default:
+                    inElementFormVisibleField.addItem(
+                        new sap.ui.core.Item({
+                            key: element.id,
+                            text: element.title,
+                        })
+                    );
+                    break;
+            }
+        };
+
         // Conditional Access
         inElementFormVisibleField.destroyItems();
         inElementFormVisibleField.addItem(new sap.ui.core.Item());
 
-        modeloPageDetail.oData.setup.forEach(function (section, i) {
-            section.elements.forEach(function (element, i) {
-                switch (element.type) {
-                    case "Image":
-                    case "MultipleChoice":
-                    case "MultipleSelect":
-                    case "MessageStrip":
-                    case "TextArea":
-                    case "Input":
-                    case "Text":
-                    case "FormTitle":
-                    case "Date":
-                        break;
-
-                    default:
-                        inElementFormVisibleField.addItem(
-                            new sap.ui.core.Item({
-                                key: element.id,
-                                text: element.title,
-                            })
-                        );
-                        break;
+        modeloPageDetail.oData.setup.forEach(function (section) {
+            section.elements.forEach(function (element) {
+                addConditionalField(element);
+                if (element.elements) {
+                    element.elements.forEach(function (element) {
+                        addConditionalField(element);
+                    });
                 }
             });
         });
@@ -843,6 +829,17 @@ const controller = {
         } catch (e) {
             console.log(e);
         }
+    },
+
+    filterSubGroup: function () {
+        const binding = informDetailSubGroup.getBinding("items");
+
+        const filter = new sap.ui.model.Filter({
+            filters: [new sap.ui.model.Filter("groupid", "EQ", modeloPageDetail.oData.groupid), new sap.ui.model.Filter("name", "EQ", "")],
+            and: false,
+        });
+
+        binding.filter([filter]);
     },
 };
 
