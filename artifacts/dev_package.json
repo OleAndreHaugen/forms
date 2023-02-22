@@ -7,7 +7,7 @@
 	},
 	"name": "neptunesoftware-forms",
 	"description": "Neptune FORMS Solution",
-	"ver": "23.1.24.155",
+	"ver": "23.2.22.1729",
 	"enableCICD": true,
 	"apps": [
 		{
@@ -251,5 +251,7 @@
 			"name": "Usage in your own App",
 			"description": null
 		}
-	]
+	],
+	"wf_determination": [],
+	"wf_taskaction": []
 }

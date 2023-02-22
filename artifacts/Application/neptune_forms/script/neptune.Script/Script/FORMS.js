@@ -9,6 +9,7 @@ const FORMS = {
     bindingPath: "",
     columnTemplate: null,
     sessionid: null,
+    validationCheck: false,
 
     build: function (parent, options) {
         let formOptions;
@@ -136,8 +137,10 @@ const FORMS = {
                                 switch (element.type) {
                                     case "SingleChoice":
                                     case "SegmentedButton":
-                                        const firstItem = element.items[0];
-                                        newRec[element.id] = firstItem.key;
+                                        if (element.items) {
+                                            const firstItem = element.items[0];
+                                            newRec[element.id] = firstItem.key;
+                                        }
                                         break;
 
                                     default:
@@ -161,10 +164,9 @@ const FORMS = {
     buildParentForm: function (section) {
         const sectionPanel = new sap.m.Panel(FORMS.buildElementFieldID(section), {
             headerText: section.title,
-            // expandable: section.expandable,
-            // expanded: section.expanded,
+            backgroundDesign: "Solid",
             visible: FORMS.buildVisibleCond(section),
-        }).addStyleClass("sapUiSmallMarginBottom");
+        }).addStyleClass("sapUiSmallMarginTopBottom");
 
         const sectionForm = new sap.ui.layout.form.SimpleForm({
             layout: "ResponsiveGridLayout",
@@ -310,10 +312,8 @@ const FORMS = {
         }
 
         const sectionPanel = new sap.m.Panel("section" + section.id, {
-            // expandable: section.expandable,
-            // expanded: section.expanded,
             visible: FORMS.buildVisibleCond(section),
-        }).addStyleClass("sapUiSmallMarginBottom");
+        }).addStyleClass("sapUiSmallMarginTopBottom");
 
         const sectionToolbar = new sap.m.Toolbar();
 
@@ -639,6 +639,10 @@ const FORMS = {
                 elementField = FORMS.buildElementInput(element);
                 break;
 
+            case "ValueHelp":
+                elementField = FORMS.buildElementValueHelp(element);
+                break;
+
             default:
                 break;
         }
@@ -688,6 +692,42 @@ const FORMS = {
             value: "{" + FORMS.bindingPath + element.id + "}",
             editable: FORMS.editable,
             placeholder: element.placeholder,
+        });
+
+        return newField;
+    },
+
+    buildElementValueHelp: function (element) {
+        const newField = new sap.m.Input(FORMS.buildElementFieldID(element), {
+            value: "{" + FORMS.bindingPath + element.id + "}",
+            editable: FORMS.editable,
+            placeholder: element.placeholder,
+            valueHelpOnly: true,
+            showValueHelp: true,
+            valueHelpRequest: function (oEvent) {
+                if (!element.adaptiveApp) return;
+
+                events = {
+                    valueRequest: true,
+                    valueRequestField: this.sId,
+                    valueRequestKey: element.returnField ? element.returnField : "id",
+                };
+
+                navigation = {
+                    destinationTargetF: element.adaptiveApp,
+                    destinationType: "F",
+                    openAs: "D",
+                    dialogHeight: element.dialogHeight + "px",
+                    dialogWidth: element.dialogWidth + "px",
+                };
+
+                if (element.dialogTitle) {
+                    navigation.dialogTitle = element.dialogTitle;
+                    navigation.dialogHeader = true;
+                }
+
+                sap.n.Adaptive.navigation(navigation, null, events);
+            },
         });
 
         return newField;
@@ -824,13 +864,15 @@ const FORMS = {
             }
         }
 
-        element.items.forEach(function (item, i) {
-            newField.addItem(new sap.m.SegmentedButtonItem({ key: item.key, text: item.title, icon: item.icon }));
-        });
+        if (element.items) {
+            element.items.forEach(function (item, i) {
+                newField.addItem(new sap.m.SegmentedButtonItem({ key: item.key, text: item.title, icon: item.icon }));
+            });
 
-        // Set Default Item 1 as Selected
-        const formModel = FORMS.formParent.getModel();
-        if (!formModel.oData[element.id]) formModel.oData[element.id] = element.items[0].key;
+            // Set Default Item 1 as Selected
+            const formModel = FORMS.formParent.getModel();
+            if (!formModel.oData[element.id]) formModel.oData[element.id] = element.items[0].key;
+        }
 
         return newField;
     },
@@ -1255,7 +1297,7 @@ const FORMS = {
 
         FORMS.config.setup.forEach(function (section) {
             if (section.type === "Table") {
-                const validTable = FORMS.validateTableContentRequired(section);
+                const validTable = FORMS.validateTableContentRequired(section, process);
                 if (!validTable) validForm = false;
             } else {
                 section.elements.forEach(function (element) {
@@ -1273,7 +1315,7 @@ const FORMS = {
         return validForm;
     },
 
-    validateTableContentRequired: function (section) {
+    validateTableContentRequired: function (section, process) {
         const table = sap.ui.getCore().byId("field" + section.id);
         const model = table.getModel();
 
@@ -1287,12 +1329,14 @@ const FORMS = {
         model.oData.forEach(function (rowData) {
             delete rowData.highlight;
 
-            requiredFields.forEach(function (requiredField) {
-                if (!rowData[requiredField]) {
-                    validTable = false;
-                    rowData.highlight = "Error";
-                }
-            });
+            if (process !== "Reset") {
+                requiredFields.forEach(function (requiredField) {
+                    if (!rowData[requiredField]) {
+                        validTable = false;
+                        rowData.highlight = "Error";
+                    }
+                });
+            }
         });
 
         model.refresh();

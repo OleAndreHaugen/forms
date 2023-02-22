@@ -33,6 +33,7 @@ const controller = {
         { icon: "sap-icon://multi-select", text: "Multiple Choice", type: "MultipleChoice", parent: false, table: false },
         { icon: "sap-icon://text", text: "Text", type: "Text", parent: false, table: true },
         { icon: "sap-icon://document-text", text: "Text Area", type: "TextArea", parent: false, table: true },
+        { icon: "sap-icon://value-help", text: "Value Help", type: "ValueHelp", parent: false, table: true },
     ],
 
     init: function () {
@@ -97,6 +98,12 @@ const controller = {
                 modeloPageDetail.refresh();
                 controller.preview();
             }
+        });
+
+        // Adaptive Apps Columns
+        adaptiveAppsOpenColsKeys.forEach(function (k) {
+            const item = adaptiveAppsOpenColsMap[k];
+            toolAppsCols.addItem(new sap.ui.core.ListItem({ key: k, text: item.text }));
         });
 
         // Get FORMS
@@ -291,7 +298,17 @@ const controller = {
     },
 
     list: function () {
-        apiList();
+        apiList().then(function (res) {
+            modeltabApps.setData(res.adaptiveApps);
+
+            toolAppsPackage.destroyItems();
+
+            if (res.package) {
+                res.package.forEach(function (package) {
+                    toolAppsPackage.addItem(new sap.ui.core.ListItem({ key: package.id, text: package.name, additionalText: package.description }));
+                });
+            }
+        });
     },
 
     get: function (id, editable) {
@@ -628,6 +645,12 @@ const controller = {
                     { id: ModelData.genID(), title: "Option2", key: "key2", option: "I" },
                     { id: ModelData.genID(), title: "Option3", key: "key3", option: "I" },
                 ];
+                break;
+
+            case "ValueHelp":
+                newElement.dialogHeight = 600;
+                newElement.dialogWidth = 900;
+
                 break;
         }
 

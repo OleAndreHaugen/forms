@@ -3,7 +3,14 @@
 	"createdAt": "2023-01-13T06:42:08.000Z",
 	"createdBy": "ole-andre.haugen@neptune-software.com",
 	"globalScripts": [],
-	"externalModules": [],
+	"externalModules": [
+		{
+			"id": "c1e44158-f85b-48c3-85df-cd3bb1f6c7f4",
+			"name": "typeorm",
+			"contextname": "typeorm",
+			"path": "typeorm"
+		}
+	],
 	"entitySets": [
 		{
 			"id": "29f811fe-1310-4769-a00f-c27cd73d7f21",
@@ -23,7 +30,7 @@
 	],
 	"apis": [],
 	"name": "formList",
-	"ver": "23.2.21.1115",
+	"ver": "23.2.22.1634",
 	"description": null,
 	"content": "file:///content.js",
 	"useAsGlobalScript": false,

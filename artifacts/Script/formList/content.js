@@ -1,3 +1,19 @@
+const manager = modules.typeorm.getConnection().manager;
+
+const adaptiveApps = await manager.find('reports', {
+    select: ["name", "description", "id", "application", "package", "updatedAt", "changedBy"],
+    order: {
+        name: "ASC"
+    }
+});
+
+const package = await manager.find('dev_package', {
+    select: ["name", "description", "id"],
+    order: {
+        name: "ASC"
+    }
+});
+
 const forms = await entities.forms_design.find({
     select: ["name", "description", "id", "updatedAt", "updatedBy", "released", "groupid", "subgroupid"],
     order: {
@@ -15,6 +31,9 @@ subgroup.splice(0, 0, { name: "" });
 result.data = {
     forms,
     group,
-    subgroup
+    subgroup,
+    adaptiveApps,
+    package
 }
+
 complete();
