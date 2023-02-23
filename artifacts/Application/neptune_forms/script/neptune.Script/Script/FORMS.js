@@ -434,12 +434,11 @@ const FORMS = {
 
                         for (var key in rowData) {
                             if (key !== "id") {
-                                const selected = sap.ui
-                                    .getCore()
-                                    .byId("include-" + key)
-                                    .getSelected();
-
-                                if (selected) newRow[key] = rowData[key];
+                                const element = sap.ui.getCore().byId("include-" + key);
+                                if (element) {
+                                    const selected = element.getSelected();
+                                    if (selected) newRow[key] = rowData[key];
+                                }
                             }
                         }
 
@@ -1310,28 +1309,51 @@ const FORMS = {
         // Fields
         FORMS.validate("Reset");
 
-        const clearChoice = function (element) {
-            if (element.type === "SingleChoice" || element.type === "MultipleChoice") {
-                element.items.forEach(function (item, i) {
-                    const field = sap.ui.getCore().byId("item" + item.id);
-                    if (field) {
-                        if (element.type === "SingleChoice" && i === 0) {
-                            field.setSelected(true);
-                        } else {
-                            field.setSelected(false);
+        const clearElement = function (element) {
+            switch (element.type) {
+                case "SingleChoice":
+                case "MultipleChoice":
+                    element.items.forEach(function (item, i) {
+                        const field = sap.ui.getCore().byId("item" + item.id);
+                        if (field) {
+                            if (element.type === "SingleChoice" && i === 0) {
+                                field.setSelected(true);
+                            } else {
+                                field.setSelected(false);
+                            }
                         }
+                    });
+                    break;
+
+                case "Table":
+                    const field = sap.ui.getCore().byId("field" + element.id);
+                    const model = field.getModel();
+                    const oldData = model.getData();
+                    const newData = [];
+
+                    for (let i = 0; i < oldData.length; i++) {
+                        newData.push({
+                            id: oldData[i].id,
+                        });
                     }
-                });
+
+                    model.setData(newData);
+                    model.refresh();
+                    break;
+
+                default:
+                    break;
             }
         };
 
         // Single/MultiChoice
         FORMS.config.setup.forEach(function (section) {
+            clearElement(section);
             section.elements.forEach(function (element) {
-                clearChoice(element);
+                clearElement(element);
                 if (element.elements) {
                     element.elements.forEach(function (subElement) {
-                        clearChoice(subElement);
+                        clearElement(subElement);
                     });
                 }
             });
