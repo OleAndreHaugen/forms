@@ -60,7 +60,7 @@
 	"helpText": null,
 	"helpEnabled": false,
 	"openClickTile": false,
-	"ver": "23.2.21.947",
+	"ver": "23.2.23.170",
 	"actionWebApp": "",
 	"name": "FORMS Classification",
 	"cardWidth": null,
@@ -81,11 +81,5 @@
 	"actionType": "F",
 	"cockpitTile": true,
 	"package": "a313322e-f024-45f1-960f-b90081757b85",
-	"roles": [
-		{
-			"id": "edbb8b4a-757f-4eaf-b8dc-11b7cfe0f77e",
-			"name": "neptunesoftware-forms",
-			"ver": "23.2.21.916"
-		}
-	]
+	"roles": []
 }
