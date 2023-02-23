@@ -6307,7 +6307,7 @@
 																													"translation": []
 																												},
 																												{
-																													"attribute": "enabled",
+																													"attribute": "editable",
 																													"grouping": "Properties",
 																													"value": "{appControl>/enableEdit}",
 																													"script": "",
@@ -6341,7 +6341,7 @@
 																													"translation": []
 																												},
 																												{
-																													"attribute": "enabled",
+																													"attribute": "editable",
 																													"grouping": "Properties",
 																													"value": "{appControl>/enableEdit}",
 																													"script": "",
@@ -8219,7 +8219,7 @@
 																													"translation": []
 																												},
 																												{
-																													"attribute": "enabled",
+																													"attribute": "editable",
 																													"grouping": "Properties",
 																													"value": "{appControl>/enableEdit}",
 																													"script": "",
@@ -8287,7 +8287,7 @@
 																													"translation": []
 																												},
 																												{
-																													"attribute": "enabled",
+																													"attribute": "editable",
 																													"grouping": "Properties",
 																													"value": "{appControl>/enableEdit}",
 																													"script": "",
@@ -8321,7 +8321,7 @@
 																													"translation": []
 																												},
 																												{
-																													"attribute": "enabled",
+																													"attribute": "editable",
 																													"grouping": "Properties",
 																													"value": "{appControl>/enableEdit}",
 																													"script": "",
@@ -9119,6 +9119,13 @@
 																													"value": "{/required}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -9146,6 +9153,13 @@
 																													"value": "{/enableLabel}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -9171,6 +9185,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableDescription}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -9226,6 +9247,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableDuplicate}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -9330,6 +9358,13 @@
 																													"value": "{/horizontal}",
 																													"script": "",
 																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
 																												}
 																											],
 																											"data": []
@@ -9362,6 +9397,13 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableWidth}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
 																													"script": "",
 																													"translation": []
 																												}
@@ -20099,7 +20141,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.2.23.1048",
+	"ver": "23.2.23.1124",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
