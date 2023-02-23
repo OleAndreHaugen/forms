@@ -30,6 +30,14 @@ if (["Form", "Table"].includes(oDraggedData.type)) {
 let indexDrag = controller.getIndexFromId(oDraggedData.id);
 let indexDrop = controller.getIndexFromId(oDroppedData.id);
 
+// Allowed in Table ?
+const library = ModelData.FindFirst(controller.elementTypes, "type", controller.dragElement.type);
+
+if (oDroppedParent.type === "Table" && !library.table) {
+    sap.m.MessageToast.show("Element not allowed in parent Table");
+    return ;
+}
+
 const rootType = ["Form", "Table"];
 
 // FORM - TOP

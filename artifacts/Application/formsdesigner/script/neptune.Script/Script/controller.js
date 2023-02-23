@@ -9,6 +9,7 @@ const controller = {
         elemId: null,
     },
     pressedPreview: false,
+    dragElement:null,
 
     elementTypes: [
         { icon: "sap-icon://form", text: "Form", type: "Form", parent: true, descripton: "Present the data in Form layout" },

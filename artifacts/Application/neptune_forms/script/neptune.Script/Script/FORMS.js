@@ -123,11 +123,11 @@ const FORMS = {
                     const tabModel = new sap.ui.model.json.JSONModel();
                     sectionParent.setModel(tabModel);
 
-                    if (options.data && options.data[section.id]) {
+                    if (options.data && options.data[section.id] && options.data[section.id].length) {
                         tabModel.setData(options.data[section.id]);
                     } else {
                         let modelData = [];
-                        let rows = section.rows || 5;
+                        let rows = section.rows || 1;
 
                         for (let i = 0; i < rows; i++) {
                             let newRec = { id: ModelData.genID() };
@@ -221,6 +221,28 @@ const FORMS = {
         // Description
         if (element.enableDescription) {
             elementParent.addItem(new sap.m.Label({ text: element.description, wrapping: true }));
+        }
+
+        // Log
+        if (element.enableLog) {
+            elementParent.addItem(
+                new sap.m.Button({
+                    text: "Log",
+                    type: "Transparent",
+                    press: function (oEvent) {
+                        const options = {
+                            parameters: {
+                                formid: FORMS.config.id,
+                                elementid: element.id,
+                            },
+                        };
+
+                        apiElementLog(options).then(function (res) {
+                            FORMS.buildLogDialog(res);
+                        });
+                    },
+                })
+            );
         }
 
         // Duplicate
@@ -519,6 +541,78 @@ const FORMS = {
         diaCopy.addContent(tabCopy);
 
         diaCopy.open();
+    },
+
+    buildLogDialog: function (res) {
+        const diaLog = new sap.m.Dialog({
+            draggable: true,
+            contentHeight: "800px",
+            contentWidth: "800px",
+            title: "Log History",
+        }).addStyleClass("sapUiContentPadding");
+
+        diaLog.setEndButton(
+            new sap.m.Button({
+                type: "Transparent",
+                text: "Close",
+                press: function (oEvent) {
+                    diaLog.close();
+                },
+            }).addStyleClass("sapUiSizeCompact")
+        );
+
+        const currentEditable = FORMS.editable;
+        const currentFormParent = FORMS.formParent;
+        const oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance();
+
+        FORMS.editable = false;
+
+        for (let i = 0; i < res.length; i++) {
+            const element = res[i];
+
+            const formParent = new sap.ui.layout.form.SimpleForm({
+                layout: "ResponsiveGridLayout",
+                editable: true,
+                labelSpanL: 12,
+                labelSpanM: 12,
+                labelSpanS: 12,
+                columnsL: 2,
+                columnsM: 2,
+            });
+
+            const formModel = new sap.ui.model.json.JSONModel();
+            formModel.setData(element.data);
+            formParent.setModel(formModel);
+
+            delete element.config.enableLog;
+            const updatedAt = oDateFormat.format(new Date(element.updatedAt));
+
+            // formParent.addContent(new sap.ui.core.Title({}));
+            // formParent.addContent(new sap.m.Label({ text: "Updated" }));
+            // const vBox = new sap.m.VBox();
+
+            // vBox.addItem(new sap.m.Text({ text: updatedAt }));
+            // vBox.addItem(new sap.m.Text({ text: element.updatedBy }));
+            // formParent.addContent(vBox);
+
+            // formParent.addContent(new sap.ui.core.Title({}));
+
+            FORMS.formParent = formParent;
+            FORMS.buildElement(formParent, element.config, { type: "Form" }, i);
+
+            var panel = new sap.m.Panel({
+                backgroundDesign: "Solid",
+                headerText: updatedAt + " - " + element.updatedBy,
+            });
+            panel.addContent(formParent);
+
+            diaLog.addContent(panel);
+        }
+
+        FORMS.editable = currentEditable;
+        FORMS.formParent = currentFormParent;
+
+        diaLog.open();
     },
 
     buildParentTableChildren: function (parent, element, section, index, elementField) {
@@ -1326,18 +1420,20 @@ const FORMS = {
             if (element.required) requiredFields.push(element.id);
         });
 
-        model.oData.forEach(function (rowData) {
-            delete rowData.highlight;
+        if (model.oData && model.oData.length) {
+            model.oData.forEach(function (rowData) {
+                delete rowData.highlight;
 
-            if (process !== "Reset") {
-                requiredFields.forEach(function (requiredField) {
-                    if (!rowData[requiredField]) {
-                        validTable = false;
-                        rowData.highlight = "Error";
-                    }
-                });
-            }
-        });
+                if (process !== "Reset") {
+                    requiredFields.forEach(function (requiredField) {
+                        if (!rowData[requiredField]) {
+                            validTable = false;
+                            rowData.highlight = "Error";
+                        }
+                    });
+                }
+            });
+        }
 
         model.refresh();
 

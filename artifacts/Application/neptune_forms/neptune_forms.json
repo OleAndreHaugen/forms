@@ -64,6 +64,20 @@
 					"attributes": [],
 					"data": [
 						{
+							"fieldNo": "40471241-0765-4a18-b1d1-31da6f83f3f2",
+							"fieldName": "ElementLog",
+							"fieldParent": "5da79be1-8fb0-4ce4-a5e3-7fc4517150fd",
+							"fieldType": "neptune.restapi",
+							"script": "",
+							"customComponent": false,
+							"restSource": "d5bc31e5-8726-409e-8987-65088dc3a2d1",
+							"restOperation": "e0043ec0-2e7c-4fbe-e585-bd08869690fe",
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						},
+						{
 							"fieldNo": "355b630f-d3dc-40a1-d904-a998b6ccece0",
 							"fieldName": "SaveLog",
 							"fieldParent": "5da79be1-8fb0-4ce4-a5e3-7fc4517150fd",
@@ -117,7 +131,7 @@
 			"sap.m.Panel"
 		]
 	},
-	"ver": "23.2.22.1718",
+	"ver": "23.2.23.1032",
 	"application": "neptune_forms",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
@@ -160,7 +174,7 @@
 		{
 			"id": "d5bc31e5-8726-409e-8987-65088dc3a2d1",
 			"name": "FormsClient",
-			"ver": "23.2.21.02"
+			"ver": "23.2.23.855"
 		}
 	],
 	"package": "a313322e-f024-45f1-960f-b90081757b85"

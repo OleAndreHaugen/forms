@@ -97,6 +97,11 @@
 			"id": "6614e08f-6f22-4387-b661-757dd8648642",
 			"name": "demo",
 			"description": null
+		},
+		{
+			"id": "65546019-2d1a-483a-970b-e5a4a165dd01",
+			"name": "formGetLog",
+			"description": null
 		}
 	],
 	"jsscript_group": [
