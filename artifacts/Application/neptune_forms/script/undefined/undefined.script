@@ -14,6 +14,14 @@
   border-left: 4px solid #f53232;
 }
 
+.noBorderRadius {
+  border-radius: 0 !important;
+}
+
+.noOverflow .sapMPanelContent {
+  overflow: hidden !important;
+}
+
 .sapUiRespGridMedia-Std-Phone.sapUiFormResGridCont > .sapUiFormElementLbl:not(.sapUiRespGridSpanS12) > .nepLabelLeftAlign,
 .sapUiRespGridMedia-Std-Tablet.sapUiFormResGridCont > .sapUiFormElementLbl:not(.sapUiRespGridSpanM12) > .nepLabelLeftAlign,
 .sapUiRespGridMedia-Std-Desktop.sapUiFormResGridCont > .sapUiFormElementLbl:not(.sapUiRespGridSpanL12) > .nepLabelLeftAlign,

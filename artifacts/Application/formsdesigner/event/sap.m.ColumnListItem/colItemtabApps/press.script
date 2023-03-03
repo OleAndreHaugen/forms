@@ -4,4 +4,6 @@ var data = context.getObject();
 modelpanTopProperties.oData.adaptiveApp = data.id;
 modelpanTopProperties.refresh();
 
+controller.buildAdaptiveFields();
+
 diaApps.close();

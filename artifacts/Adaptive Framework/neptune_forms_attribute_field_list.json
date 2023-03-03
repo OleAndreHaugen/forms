@@ -1,18 +1,18 @@
 {
-	"id": "c44d98ad-fdb8-40a7-9476-cab348d55a2b",
-	"createdAt": "2023-02-21T10:34:10.000Z",
+	"id": "89ea0eb8-fc55-42ff-9a04-d8d0b9d05ded",
+	"createdAt": "2023-02-28T12:59:53.000Z",
 	"createdBy": "ole-andre.haugen@neptune-software.com",
 	"settings": {
 		"properties": {
 			"report": {
-				"showIcon": true,
+				"showIcon": false,
 				"actionButtonLeft": false,
 				"iconButtonClose": "",
 				"textButtonClose": "Close",
 				"typeButtonClose": "Transparent",
 				"iconButtonCreate": "",
-				"textButtonCreate": "Create",
-				"typeButtonCreate": "Emphasized",
+				"textButtonCreate": "Add",
+				"typeButtonCreate": "Transparent",
 				"iconButtonExport": "sap-icon://excel-attachment",
 				"textButtonExport": "",
 				"typeButtonExport": "Transparent",
@@ -24,11 +24,11 @@
 				"typeButtonMultiSelect": "Emphasized",
 				"iconButtonRun": "",
 				"textButtonRun": "Update",
-				"typeButtonRun": "Transparent",
-				"enableRun": true,
-				"enableCreate": false,
-				"enableClose": true,
-				"enableDelete": false,
+				"typeButtonRun": "Emphasized",
+				"enableRun": false,
+				"enableCreate": true,
+				"enableClose": false,
+				"enableDelete": true,
 				"enableExport": false,
 				"enableImport": false,
 				"enableMultiSelect": false,
@@ -38,16 +38,30 @@
 				"autoRunFocus": true,
 				"searchLabel": "Search",
 				"searchPlaceholder": "",
-				"title": "Reports",
-				"avatarIcon": "sap-icon://trip-report",
-				"avatarBackgroundColor": "Accent7",
+				"title": "Attribute Fields",
+				"_navigationCreate": {
+					"destinationType": "F",
+					"openAs": "D",
+					"butType": "Accept",
+					"destinationTargetF": "95522c9f-3c92-4be4-9375-445d1da47e68",
+					"keyField": [
+						{
+							"fieldName": "groupid",
+							"key": "groupid",
+							"value": ""
+						}
+					],
+					"dialogHeight": "350px"
+				},
 				"_navigationItemPress": {
 					"destinationType": "F",
-					"openAs": "P",
+					"openAs": "D",
 					"butType": "Accept",
-					"destinationTargetF": "ab34d0f6-ff00-429e-9838-703092fa1323",
-					"keyField": []
-				}
+					"destinationTargetF": "b86ddb45-614b-4b14-9a3c-81b8d180770c",
+					"keyField": [],
+					"dialogHeight": "600px"
+				},
+				"subTitle": ""
 			},
 			"form": {
 				"enableCompact": false,
@@ -76,52 +90,26 @@
 				"action4Text": "",
 				"action4Type": "Transparent",
 				"action5Text": "",
-				"action5Type": "Transparent",
-				"initialSortField": "updatedAt",
-				"initialSortOrder": "DESC"
+				"action5Type": "Transparent"
 			}
 		},
 		"fieldCatalog": [
 			{
-				"name": "createdAt",
-				"label": "Created At",
-				"type": "timestamp",
-				"usage": "BOTH"
-			},
-			{
-				"name": "createdBy",
-				"label": "Created By",
-				"type": "text",
-				"usage": "BOTH"
-			},
-			{
-				"name": "data",
-				"label": "FORM Data",
-				"type": "json",
-				"usage": "BOTH"
-			},
-			{
-				"name": "formid",
-				"label": "FORM ID",
+				"name": "groupid",
+				"label": "Attribute Group",
 				"type": "smalltext",
 				"usage": "BOTH"
 			},
 			{
-				"name": "sessionid",
-				"label": "Session ID",
+				"name": "name",
+				"label": "Name",
 				"type": "smalltext",
 				"usage": "BOTH"
 			},
 			{
-				"name": "completed",
-				"label": "Status: Completed",
-				"type": "boolean",
-				"usage": "BOTH"
-			},
-			{
-				"name": "valid",
-				"label": "Status: Valid",
-				"type": "boolean",
+				"name": "description",
+				"label": "Description",
+				"type": "mediumtext",
 				"usage": "BOTH"
 			},
 			{
@@ -131,36 +119,53 @@
 				"usage": "BOTH"
 			},
 			{
+				"name": "createdAt",
+				"label": "Created At",
+				"type": "timestamp",
+				"usage": "BOTH"
+			},
+			{
 				"name": "updatedBy",
 				"label": "Updated By",
+				"type": "text",
+				"usage": "BOTH"
+			},
+			{
+				"name": "createdBy",
+				"label": "Created By",
 				"type": "text",
 				"usage": "BOTH"
 			}
 		],
 		"fieldsSel": [
 			{
-				"visible": true,
-				"name": "updatedAt",
-				"text": "Updated At",
-				"fieldPos": 1,
-				"type": "DateRange",
-				"sysvarValue": "LAST_30"
-			},
-			{
-				"visible": true,
-				"name": "updatedBy",
-				"text": "Updated By",
-				"fieldPos": 2
-			},
-			{
 				"visible": false,
-				"name": "formid",
-				"text": "FORM ID",
-				"fieldPos": 3,
-				"required": true
+				"name": "groupid",
+				"text": "Attribute Group",
+				"fieldPos": 1
 			}
 		],
 		"fieldsRun": [
+			{
+				"buttonType": "Transparent",
+				"popinDisplay": "Block",
+				"enableFilter": true,
+				"enableSort": true,
+				"visible": true,
+				"name": "name",
+				"text": "Name",
+				"fieldPos": 2
+			},
+			{
+				"buttonType": "Transparent",
+				"popinDisplay": "Block",
+				"enableFilter": true,
+				"enableSort": true,
+				"visible": true,
+				"name": "description",
+				"text": "Description",
+				"fieldPos": 3
+			},
 			{
 				"buttonType": "Transparent",
 				"popinDisplay": "Block",
@@ -185,40 +190,16 @@
 			{
 				"buttonType": "Transparent",
 				"popinDisplay": "Block",
-				"enableFilter": false,
+				"enableFilter": true,
 				"enableSort": true,
-				"visible": true,
-				"name": "completed",
-				"text": " Completed",
-				"fieldPos": 6,
-				"type": "ObjectStatus",
-				"width": "150px",
-				"statusStateType": "Rule",
-				"statusStateRule": "af618c32-dc24-4c40-a4fa-03b7bc3d90d6",
-				"valueType": "Rule",
-				"valueRule": "ed17eb91-2e7a-4cf0-a98f-41fbcc5fda00"
-			},
-			{
-				"buttonType": "Transparent",
-				"popinDisplay": "Block",
-				"enableFilter": false,
-				"enableSort": true,
-				"visible": true,
-				"name": "valid",
-				"text": "Valid",
-				"fieldPos": 7,
-				"type": "ObjectStatus",
-				"statusStateType": "Rule",
-				"statusStateRule": "e086e9e0-1fef-4006-96e2-b508a2d33d75",
-				"statusTitleType": "",
-				"statusTitleRule": "e086e9e0-1fef-4006-96e2-b508a2d33d75",
-				"valueType": "Rule",
-				"valueRule": "154a03b5-6ce5-4a99-94dc-4999d534ed01",
-				"width": "150px"
+				"visible": false,
+				"name": "groupid",
+				"text": "Attribute Group",
+				"fieldPos": 6
 			}
 		],
 		"defaultVariant": {
-			"id": "c962d901-b946-4b02-e57f-138ff19496f8",
+			"id": "f72ffdce-bb1c-4ca9-d465-be086b411457",
 			"colOrder": "key_a_to_z",
 			"rowOrder": "key_a_to_z",
 			"row": [],
@@ -228,15 +209,15 @@
 			"exclusions": {}
 		}
 	},
-	"name": "neptune_forms_report_list",
+	"name": "neptune_forms_attribute_field_list",
 	"description": "",
 	"group": "",
 	"type": "C",
-	"connectorid": "eff69025-ed3b-4393-96aa-f68647e513ee",
+	"connectorid": "2d4b433b-be45-40c0-952d-a9776c9de99c",
 	"scriptSel": null,
 	"scriptRun": null,
 	"tableid": null,
-	"ver": "23.3.3.820",
+	"ver": "23.2.28.1415",
 	"disabled": false,
 	"appType": "A",
 	"application": "planet9_adaptive_list",

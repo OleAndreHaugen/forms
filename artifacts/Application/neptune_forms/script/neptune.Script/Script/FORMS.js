@@ -10,6 +10,7 @@ const FORMS = {
     columnTemplate: null,
     sessionid: null,
     validationCheck: false,
+    signatures: {},
 
     build: function (parent, options) {
         let formOptions;
@@ -51,6 +52,7 @@ const FORMS = {
 
         FORMS.editable = true;
         FORMS.formTitleHide = [];
+        FORMS.signatures = {};
         FORMS.config = options.config;
         FORMS.sessionid = options.sessionid;
 
@@ -227,8 +229,9 @@ const FORMS = {
         if (element.enableLog) {
             elementParent.addItem(
                 new sap.m.Button({
-                    text: "Log",
-                    type: "Transparent",
+                    text: element.logButtonText,
+                    type: element.logButtonType,
+                    icon: element.logButtonIcon,
                     press: function (oEvent) {
                         const options = {
                             parameters: {
@@ -241,7 +244,7 @@ const FORMS = {
                             FORMS.buildLogDialog(res);
                         });
                     },
-                })
+                }).addStyleClass("sapUiSizeCompact")
             );
         }
 
@@ -302,12 +305,16 @@ const FORMS = {
         if (!element.visibleCondition) return;
         if (!element.visibleValue) return;
 
-        let bindingPath = element.type === "Table" ? "/" : FORMS.bindingPath;
+        let bindingPath = "/"; //element.type === "Table" ? "/" : FORMS.bindingPath;
         let visibleStatement = element.visibleInverse ? "false:true" : "true:false";
         let visibleValueSep = element.visibleValue === "true" || element.visibleValue === "false" ? "" : "'";
+        let visibleFieldName = element.visibleFieldName;
 
-        let visibleCond =
-            "{= ${" + bindingPath + element.visibleFieldName + "} " + element.visibleCondition + " " + visibleValueSep + element.visibleValue + visibleValueSep + " ? " + visibleStatement + " }";
+        // Check if field have object attributes
+        const checkElement = FORMS.getElementFromId(element.visibleFieldName);
+        if (checkElement.fieldName) visibleFieldName = checkElement.fieldName;
+
+        let visibleCond = "{= ${" + bindingPath + visibleFieldName + "} " + element.visibleCondition + " " + visibleValueSep + element.visibleValue + visibleValueSep + " ? " + visibleStatement + " }";
 
         return visibleCond;
     },
@@ -619,7 +626,10 @@ const FORMS = {
             demandPopin: true,
             popinDisplay: "Block",
             minScreenWidth: "Tablet",
+            // visible: FORMS.buildVisibleCond(element)
         });
+
+        elementField.bindProperty("visible", FORMS.buildVisibleCond(element));
 
         // Column Width
         if (section.widths) {
@@ -666,6 +676,10 @@ const FORMS = {
 
             case "TextArea":
                 elementField = FORMS.buildElementTextArea(element);
+                break;
+
+            case "Signature":
+                elementField = FORMS.buildElementSignature(element);
                 break;
 
             case "SegmentedButton":
@@ -781,8 +795,10 @@ const FORMS = {
     },
 
     buildElementInput: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         const newField = new sap.m.Input(FORMS.buildElementFieldID(element), {
-            value: "{" + FORMS.bindingPath + element.id + "}",
+            value: "{" + FORMS.bindingPath + bindingField + "}",
             editable: FORMS.editable,
             placeholder: element.placeholder,
         });
@@ -791,8 +807,10 @@ const FORMS = {
     },
 
     buildElementValueHelp: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         const newField = new sap.m.Input(FORMS.buildElementFieldID(element), {
-            value: "{" + FORMS.bindingPath + element.id + "}",
+            value: "{" + FORMS.bindingPath + bindingField + "}",
             editable: FORMS.editable,
             placeholder: element.placeholder,
             valueHelpOnly: true,
@@ -850,6 +868,42 @@ const FORMS = {
         return newField;
     },
 
+    buildElementSignature: function (element) {
+        if (!element.signatureHeight) element.signatureHeight = 200;
+
+        const newField = new sap.m.Panel(FORMS.buildElementFieldID(element), {
+            width: "100%",
+            height: element.signatureHeight + "px",
+            backgroundDesign: "Transparent",
+        }).addStyleClass("sapUiNoContentPadding noBorderRadius noOverflow");
+
+        const canvasId = "signature" + element.id;
+
+        let signatureData = null;
+        const formModel = FORMS.formParent.getModel();
+
+        if (formModel.oData[element.id]) signatureData = formModel.oData[element.id];
+
+        const SignatureHTML = new sap.ui.core.HTML({
+            preferDOM: false,
+            content: "<div style='height:100%;width:100%;'><canvas id='" + canvasId + "' class='noOverflow' style='background:white'></canvas></div>",
+        });
+
+        SignatureHTML.attachAfterRendering(function (oEvent) {
+            setTimeout(function () {
+                let signatureCanvas = document.getElementById(canvasId);
+                signatureCanvas.width = signatureCanvas.parentNode.clientWidth;
+                signatureCanvas.height = element.signatureHeight;
+                FORMS.signatures[element.id] = new Signature(signatureCanvas);
+                if (signatureData) FORMS.signatures[element.id].fromDataURL(signatureData);
+            }, 200);
+        });
+
+        newField.addContent(SignatureHTML);
+
+        return newField;
+    },
+
     buildElementText: function (element) {
         const newField = new sap.m.Title(FORMS.buildElementFieldID(element), {
             text: element.text,
@@ -861,8 +915,10 @@ const FORMS = {
     },
 
     buildElementTextArea: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         const newField = new sap.m.TextArea(FORMS.buildElementFieldID(element), {
-            value: "{" + FORMS.bindingPath + element.id + "}",
+            value: "{" + FORMS.bindingPath + bindingField + "}",
             placeholder: element.placeholder,
             editable: FORMS.editable,
             growing: element.growing,
@@ -875,8 +931,10 @@ const FORMS = {
     },
 
     buildElementRating: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         const newField = new sap.m.RatingIndicator(FORMS.buildElementFieldID(element), {
-            value: "{" + FORMS.bindingPath + element.id + "}",
+            value: "{" + FORMS.bindingPath + bindingField + "}",
             editable: FORMS.editable,
             maxValue: element.maxValue,
         });
@@ -892,8 +950,10 @@ const FORMS = {
     },
 
     buildElementNumeric: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         const newField = new sap.m.Input(FORMS.buildElementFieldID(element), {
-            value: "{" + FORMS.bindingPath + element.id + "}",
+            value: "{" + FORMS.bindingPath + bindingField + "}",
             placeholder: element.placeholder,
             editable: FORMS.editable,
             type: "Number",
@@ -906,8 +966,10 @@ const FORMS = {
     },
 
     buildElementStepInput: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         const newField = new sap.m.StepInput(FORMS.buildElementFieldID(element), {
-            value: "{" + FORMS.bindingPath + element.id + "}",
+            value: "{" + FORMS.bindingPath + bindingField + "}",
             placeholder: element.placeholder,
             editable: FORMS.editable,
         });
@@ -919,8 +981,10 @@ const FORMS = {
     },
 
     buildElementSwitch: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         const newField = new sap.m.Switch(FORMS.buildElementFieldID(element), {
-            state: "{" + FORMS.bindingPath + element.id + "}",
+            state: "{" + FORMS.bindingPath + bindingField + "}",
             enabled: FORMS.editable,
             customTextOff: element.customTextOff,
             customTextOn: element.customTextOn,
@@ -934,8 +998,10 @@ const FORMS = {
     },
 
     buildElementCheckBox: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         const newField = new sap.m.CheckBox(FORMS.buildElementFieldID(element), {
-            selected: "{" + FORMS.bindingPath + element.id + "}",
+            selected: "{" + FORMS.bindingPath + bindingField + "}",
             editable: FORMS.editable,
             text: element.text,
         });
@@ -944,8 +1010,10 @@ const FORMS = {
     },
 
     buildElementSegmentedButton: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         const newField = new sap.m.SegmentedButton(FORMS.buildElementFieldID(element), {
-            selectedKey: "{" + FORMS.bindingPath + element.id + "}",
+            selectedKey: "{" + FORMS.bindingPath + bindingField + "}",
             enabled: FORMS.editable,
         });
 
@@ -964,15 +1032,17 @@ const FORMS = {
 
             // Set Default Item 1 as Selected
             const formModel = FORMS.formParent.getModel();
-            if (!formModel.oData[element.id]) formModel.oData[element.id] = element.items[0].key;
+            if (!formModel.oData[bindingField]) formModel.oData[bindingField] = element.items[0].key;
         }
 
         return newField;
     },
 
     buildElementSingleSelect: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         const newField = new sap.m.ComboBox(FORMS.buildElementFieldID(element), {
-            selectedKey: "{" + FORMS.bindingPath + element.id + "}",
+            selectedKey: "{" + FORMS.bindingPath + bindingField + "}",
             width: "100%",
             editable: FORMS.editable,
         });
@@ -985,6 +1055,8 @@ const FORMS = {
     },
 
     buildElementSingleChoice: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         let newField;
 
         newField = new sap.m.RadioButtonGroup(FORMS.buildElementFieldID(element), {
@@ -997,7 +1069,7 @@ const FORMS = {
 
         element.items.forEach(function (item, i) {
             // Always set first field as default value, as the parent is RadioButtonGroup
-            if (i === 0 && !formModel.oData[element.id]) formModel.oData[element.id] = item.key;
+            if (i === 0 && !formModel.oData[bindingField]) formModel.oData[bindingField] = item.key;
 
             const elementRadio = new sap.m.RadioButton("item" + item.id, {
                 text: item.title,
@@ -1007,9 +1079,9 @@ const FORMS = {
                     const context = oEvent.oSource.getBindingContext();
                     if (context) {
                         const data = context.getObject();
-                        data[element.id] = item.key;
+                        data[bindingField] = item.key;
                     } else {
-                        formModel.oData[element.id] = item.key;
+                        formModel.oData[bindingField] = item.key;
                         formModel.refresh();
                     }
                 },
@@ -1022,7 +1094,7 @@ const FORMS = {
             }
 
             // If Data Present
-            if (formModel.oData[element.id] && formModel.oData[element.id] === item.key) {
+            if (formModel.oData[bindingField] && formModel.oData[bindingField] === item.key) {
                 elementRadio.setSelected(true);
             }
 
@@ -1033,8 +1105,10 @@ const FORMS = {
     },
 
     buildElementMultipleSelect: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         const newField = new sap.m.MultiComboBox(FORMS.buildElementFieldID(element), {
-            selectedKeys: "{" + FORMS.bindingPath + element.id + "}",
+            selectedKeys: "{" + FORMS.bindingPath + bindingField + "}",
             width: "100%",
             editable: FORMS.editable,
         });
@@ -1047,6 +1121,8 @@ const FORMS = {
     },
 
     buildElementMultipleChoice: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         let newField;
 
         if (element.horizontal) {
@@ -1068,13 +1144,13 @@ const FORMS = {
                 text: item.title,
                 editable: FORMS.editable,
                 select: function (oEvent) {
-                    if (!formModel.oData[element.id]) formModel.oData[element.id] = [];
+                    if (!formModel.oData[bindingField]) formModel.oData[bindingField] = [];
 
                     if (this.getSelected()) {
-                        formModel.oData[element.id].push(item.key);
+                        formModel.oData[bindingField].push(item.key);
                     } else {
-                        const index = formModel.oData[element.id].indexOf(item.key);
-                        if (index > -1) formModel.oData[element.id].splice(index, 1);
+                        const index = formModel.oData[bindingField].indexOf(item.key);
+                        if (index > -1) formModel.oData[bindingField].splice(index, 1);
                     }
                     formModel.refresh(true);
                 },
@@ -1085,7 +1161,7 @@ const FORMS = {
             }
 
             // If Data Present
-            if (formModel.oData[element.id] && formModel.oData[element.id].includes(item.key)) {
+            if (formModel.oData[bindingField] && formModel.oData[bindingField].includes(item.key)) {
                 elementCheckBox.setSelected(true);
             }
 
@@ -1096,8 +1172,11 @@ const FORMS = {
     },
 
     buildElementDatePicker: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         const newField = new sap.m.DatePicker(FORMS.buildElementFieldID(element), {
-            value: "{" + FORMS.bindingPath + element.id + "}",
+            value: "{" + FORMS.bindingPath + bindingField + "}",
+            displayFormat: element.displayFormat ? element.displayFormat : "dd.MM.yyyy",
             editable: FORMS.editable,
         });
 
@@ -1105,6 +1184,8 @@ const FORMS = {
     },
 
     buildElementImage: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         const newField = new sap.m.VBox(FORMS.buildElementFieldID(element), {
             width: "100%",
         });
@@ -1121,7 +1202,7 @@ const FORMS = {
 
         const elementImage = new sap.m.Image({
             height: "200px",
-            src: "{" + FORMS.bindingPath + element.id + "}",
+            src: "{" + FORMS.bindingPath + bindingField + "}",
         });
 
         newField.addItem(elementUploader);
@@ -1131,8 +1212,11 @@ const FORMS = {
     },
 
     buildElementDateTimePicker: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
         const newField = new sap.m.DateTimePicker(FORMS.buildElementFieldID(element), {
-            value: "{" + FORMS.bindingPath + element.id + "}",
+            value: "{" + FORMS.bindingPath + bindingField + "}",
+            displayFormat: element.displayFormat ? element.displayFormat : "dd.MM.yyyy HH:mm",
             editable: FORMS.editable,
         });
 
@@ -1228,16 +1312,29 @@ const FORMS = {
         let completed = false;
 
         const getElementData = function (element) {
-            if (formModel.oData[element.id]) {
-                outputData[element.id] = formModel.oData[element.id];
-            }
-
-            if (element.type === "CheckList") {
-                element.items.forEach(function (item) {
-                    if (formModel.oData[item.id]) {
-                        outputData[item.id] = formModel.oData[item.id];
+            switch (element.type) {
+                case "Signature":
+                    if (FORMS.signatures[element.id]) {
+                        outputData[element.id] = FORMS.signatures[element.id].toDataURL();
                     }
-                });
+                    break;
+
+                case "CheckList":
+                    element.items.forEach(function (item) {
+                        if (formModel.oData[item.id]) {
+                            outputData[item.id] = formModel.oData[item.id];
+                        }
+                    });
+                    break;
+
+                default:
+                    if (element.fieldName) {
+                        if (formModel.oData[element.fieldName]) outputData[element.fieldName] = formModel.oData[element.fieldName];
+                    } else {
+                        if (formModel.oData[element.id]) outputData[element.id] = formModel.oData[element.id];
+                    }
+
+                    break;
             }
         };
 
@@ -1294,10 +1391,6 @@ const FORMS = {
         }
 
         return formData;
-
-        // if (element.fieldName) {
-        //     outputData[element.fieldName] = formModel.oData[element.id]; // TODO - Need in/out handling for fieldnames
-        // } else {
     },
 
     clear: function () {
@@ -1323,6 +1416,10 @@ const FORMS = {
                             }
                         }
                     });
+                    break;
+
+                case "Signature":
+                    FORMS.signatures[element.id].clear();
                     break;
 
                 case "Table":
@@ -1369,7 +1466,9 @@ const FORMS = {
             const field = sap.ui.getCore().byId("field" + element.id);
 
             if (element.required && !element.disabled && field.getDomRef()) {
-                fieldCompleted = formModel.oData[element.id] ? true : false;
+                const bindingField = element.fieldName ? element.fieldName : element.id;
+
+                fieldCompleted = formModel.oData[bindingField] ? true : false;
                 if (validForm) validForm = fieldCompleted;
                 FORMS.validateMarkField(element.id, fieldCompleted, process);
             }
@@ -1439,7 +1538,7 @@ const FORMS = {
         let requiredFields = [];
 
         section.elements.forEach(function (element) {
-            if (element.required) requiredFields.push(element.id);
+            if (element.required) requiredFields.push(element.fieldName ? element.fieldName : element.id);
         });
 
         if (model.oData && model.oData.length) {
@@ -1488,6 +1587,24 @@ const FORMS = {
         }
     },
 
+    getElementFromId: function (id) {
+        let elementFound = null;
+
+        FORMS.config.setup.forEach(function (section) {
+            if (section.id === id) elementFound = section;
+            section.elements.forEach(function (element) {
+                if (element.id === id) elementFound = element;
+                if (element.elements) {
+                    element.elements.forEach(function (subElement) {
+                        if (subElement.id === id) elementFound = subElement;
+                    });
+                }
+            });
+        });
+
+        return elementFound;
+    },
+
     apiGetForm: function (id) {
         return new Promise(function (resolve) {
             $.ajax({
@@ -1518,7 +1635,7 @@ const FORMS = {
                     formModel = FORMS.formParent.getModel();
                 }
 
-                formModel.oData[FORMS.elementUpload.id] = fileLoadedEvent.target.result;
+                formModel.oData[FORMS.elementUpload.fieldName ? FORMS.elementUpload.fieldName : FORMS.elementUpload.id] = fileLoadedEvent.target.result;
                 formModel.refresh();
                 document.getElementById("imageUploader").value = "";
             };

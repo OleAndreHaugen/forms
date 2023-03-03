@@ -89,7 +89,7 @@ const metadata = {
             fieldFormId: { type: "TableFieldLocal", label: "Form ID", visible: vb.enableTabF },
             fieldFormData: { type: "TableFieldLocal", label: "Form Data", visible: vb.enableTabF },
             fieldFormStatus: { type: "TableFieldLocal", label: "Form Status", visible: vb.enableTabF },
-            fieldFormFetch: { type: "CheckBox", label: "Always fetch Form", visible: vb.enableTabF },
+            fieldFormFetch: { type: "CheckBox", label: "Always use latest config", visible: vb.enableTabF },
 
             titleTab0: { type: "Title", label: "Tab Main", visible: vb.enableTab0 },
             tab0Text: { type: "Input", label: "Text", default: "General", visible: vb.enableTab0, translate: true },

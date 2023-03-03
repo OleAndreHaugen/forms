@@ -4,8 +4,9 @@
 	"createdBy": "ole-andre.haugen@neptune-software.com",
 	"translation": [],
 	"tilesOrder": [
-		"59f26a1a-f9d5-403b-ad96-4ba203ccbf13",
 		"538e3ef8-0493-4f9e-a738-a231db3e8c01",
+		"59f26a1a-f9d5-403b-ad96-4ba203ccbf13",
+		"d832bb94-ec3a-4f59-8f1a-bab662c6a4d6",
 		"b5d4a055-2df2-4ae1-976d-3e41d2d1ce3c"
 	],
 	"tilegroupsOrder": [],
@@ -31,7 +32,7 @@
 	"enableShadeCalc": false,
 	"numTiles": null,
 	"enableMessage": false,
-	"ver": "23.2.23.170",
+	"ver": "23.2.28.1412",
 	"headColor": null,
 	"headTxtClr": null,
 	"subheadTxtClr": null,
@@ -72,6 +73,12 @@
 		}
 	],
 	"tiles": [
+		{
+			"id": "d832bb94-ec3a-4f59-8f1a-bab662c6a4d6",
+			"name": "FORMS Attributes",
+			"title": "FORMS Attributes",
+			"ver": "23.2.28.1412"
+		},
 		{
 			"id": "b5d4a055-2df2-4ae1-976d-3e41d2d1ce3c",
 			"name": "FORMS Reports",

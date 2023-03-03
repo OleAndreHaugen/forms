@@ -1,4 +1,5 @@
 const controller = {
+    filterGroupid: null,
     currentIndex: null,
     currentObject: null,
     currentFilter: null,
@@ -9,7 +10,7 @@ const controller = {
         elemId: null,
     },
     pressedPreview: false,
-    dragElement:null,
+    dragElement: null,
 
     elementTypes: [
         { icon: "sap-icon://form", text: "Form", type: "Form", parent: true, descripton: "Present the data in Form layout" },
@@ -28,6 +29,7 @@ const controller = {
         { icon: "sap-icon://numbered-text", text: "Step Input", type: "StepInput", parent: false, table: true },
         { icon: "sap-icon://switch-views", text: "Switch", type: "Switch", parent: false, table: true },
         { icon: "sap-icon://activities", text: "Segmented Button", type: "SegmentedButton", parent: false, table: true },
+        { icon: "sap-icon://fa-solid/signature", text: "Signature", type: "Signature", parent: false, table: false },
         { icon: "sap-icon://fa-regular/circle", text: "Single Select", type: "SingleSelect", parent: false, table: true },
         { icon: "sap-icon://fa-regular/circle", text: "Single Choice", type: "SingleChoice", parent: false, table: false },
         { icon: "sap-icon://multi-select", text: "Multiple Select", type: "MultipleSelect", parent: false, table: true },
@@ -66,17 +68,17 @@ const controller = {
             let target;
 
             if (e.target.id.indexOf("field") > -1) {
-                target = e.target.id.split("--")[0];
+                target = e.target.id.substr(0, 41);
             } else if (e.target.parentElement.id.indexOf("field") > -1) {
-                target = e.target.parentElement.id.split("--")[0];
+                target = e.target.parentElement.id.substr(0, 41);
             } else if (e.target.parentElement.parentElement.id.indexOf("field") > -1) {
-                target = e.target.parentElement.parentElement.id.split("--")[0];
+                target = e.target.parentElement.parentElement.id.substr(0, 41);
             } else if (e.target.parentElement.parentElement.parentElement.id.indexOf("field") > -1) {
-                target = e.target.parentElement.parentElement.parentElement.id.split("--")[0];
+                target = e.target.parentElement.parentElement.parentElement.id.substr(0, 41);
             } else if (e.target.parentElement.parentElement.parentElement.parentElement.id.indexOf("field") > -1) {
-                target = e.target.parentElement.parentElement.parentElement.parentElement.id.split("--")[0];
+                target = e.target.parentElement.parentElement.parentElement.parentElement.id.substr(0, 41);
             } else if (e.target.parentElement.parentElement.parentElement.parentElement.parentElement.id.indexOf("field") > -1) {
-                target = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.id.split("--")[0];
+                target = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.id.substr(0, 41);
             }
 
             if (target) {
@@ -319,6 +321,7 @@ const controller = {
             },
         }).then(function (req) {
             modeloPageDetail.setData(req);
+            modelpanTopProperties.setData({});
             controller.preview();
 
             if (oApp.getCurrentPage() === oPageStart) {
@@ -537,6 +540,8 @@ const controller = {
             disabled: false,
             duplicateButtonText: "Add",
             duplicateButtonType: "Transparent",
+            logButtonText: "Log",
+            logButtonType: "Transparent",
             placeholder: "",
             option: "E",
             title: elementData.type,
@@ -659,7 +664,8 @@ const controller = {
             modeloPageDetail.oData.setup.push(newElement);
         } else {
             let currentObject = controller.currentObject.option === "P" ? controller.currentObject : controller.getParentFromId(controller.currentObject.id);
-            if (controller.currentIndex) {
+
+            if (currentObject.type !== "FormTitle" && controller.currentIndex) {
                 currentObject.elements.splice(controller.currentIndex, 0, newElement);
             } else {
                 currentObject.elements.splice(0, 0, newElement);
@@ -795,6 +801,10 @@ const controller = {
             }
         };
 
+        if (element.type === "ValueHelp") {
+            controller.buildAdaptiveFields();
+        }
+
         // Conditional Access
         inElementFormVisibleField.destroyItems();
         inElementFormVisibleField.addItem(new sap.ui.core.Item());
@@ -831,9 +841,11 @@ const controller = {
                 break;
 
             default:
-                visibleField.items.forEach(function (item, i) {
-                    inElementFormVisibleValue.addItem(new sap.ui.core.Item({ key: item.key, text: item.title }));
-                });
+                if (visibleField.items) {
+                    visibleField.items.forEach(function (item, i) {
+                        inElementFormVisibleValue.addItem(new sap.ui.core.Item({ key: item.key, text: item.title }));
+                    });
+                }
                 break;
         }
     },
@@ -864,6 +876,23 @@ const controller = {
         });
 
         binding.filter([filter]);
+    },
+
+    buildAdaptiveFields: function () {
+        if (!modelpanTopProperties.oData.adaptiveApp) return;
+
+        const data = {
+            id: modelpanTopProperties.oData.adaptiveApp,
+        };
+
+        sap.n.Adaptive.init(data).then(function (res) {
+            inElementFormValueHelpField.destroyItems();
+            inElementFormValueHelpField.addItem(new sap.ui.core.ListItem({ key: "", text: "" }));
+
+            res.fieldsReport.forEach(function (item) {
+                inElementFormValueHelpField.addItem(new sap.ui.core.ListItem({ key: item.name, text: item.text }));
+            });
+        });
     },
 };
 

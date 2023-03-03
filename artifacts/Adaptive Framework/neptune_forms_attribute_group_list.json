@@ -1,6 +1,6 @@
 {
-	"id": "c44d98ad-fdb8-40a7-9476-cab348d55a2b",
-	"createdAt": "2023-02-21T10:34:10.000Z",
+	"id": "e83a706d-3f77-4536-9c17-67e6cc67942a",
+	"createdAt": "2023-02-28T12:53:32.000Z",
 	"createdBy": "ole-andre.haugen@neptune-software.com",
 	"settings": {
 		"properties": {
@@ -11,7 +11,7 @@
 				"textButtonClose": "Close",
 				"typeButtonClose": "Transparent",
 				"iconButtonCreate": "",
-				"textButtonCreate": "Create",
+				"textButtonCreate": "Add",
 				"typeButtonCreate": "Emphasized",
 				"iconButtonExport": "sap-icon://excel-attachment",
 				"textButtonExport": "",
@@ -26,8 +26,8 @@
 				"textButtonRun": "Update",
 				"typeButtonRun": "Transparent",
 				"enableRun": true,
-				"enableCreate": false,
-				"enableClose": true,
+				"enableCreate": true,
+				"enableClose": false,
 				"enableDelete": false,
 				"enableExport": false,
 				"enableImport": false,
@@ -38,16 +38,24 @@
 				"autoRunFocus": true,
 				"searchLabel": "Search",
 				"searchPlaceholder": "",
-				"title": "Reports",
-				"avatarIcon": "sap-icon://trip-report",
-				"avatarBackgroundColor": "Accent7",
+				"title": "Attribute Group",
+				"avatarIcon": "sap-icon://group-2",
+				"_navigationCreate": {
+					"destinationType": "F",
+					"openAs": "D",
+					"butType": "Accept",
+					"destinationTargetF": "024a4eb3-e205-4f8a-a36c-56a39a1bbb6d",
+					"keyField": [],
+					"dialogHeight": "350px"
+				},
 				"_navigationItemPress": {
 					"destinationType": "F",
 					"openAs": "P",
 					"butType": "Accept",
-					"destinationTargetF": "ab34d0f6-ff00-429e-9838-703092fa1323",
+					"destinationTargetF": "95f1287d-b3a8-45b4-b880-28aa297033d5",
 					"keyField": []
-				}
+				},
+				"avatarBackgroundColor": "Accent7"
 			},
 			"form": {
 				"enableCompact": false,
@@ -76,52 +84,20 @@
 				"action4Text": "",
 				"action4Type": "Transparent",
 				"action5Text": "",
-				"action5Type": "Transparent",
-				"initialSortField": "updatedAt",
-				"initialSortOrder": "DESC"
+				"action5Type": "Transparent"
 			}
 		},
 		"fieldCatalog": [
 			{
-				"name": "createdAt",
-				"label": "Created At",
-				"type": "timestamp",
-				"usage": "BOTH"
-			},
-			{
-				"name": "createdBy",
-				"label": "Created By",
-				"type": "text",
-				"usage": "BOTH"
-			},
-			{
-				"name": "data",
-				"label": "FORM Data",
-				"type": "json",
-				"usage": "BOTH"
-			},
-			{
-				"name": "formid",
-				"label": "FORM ID",
+				"name": "name",
+				"label": "Name",
 				"type": "smalltext",
 				"usage": "BOTH"
 			},
 			{
-				"name": "sessionid",
-				"label": "Session ID",
-				"type": "smalltext",
-				"usage": "BOTH"
-			},
-			{
-				"name": "completed",
-				"label": "Status: Completed",
-				"type": "boolean",
-				"usage": "BOTH"
-			},
-			{
-				"name": "valid",
-				"label": "Status: Valid",
-				"type": "boolean",
+				"name": "description",
+				"label": "Description",
+				"type": "mediumtext",
 				"usage": "BOTH"
 			},
 			{
@@ -131,8 +107,20 @@
 				"usage": "BOTH"
 			},
 			{
+				"name": "createdAt",
+				"label": "Created At",
+				"type": "timestamp",
+				"usage": "BOTH"
+			},
+			{
 				"name": "updatedBy",
 				"label": "Updated By",
+				"type": "text",
+				"usage": "BOTH"
+			},
+			{
+				"name": "createdBy",
+				"label": "Created By",
 				"type": "text",
 				"usage": "BOTH"
 			}
@@ -140,27 +128,38 @@
 		"fieldsSel": [
 			{
 				"visible": true,
-				"name": "updatedAt",
-				"text": "Updated At",
-				"fieldPos": 1,
-				"type": "DateRange",
-				"sysvarValue": "LAST_30"
+				"name": "name",
+				"text": "Name",
+				"fieldPos": 1
 			},
 			{
 				"visible": true,
 				"name": "updatedBy",
 				"text": "Updated By",
 				"fieldPos": 2
-			},
-			{
-				"visible": false,
-				"name": "formid",
-				"text": "FORM ID",
-				"fieldPos": 3,
-				"required": true
 			}
 		],
 		"fieldsRun": [
+			{
+				"buttonType": "Transparent",
+				"popinDisplay": "Block",
+				"enableFilter": true,
+				"enableSort": true,
+				"visible": true,
+				"name": "name",
+				"text": "Name",
+				"fieldPos": 3
+			},
+			{
+				"buttonType": "Transparent",
+				"popinDisplay": "Block",
+				"enableFilter": true,
+				"enableSort": true,
+				"visible": true,
+				"name": "description",
+				"text": "Description",
+				"fieldPos": 4
+			},
 			{
 				"buttonType": "Transparent",
 				"popinDisplay": "Block",
@@ -169,7 +168,7 @@
 				"visible": true,
 				"name": "updatedAt",
 				"text": "Updated At",
-				"fieldPos": 4,
+				"fieldPos": 5,
 				"formatter": "date00"
 			},
 			{
@@ -180,45 +179,11 @@
 				"visible": true,
 				"name": "updatedBy",
 				"text": "Updated By",
-				"fieldPos": 5
-			},
-			{
-				"buttonType": "Transparent",
-				"popinDisplay": "Block",
-				"enableFilter": false,
-				"enableSort": true,
-				"visible": true,
-				"name": "completed",
-				"text": " Completed",
-				"fieldPos": 6,
-				"type": "ObjectStatus",
-				"width": "150px",
-				"statusStateType": "Rule",
-				"statusStateRule": "af618c32-dc24-4c40-a4fa-03b7bc3d90d6",
-				"valueType": "Rule",
-				"valueRule": "ed17eb91-2e7a-4cf0-a98f-41fbcc5fda00"
-			},
-			{
-				"buttonType": "Transparent",
-				"popinDisplay": "Block",
-				"enableFilter": false,
-				"enableSort": true,
-				"visible": true,
-				"name": "valid",
-				"text": "Valid",
-				"fieldPos": 7,
-				"type": "ObjectStatus",
-				"statusStateType": "Rule",
-				"statusStateRule": "e086e9e0-1fef-4006-96e2-b508a2d33d75",
-				"statusTitleType": "",
-				"statusTitleRule": "e086e9e0-1fef-4006-96e2-b508a2d33d75",
-				"valueType": "Rule",
-				"valueRule": "154a03b5-6ce5-4a99-94dc-4999d534ed01",
-				"width": "150px"
+				"fieldPos": 6
 			}
 		],
 		"defaultVariant": {
-			"id": "c962d901-b946-4b02-e57f-138ff19496f8",
+			"id": "5333eb06-d575-447e-bc1a-a063e47f5ef1",
 			"colOrder": "key_a_to_z",
 			"rowOrder": "key_a_to_z",
 			"row": [],
@@ -228,15 +193,15 @@
 			"exclusions": {}
 		}
 	},
-	"name": "neptune_forms_report_list",
+	"name": "neptune_forms_attribute_group_list",
 	"description": "",
 	"group": "",
 	"type": "C",
-	"connectorid": "eff69025-ed3b-4393-96aa-f68647e513ee",
+	"connectorid": "d2616192-861a-4fef-8970-ad4fbf9e9066",
 	"scriptSel": null,
 	"scriptRun": null,
 	"tableid": null,
-	"ver": "23.3.3.820",
+	"ver": "23.2.28.1413",
 	"disabled": false,
 	"appType": "A",
 	"application": "planet9_adaptive_list",

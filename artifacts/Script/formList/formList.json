@@ -13,6 +13,16 @@
 	],
 	"entitySets": [
 		{
+			"id": "2e3d2b75-db26-438a-8bff-ba72399fead8",
+			"name": "forms_attribute_fields",
+			"contextname": "forms_attribute_fields"
+		},
+		{
+			"id": "2e3d2b75-db26-438a-8bff-ba72399fead8",
+			"name": "forms_attribute_fields",
+			"contextname": "forms_attribute_fields"
+		},
+		{
 			"id": "29f811fe-1310-4769-a00f-c27cd73d7f21",
 			"name": "forms_design",
 			"contextname": "forms_design"
@@ -26,11 +36,16 @@
 			"id": "78f60bae-e2ca-4d4a-ae6e-170ac0f67296",
 			"name": "forms_subgroup",
 			"contextname": "forms_subgroup"
+		},
+		{
+			"id": "de90511f-f1cd-49ad-bb20-07f4c879cf3f",
+			"name": "forms_attribute_group",
+			"contextname": "forms_attribute_group"
 		}
 	],
 	"apis": [],
 	"name": "formList",
-	"ver": "23.2.23.949",
+	"ver": "23.2.28.1525",
 	"description": null,
 	"content": "file:///content.js",
 	"useAsGlobalScript": false,

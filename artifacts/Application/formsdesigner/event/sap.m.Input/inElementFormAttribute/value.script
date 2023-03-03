@@ -1,0 +1,12 @@
+if (typeof fieldId === "undefined" || fieldId === null || fieldId === "") {
+    return;
+}
+
+const field = ModelData.FindFirst(modelappData.oData.attributefields, "id", fieldId);
+
+if (field) {
+    const group = ModelData.FindFirst(modelappData.oData.attributegroup, "id", field.groupid);
+    return "(" + group.name + ") " + field.name;
+} else {
+    return fieldId;
+}

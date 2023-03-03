@@ -47,6 +47,11 @@
 	"odataMock": [],
 	"dictionary": [
 		{
+			"id": "de90511f-f1cd-49ad-bb20-07f4c879cf3f",
+			"name": "forms_attribute_group",
+			"description": "FORMS: Object Attribute Group"
+		},
+		{
 			"id": "7c35f34a-4a8d-498d-8366-684cdf4c791f",
 			"name": "forms_data",
 			"description": "FORMS: Data"
@@ -60,6 +65,11 @@
 			"id": "4a9e3232-70e5-4f49-9b63-4104044f5642",
 			"name": "forms_group",
 			"description": "FORMS: Classification - Group"
+		},
+		{
+			"id": "2e3d2b75-db26-438a-8bff-ba72399fead8",
+			"name": "forms_attribute_fields",
+			"description": "FORMS: Object Attribute Fields"
 		},
 		{
 			"id": "29f811fe-1310-4769-a00f-c27cd73d7f21",
@@ -91,11 +101,6 @@
 		{
 			"id": "7341be77-5379-4c38-a6c5-01b4cb553199",
 			"name": "formSave",
-			"description": null
-		},
-		{
-			"id": "6614e08f-6f22-4387-b661-757dd8648642",
-			"name": "demo",
 			"description": null
 		},
 		{
@@ -143,6 +148,12 @@
 			"application": "planet9_adaptive_list"
 		},
 		{
+			"id": "e83a706d-3f77-4536-9c17-67e6cc67942a",
+			"name": "neptune_forms_attribute_group_list",
+			"description": "",
+			"application": "planet9_adaptive_list"
+		},
+		{
 			"id": "c5376245-bc88-4d7e-9e9b-4b60044eea14",
 			"name": "neptune_forms_classification_detail",
 			"description": "",
@@ -153,6 +164,12 @@
 			"name": "neptune_forms_report_list",
 			"description": "",
 			"application": "planet9_adaptive_list"
+		},
+		{
+			"id": "b86ddb45-614b-4b14-9a3c-81b8d180770c",
+			"name": "neptune_forms_attribute_field_detail",
+			"description": "",
+			"application": "planet9_adaptive_edit"
 		},
 		{
 			"id": "ab34d0f6-ff00-429e-9838-703092fa1323",
@@ -167,6 +184,24 @@
 			"application": "planet9_adaptive_edit"
 		},
 		{
+			"id": "95f1287d-b3a8-45b4-b880-28aa297033d5",
+			"name": "neptune_forms_attribute_group_detail",
+			"description": "",
+			"application": "planet9_adaptive_edit"
+		},
+		{
+			"id": "95522c9f-3c92-4be4-9375-445d1da47e68",
+			"name": "neptune_forms_attribute_field_create",
+			"description": "",
+			"application": "planet9_adaptive_edit"
+		},
+		{
+			"id": "89ea0eb8-fc55-42ff-9a04-d8d0b9d05ded",
+			"name": "neptune_forms_attribute_field_list",
+			"description": "",
+			"application": "planet9_adaptive_list"
+		},
+		{
 			"id": "44e04b91-df79-49be-955e-3a27cb6aeb2c",
 			"name": "neptune_forms_classification_list",
 			"description": "",
@@ -177,6 +212,18 @@
 			"name": "neptune_forms_design_list",
 			"description": "",
 			"application": "planet9_adaptive_list"
+		},
+		{
+			"id": "18e87cdd-a920-4b72-8ed0-8146a62ce210",
+			"name": "neptune_forms_classification_create",
+			"description": "",
+			"application": "planet9_adaptive_edit"
+		},
+		{
+			"id": "024a4eb3-e205-4f8a-a36c-56a39a1bbb6d",
+			"name": "neptune_forms_attribute_group_create",
+			"description": "",
+			"application": "planet9_adaptive_edit"
 		}
 	],
 	"api_authentication": [],
@@ -188,6 +235,11 @@
 		}
 	],
 	"tile": [
+		{
+			"id": "d832bb94-ec3a-4f59-8f1a-bab662c6a4d6",
+			"description": "Create FORMS Object Attributes",
+			"name": "FORMS Attributes"
+		},
 		{
 			"id": "b5d4a055-2df2-4ae1-976d-3e41d2d1ce3c",
 			"description": "View FORMS submitted reports",
@@ -233,6 +285,11 @@
 			"description": "Neptune FORMS: Report"
 		},
 		{
+			"id": "d2616192-861a-4fef-8970-ad4fbf9e9066",
+			"name": "Neptune FORMS: Attribute Group",
+			"description": "Neptune FORMS: Attribute Group"
+		},
+		{
 			"id": "a47d931d-3a18-4a66-b183-98d85399c432",
 			"name": "Neptune FORMS: Design",
 			"description": "Neptune FORMS: Design"
@@ -241,6 +298,11 @@
 			"id": "2e11d750-fd5f-40d4-b8cc-9df7a0ca3c0b",
 			"name": "Neptune FORMS: Classification",
 			"description": "Neptune FORMS: Classification"
+		},
+		{
+			"id": "2d4b433b-be45-40c0-952d-a9776c9de99c",
+			"name": "Neptune FORMS: Attribute Fields",
+			"description": "Neptune FORMS: Attribute Fields"
 		},
 		{
 			"id": "1bd658c2-7535-4513-bad5-80e029b3511d",

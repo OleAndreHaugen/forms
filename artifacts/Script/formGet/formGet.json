@@ -9,11 +9,16 @@
 			"id": "29f811fe-1310-4769-a00f-c27cd73d7f21",
 			"name": "forms_design",
 			"contextname": "forms_design"
+		},
+		{
+			"id": "2e3d2b75-db26-438a-8bff-ba72399fead8",
+			"name": "forms_attribute_fields",
+			"contextname": "forms_attribute_fields"
 		}
 	],
 	"apis": [],
 	"name": "formGet",
-	"ver": "23.1.13.744",
+	"ver": "23.2.28.1557",
 	"description": null,
 	"content": "file:///content.js",
 	"useAsGlobalScript": false,

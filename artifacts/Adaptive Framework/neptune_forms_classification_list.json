@@ -42,12 +42,12 @@
 				"avatarIcon": "sap-icon://fa-solid/layer-group",
 				"_navigationCreate": {
 					"destinationType": "F",
-					"openAs": "P",
+					"openAs": "D",
 					"butType": "Accept",
-					"destinationTargetF": "c5376245-bc88-4d7e-9e9b-4b60044eea14",
+					"destinationTargetF": "18e87cdd-a920-4b72-8ed0-8146a62ce210",
 					"keyField": [],
 					"dialogHeader": false,
-					"dialogHeight": "600px",
+					"dialogHeight": "350px",
 					"dialogWidth": "900px"
 				},
 				"_navigationItemPress": {
@@ -205,7 +205,7 @@
 	"scriptSel": null,
 	"scriptRun": null,
 	"tableid": null,
-	"ver": "23.2.21.1120",
+	"ver": "23.2.28.1358",
 	"disabled": false,
 	"appType": "A",
 	"application": "planet9_adaptive_list",
