@@ -629,7 +629,7 @@ const FORMS = {
             // visible: FORMS.buildVisibleCond(element)
         });
 
-        elementField.bindProperty("visible", FORMS.buildVisibleCond(element));
+        // elementField.bindProperty("visible", FORMS.buildVisibleCond(element));
 
         // Column Width
         if (section.widths) {
