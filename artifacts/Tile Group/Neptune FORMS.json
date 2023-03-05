@@ -7,7 +7,8 @@
 		"538e3ef8-0493-4f9e-a738-a231db3e8c01",
 		"59f26a1a-f9d5-403b-ad96-4ba203ccbf13",
 		"d832bb94-ec3a-4f59-8f1a-bab662c6a4d6",
-		"b5d4a055-2df2-4ae1-976d-3e41d2d1ce3c"
+		"b5d4a055-2df2-4ae1-976d-3e41d2d1ce3c",
+		"ab45363e-4ca1-46cc-949c-267a20059ff7"
 	],
 	"tilegroupsOrder": [],
 	"configMessage": {
@@ -32,7 +33,7 @@
 	"enableShadeCalc": false,
 	"numTiles": null,
 	"enableMessage": false,
-	"ver": "23.2.28.1412",
+	"ver": "23.3.5.759",
 	"headColor": null,
 	"headTxtClr": null,
 	"subheadTxtClr": null,
@@ -76,26 +77,32 @@
 		{
 			"id": "d832bb94-ec3a-4f59-8f1a-bab662c6a4d6",
 			"name": "FORMS Attributes",
-			"title": "FORMS Attributes",
-			"ver": "23.2.28.1412"
+			"title": "Attributes",
+			"ver": "23.3.5.759"
 		},
 		{
 			"id": "b5d4a055-2df2-4ae1-976d-3e41d2d1ce3c",
 			"name": "FORMS Reports",
-			"title": "FORMS Reports",
-			"ver": "23.2.23.170"
+			"title": "Reports",
+			"ver": "23.3.5.759"
+		},
+		{
+			"id": "ab45363e-4ca1-46cc-949c-267a20059ff7",
+			"name": "FORMS Deployment",
+			"title": "Deployment",
+			"ver": "23.3.5.758"
 		},
 		{
 			"id": "59f26a1a-f9d5-403b-ad96-4ba203ccbf13",
 			"name": "FORMS Classification",
-			"title": "FORMS Classification",
-			"ver": "23.2.23.170"
+			"title": "Classification",
+			"ver": "23.3.5.759"
 		},
 		{
 			"id": "538e3ef8-0493-4f9e-a738-a231db3e8c01",
 			"name": "FORMS Designer",
-			"title": "FORMS Designer",
-			"ver": "23.2.23.170"
+			"title": "Designer",
+			"ver": "23.3.5.759"
 		}
 	],
 	"tilegroups": []

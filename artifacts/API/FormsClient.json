@@ -141,6 +141,34 @@
 			"endpoints": [],
 			"serverScript": "65546019-2d1a-483a-970b-e5a4a165dd01",
 			"tags": "Log"
+		},
+		{
+			"id": "3334d942-e284-4a10-fc8e-07f4086beaff",
+			"method": "GET",
+			"path": "/deployment-list",
+			"description": "",
+			"parameters": [],
+			"headers": [],
+			"responses": [],
+			"content": [],
+			"auth": [],
+			"endpoints": [],
+			"serverScript": "0ffd1154-b693-44e0-9019-75c95e4bffc0",
+			"tags": "Deployment"
+		},
+		{
+			"id": "8c561a7e-490a-4d42-8cfd-429726a96de0",
+			"method": "POST",
+			"path": "/deployment-save",
+			"description": "",
+			"parameters": [],
+			"headers": [],
+			"responses": [],
+			"content": [],
+			"auth": [],
+			"endpoints": [],
+			"serverScript": "78d72deb-d762-4fde-81f4-01843540d627",
+			"tags": "Deployment"
 		}
 	],
 	"definitions": [
@@ -222,7 +250,7 @@
 	"documentation": [],
 	"name": "FormsClient",
 	"endpoint": "/api/serverscript/formsclient",
-	"ver": "23.2.23.855",
+	"ver": "23.3.5.926",
 	"version": "1.0",
 	"description": "Neptune FORMS",
 	"mediaType": null,

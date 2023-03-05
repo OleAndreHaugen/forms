@@ -5,16 +5,9 @@ const cockpitUtils = {
     requiredFields: [],
 
     init: function () {
-        if (sap.n && sap.n.Planet9) cockpitUtils.isCockpit = true;
-
-        if (!cockpitUtils.isCockpit) {
-            // Hide Edit/Display Buttons
-            butDetailSetEdit.setVisible(cockpitUtils.isCockpit);
-            butDetailSetDisplay.setVisible(cockpitUtils.isCockpit);
-
-            // ReadOnly Mode
-            modelappControl.oData.enableEdit = true;
-            modelappControl.refresh();
+        if (sap.n && sap.n.Planet9) {
+            cockpitUtils.isCockpit = true;
+        } else {
             return;
         }
 
@@ -54,13 +47,6 @@ const cockpitUtils = {
         } else {
             butDetailDelete.setVisible(false);
         }
-
-        // // Outline Context Menu
-        // if (editable) {
-        //     treeOutline.setContextMenu(controller.buildContextMenu);
-        // } else {
-        //     treeOutline.setContextMenu(controller.buildContextMenuReadOnly);
-        // }
 
         // Cockpit Action
         sap.n.Planet9.setToolbarButton(editable);

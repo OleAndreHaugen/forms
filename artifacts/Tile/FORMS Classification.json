@@ -9,7 +9,7 @@
 			"id": "44e04b91-df79-49be-955e-3a27cb6aeb2c"
 		}
 	},
-	"title": "FORMS Classification",
+	"title": "Classification",
 	"subTitle": null,
 	"description": "Create FORMS Classifications",
 	"categoryID": null,
@@ -60,7 +60,7 @@
 	"helpText": null,
 	"helpEnabled": false,
 	"openClickTile": false,
-	"ver": "23.2.23.170",
+	"ver": "23.3.5.759",
 	"actionWebApp": "",
 	"name": "FORMS Classification",
 	"cardWidth": null,

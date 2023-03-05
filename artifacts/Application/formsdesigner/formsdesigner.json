@@ -21912,7 +21912,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.3.3.1027",
+	"ver": "23.3.5.826",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
@@ -21955,7 +21955,7 @@
 		{
 			"id": "d5bc31e5-8726-409e-8987-65088dc3a2d1",
 			"name": "FormsClient",
-			"ver": "23.2.23.855"
+			"ver": "23.3.5.926"
 		}
 	],
 	"package": "a313322e-f024-45f1-960f-b90081757b85"

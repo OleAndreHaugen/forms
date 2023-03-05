@@ -31,7 +31,7 @@ result.data = {
     adaptiveApps,
     package,
     attributegroup,
-    attributefields
+    attributefields,
 }
 
 complete();

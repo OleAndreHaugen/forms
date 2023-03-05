@@ -11,6 +11,12 @@
 	"enableCICD": true,
 	"apps": [
 		{
+			"id": "bbdfe2ca-c704-487a-bb87-b1656d571f3a",
+			"application": "neptune_forms_deployment",
+			"title": "FORMS Deployment",
+			"description": "FORMS Deployment"
+		},
+		{
 			"id": "98b64f81-1c34-4221-9746-71750cd376ef",
 			"application": "neptune_forms_build",
 			"title": "",
@@ -99,6 +105,11 @@
 			"description": null
 		},
 		{
+			"id": "78d72deb-d762-4fde-81f4-01843540d627",
+			"name": "deploymentSave",
+			"description": null
+		},
+		{
 			"id": "7341be77-5379-4c38-a6c5-01b4cb553199",
 			"name": "formSave",
 			"description": null
@@ -106,6 +117,11 @@
 		{
 			"id": "65546019-2d1a-483a-970b-e5a4a165dd01",
 			"name": "formGetLog",
+			"description": null
+		},
+		{
+			"id": "0ffd1154-b693-44e0-9019-75c95e4bffc0",
+			"name": "deploymentList",
 			"description": null
 		}
 	],
@@ -244,6 +260,11 @@
 			"id": "b5d4a055-2df2-4ae1-976d-3e41d2d1ce3c",
 			"description": "View FORMS submitted reports",
 			"name": "FORMS Reports"
+		},
+		{
+			"id": "ab45363e-4ca1-46cc-949c-267a20059ff7",
+			"description": "Deploy FORMS to other Open Edition systems",
+			"name": "FORMS Deployment"
 		},
 		{
 			"id": "59f26a1a-f9d5-403b-ad96-4ba203ccbf13",

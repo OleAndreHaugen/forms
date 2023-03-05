@@ -9,7 +9,7 @@
 			"id": "21c58eaa-cc42-4ab4-b60b-89b38bc99825"
 		}
 	},
-	"title": "FORMS Reports",
+	"title": "Reports",
 	"subTitle": null,
 	"description": "View FORMS submitted reports",
 	"categoryID": null,
@@ -60,7 +60,7 @@
 	"helpText": null,
 	"helpEnabled": false,
 	"openClickTile": false,
-	"ver": "23.2.23.170",
+	"ver": "23.3.5.759",
 	"actionWebApp": "",
 	"name": "FORMS Reports",
 	"cardWidth": null,
