@@ -28,6 +28,8 @@ const controller = {
     },
 
     get: async function (system) {
+        treeDeploy.setBusy(true);
+
         modeltreeDeploy.setData({
             children: [],
         });
@@ -36,6 +38,8 @@ const controller = {
             controller.remoteSystem = system;
             oPageDetailHeaderSubTitle.setText(system.name);
         }
+
+        oApp.to(oPageDetail);
 
         let actions = [];
         actions.push(controller.getRemoteData("forms_design"));
@@ -47,9 +51,8 @@ const controller = {
             controller.buildData("Classification", modelappData.oData.group, values[1]);
             controller.buildData("Attributes", modelappData.oData.attributegroup, values[2]);
             modeltreeDeploy.refresh();
+            treeDeploy.setBusy(false);
         });
-
-        oApp.to(oPageDetail);
     },
 
     buildData: function (parent, localData, remoteData) {
@@ -62,15 +65,27 @@ const controller = {
                 description: data.description,
                 updatedAt: data.updatedAt,
                 updatedBy: data.updatedBy,
-                selectable: true,
             };
 
-            let remoteItem = ModelData.FindFirst(remoteData, "id", data.id);
-            if (!remoteItem) ModelData.FindFirst(remoteData, "id", data.id.toUpperCase());
+            item._selectable = true;
+            item._selected = false;
+
+            let remoteItem = remoteData.find((r) => r.id === data.id);
+
+            if (!remoteItem) {
+                remoteItem = remoteData.find((r) => r.id === data.id.toUpperCase());
+                if (remoteItem) item._uppercase = true;
+            }
 
             if (remoteItem) {
-                item.dest_updatedAt = remoteItem.updatedAt;
-                item.dest_updatedBy = remoteItem.updatedBy;
+                item._updatedAt = remoteItem.updatedAt;
+                item._updatedBy = remoteItem.updatedBy;
+
+                if (item._updatedAt === item.updatedAt) {
+                    item._state = "Success";
+                } else {
+                    item._state = "Error";
+                }
             }
 
             items.push(item);
@@ -78,15 +93,89 @@ const controller = {
 
         modeltreeDeploy.oData.children.push({
             name: parent,
-            selectable: false,
+            _selectable: false,
             children: items,
         });
     },
 
     deploy: async function () {
+        treeDeploy.setBusy(true);
 
-        // TODO
+        modeltreeDeploy.oData.children.forEach(async function (parent) {
+            parent.children.forEach(async function (item) {
+                if (item._selected) {
+                    let tableName;
+                    let tableData;
 
+                    switch (parent.name) {
+                        case "Attributes":
+                            tableName = "forms_attribute_group";
+                            tableData = ModelData.FindFirst(modelappData.oData.attributegroup, "id", item.id);
+                            break;
+
+                        case "Classification":
+                            tableName = "forms_group";
+                            tableData = ModelData.FindFirst(modelappData.oData.group, "id", item.id);
+                            break;
+
+                        case "FORMS":
+                            tableName = "forms_design";
+                            tableData = ModelData.FindFirst(modelappData.oData.forms, "id", item.id);
+                            if (item._uppercase) {
+                                if (tableData.groupid) tableData.groupid = tableData.groupid.toUpperCase();
+                                if (tableData.subgroupid) tableData.subgroupid = tableData.subgroupid.toUpperCase();
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    if (item._uppercase) tableData.id = item.id.toUpperCase();
+                    await controller.saveRemoteData(tableName, tableData);
+
+                    //  SubData
+                    switch (parent.name) {
+                        case "Attributes":
+                            tableName = "forms_attribute_fields";
+                            tableData = ModelData.Find(modelappData.oData.attributefields, "groupid", item.id);
+
+                            if (item._uppercase) {
+                                for (let i = 0; i < tableData.length; i++) {
+                                    let tableRec = tableData[i];
+                                    tableRec.id = tableRec.id.toUpperCase();
+                                    tableRec.groupid = tableRec.groupid.toUpperCase();
+                                }
+                            }
+
+                            await controller.saveRemoteData(tableName, tableData);
+                            break;
+
+                        case "Classification":
+                            tableName = "forms_subgroup";
+                            tableData = ModelData.Find(modelappData.oData.subgroup, "groupid", item.id);
+
+                            if (item._uppercase) {
+                                for (let i = 0; i < tableData.length; i++) {
+                                    let tableRec = tableData[i];
+                                    tableRec.id = tableRec.id.toUpperCase();
+                                    tableRec.groupid = tableRec.groupid.toUpperCase();
+                                }
+                            }
+
+                            await controller.saveRemoteData(tableName, tableData);
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            });
+        });
+
+        setTimeout(function () {
+            controller.get();
+        }, 500);
     },
 
     saveRemoteData: function (tableName, tableData, index) {

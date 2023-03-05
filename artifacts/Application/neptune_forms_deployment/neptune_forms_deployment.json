@@ -1306,6 +1306,47 @@
 											"data": []
 										},
 										{
+											"fieldNo": "79c91dfc-eb0e-417d-d5e0-0713673712eb",
+											"fieldName": "butDetailUpdate",
+											"fieldParent": "70c74373-5b07-4156-cc6e-16d3fca2ceed",
+											"fieldType": "sap.m.Button",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "type",
+													"grouping": "Properties",
+													"value": "Transparent",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "text",
+													"grouping": "Properties",
+													"value": "Update",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "enableCompactMode",
+													"grouping": "Properties",
+													"value": "true",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "press",
+													"grouping": "Events",
+													"value": "controller.get();",
+													"script": "controller.get();",
+													"translation": []
+												}
+											],
+											"data": []
+										},
+										{
 											"fieldNo": "c72be2d8-5163-4a5b-c66b-b3b70918e9c6",
 											"fieldName": "butDetailBack",
 											"fieldParent": "70c74373-5b07-4156-cc6e-16d3fca2ceed",
@@ -1608,14 +1649,14 @@
 														{
 															"attribute": "visible",
 															"grouping": "Properties",
-															"value": "{selectable}",
+															"value": "{_selectable}",
 															"script": "",
 															"translation": []
 														},
 														{
 															"attribute": "selected",
 															"grouping": "Properties",
-															"value": "{sel}",
+															"value": "{_selected}",
 															"script": "",
 															"translation": []
 														}
@@ -1658,7 +1699,21 @@
 												{
 													"attribute": "text",
 													"grouping": "Properties",
-													"value": "{dest_updatedAt}",
+													"value": "{_updatedAt}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "state",
+													"grouping": "Properties",
+													"value": "{_state}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "text",
+													"grouping": "Formatter",
+													"value": "date:BrowserSetting",
 													"script": "",
 													"translation": []
 												}
@@ -1699,7 +1754,14 @@
 												{
 													"attribute": "text",
 													"grouping": "Properties",
-													"value": "{dest_updatedBy}",
+													"value": "{_updatedBy}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "state",
+													"grouping": "Properties",
+													"value": "{_state}",
 													"script": "",
 													"translation": []
 												}
@@ -1817,7 +1879,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.3.5.930",
+	"ver": "23.3.5.1045",
 	"application": "neptune_forms_deployment",
 	"title": "FORMS Deployment",
 	"description": "FORMS Deployment",
