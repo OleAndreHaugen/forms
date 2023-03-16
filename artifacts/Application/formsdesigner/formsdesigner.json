@@ -10525,6 +10525,13 @@
 																									"response": [],
 																									"attributes": [
 																										{
+																											"attribute": "visible",
+																											"grouping": "Properties",
+																											"value": "{= ${/type} === 'Table' || ${/type} === 'Form' || ${/type} === 'FormTitle' ? false:true }",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
 																											"attribute": "valueHelpOnly",
 																											"grouping": "Properties",
 																											"value": "true",
@@ -21912,7 +21919,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.3.5.1053",
+	"ver": "23.3.16.1217",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",

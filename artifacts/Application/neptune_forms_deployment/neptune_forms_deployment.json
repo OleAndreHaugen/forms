@@ -355,48 +355,6 @@
 									],
 									"data": [
 										{
-											"fieldNo": "2c4566c9-5d17-471b-b693-867854aad646",
-											"fieldName": "toolStartCreate",
-											"fieldParent": "d527e0ae-c69f-4ef3-ef51-8d631d832860",
-											"fieldType": "sap.m.Button",
-											"script": "",
-											"customComponent": false,
-											"disabled": true,
-											"request": [],
-											"response": [],
-											"attributes": [
-												{
-													"attribute": "type",
-													"grouping": "Properties",
-													"value": "Emphasized",
-													"script": "",
-													"translation": []
-												},
-												{
-													"attribute": "text",
-													"grouping": "Properties",
-													"value": "Add",
-													"script": "",
-													"translation": []
-												},
-												{
-													"attribute": "enableCompactMode",
-													"grouping": "Properties",
-													"value": "true",
-													"script": "",
-													"translation": []
-												},
-												{
-													"attribute": "press",
-													"grouping": "Events",
-													"value": "controller.new();",
-													"script": "controller.new();",
-													"translation": []
-												}
-											],
-											"data": []
-										},
-										{
 											"fieldNo": "2289d638-2478-4880-ef6f-3c2351bd6aa0",
 											"fieldName": "toolStartUpdate",
 											"fieldParent": "d527e0ae-c69f-4ef3-ef51-8d631d832860",
@@ -1879,7 +1837,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.3.5.1045",
+	"ver": "23.3.5.1056",
 	"application": "neptune_forms_deployment",
 	"title": "FORMS Deployment",
 	"description": "FORMS Deployment",
