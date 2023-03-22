@@ -613,7 +613,7 @@
 														{
 															"attribute": "text",
 															"grouping": "Properties",
-															"value": "Updated By",
+															"value": "Changed By",
 															"script": "",
 															"translation": []
 														}
@@ -21919,7 +21919,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.3.16.1217",
+	"ver": "23.3.22.758",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",

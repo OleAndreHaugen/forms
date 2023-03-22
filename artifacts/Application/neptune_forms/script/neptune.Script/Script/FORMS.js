@@ -1,6 +1,7 @@
 const FORMS = {
     model: null,
     config: null,
+    items: null,
     cache: [],
     customerParent: null,
     formParent: null,
@@ -55,6 +56,12 @@ const FORMS = {
         FORMS.signatures = {};
         FORMS.config = options.config;
         FORMS.sessionid = options.sessionid;
+
+        if (options.items) {
+            FORMS.items = options.items;
+        } else {
+            FORMS.items = null;
+        }
 
         // Parent
         if (!FORMS.formParent) {
@@ -1047,9 +1054,18 @@ const FORMS = {
             editable: FORMS.editable,
         });
 
-        element.items.forEach(function (item, i) {
-            newField.addItem(new sap.ui.core.Item({ key: item.key, text: item.title }));
-        });
+        element.itemsPath = "VKORG";
+
+        // Override externally or combine
+        if (element.itemsPath && FORMS.items[element.itemsPath]) {
+            FORMS.items[element.itemsPath].forEach(function (item, i) {
+                newField.addItem(new sap.ui.core.Item({ key: item.key, text: item.title }));
+            });
+        } else {
+            element.items.forEach(function (item, i) {
+                newField.addItem(new sap.ui.core.Item({ key: item.key, text: item.title }));
+            });
+        }
 
         return newField;
     },

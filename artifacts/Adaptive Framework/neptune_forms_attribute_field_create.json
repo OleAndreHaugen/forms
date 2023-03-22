@@ -59,15 +59,9 @@
 				"usage": "BOTH"
 			},
 			{
-				"name": "createdAt",
-				"label": "Created At",
-				"type": "timestamp",
-				"usage": "BOTH"
-			},
-			{
-				"name": "createdBy",
-				"label": "Created By",
-				"type": "text",
+				"name": "name",
+				"label": "Name",
+				"type": "smalltext",
 				"usage": "BOTH"
 			},
 			{
@@ -77,20 +71,26 @@
 				"usage": "BOTH"
 			},
 			{
-				"name": "name",
-				"label": "Name",
-				"type": "smalltext",
-				"usage": "BOTH"
-			},
-			{
 				"name": "updatedAt",
 				"label": "Updated At",
 				"type": "timestamp",
 				"usage": "BOTH"
 			},
 			{
+				"name": "createdAt",
+				"label": "Created At",
+				"type": "timestamp",
+				"usage": "BOTH"
+			},
+			{
 				"name": "updatedBy",
 				"label": "Updated By",
+				"type": "text",
+				"usage": "BOTH"
+			},
+			{
+				"name": "createdBy",
+				"label": "Created By",
 				"type": "text",
 				"usage": "BOTH"
 			}
@@ -110,7 +110,9 @@
 				"name": "name",
 				"text": "Name",
 				"fieldPos": 2,
-				"required": true
+				"required": true,
+				"type": "Input",
+				"inputFormatter": "condense"
 			},
 			{
 				"editable": true,
@@ -140,7 +142,7 @@
 	"scriptSel": null,
 	"scriptRun": null,
 	"tableid": null,
-	"ver": "23.2.28.1410",
+	"ver": "23.3.17.816",
 	"disabled": false,
 	"appType": "A",
 	"application": "planet9_adaptive_edit",
