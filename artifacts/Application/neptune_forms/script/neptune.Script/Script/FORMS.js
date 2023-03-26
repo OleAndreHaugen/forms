@@ -1054,8 +1054,6 @@ const FORMS = {
             editable: FORMS.editable,
         });
 
-        element.itemsPath = "VKORG";
-
         // Override externally or combine
         if (element.itemsPath && FORMS.items[element.itemsPath]) {
             FORMS.items[element.itemsPath].forEach(function (item, i) {
