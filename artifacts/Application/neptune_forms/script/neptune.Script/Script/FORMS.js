@@ -99,6 +99,7 @@ const FORMS = {
 
         // Section
         options.config.setup.forEach(function (section, i) {
+            if (!section) return;
             if (section.disabled) return;
 
             switch (section.type) {
@@ -1353,6 +1354,7 @@ const FORMS = {
         };
 
         FORMS.config.setup.forEach(function (section) {
+            if (!section) return;
             if (section.type === "Table") {
                 const tabObject = sap.ui.getCore().byId("field" + section.id);
                 const tabModel = tabObject.getModel();
@@ -1525,6 +1527,7 @@ const FORMS = {
         };
 
         FORMS.config.setup.forEach(function (section) {
+            if (!section) return;
             if (section.type === "Table") {
                 const validTable = FORMS.validateTableContentRequired(section, process);
                 if (!validTable) validForm = false;
