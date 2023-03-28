@@ -1,0 +1,9 @@
+const context = oEvent.oSource.getBindingContext();  
+const data = context.getObject();
+
+modelpanTopProperties.oData.type = data.type;
+modelpanTopProperties.refresh();
+
+controller.pressOutlineItem();
+
+diaChangeType.close();

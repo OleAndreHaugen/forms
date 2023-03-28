@@ -12,6 +12,7 @@ const FORMS = {
     sessionid: null,
     validationCheck: false,
     signatures: {},
+    uploadObject: null,
 
     build: function (parent, options) {
         let formOptions;
@@ -329,7 +330,7 @@ const FORMS = {
 
     buildParentTable: function (section) {
         const sectionTable = new sap.m.Table(FORMS.buildElementFieldID(section), {
-            autoPopinMode: true,
+            autoPopinMode: false,
             showSeparators: sap.m.ListSeparators.None,
             backgroundDesign: "Transparent",
             contextualWidth: "Auto",
@@ -338,10 +339,16 @@ const FORMS = {
                 const model = this.getModel();
                 const context = oEvent.mParameters.listItem.getBindingContext();
                 const data = context.getObject();
-
                 ModelData.Delete(model, "id", data.id);
             },
         });
+
+        // Popin
+        if (section.popin) {
+            sectionTable.setAutoPopinMode(true);
+        } else {
+            sectionTable.setAutoPopinMode(false);
+        }
 
         // Show Separators
         if (section.enableSeparators) {
@@ -360,10 +367,10 @@ const FORMS = {
             })
         );
 
-        // Enable Create
-        if (section.enableCreate && FORMS.editable) {
-            sectionToolbar.addContent(new sap.m.ToolbarSpacer());
+        sectionToolbar.addContent(new sap.m.ToolbarSpacer());
 
+        // Enable Add
+        if (section.enableCreate && FORMS.editable) {
             sectionToolbar.addContent(
                 new sap.m.Button({
                     text: "Add",
@@ -377,17 +384,77 @@ const FORMS = {
             );
         }
 
+        const butMultiSwitch = new sap.m.Button({
+            icon: "sap-icon://multiselect-all",
+            type: "Transparent",
+            tooltip: "Switch to multi select",
+            press: function (oEvent) {
+                sectionTable.setMode("MultiSelect");
+                butSingleSwitch.setVisible(true);
+                butMultiDelete.setVisible(true);
+                butMultiSwitch.setVisible(false);
+            },
+        }).addStyleClass("sapUiSizeCompact");
+
+        const butSingleSwitch = new sap.m.Button({
+            icon: "sap-icon://multiselect-none",
+            type: "Transparent",
+            tooltip: "Switch to single select",
+            visible: false,
+            press: function (oEvent) {
+                sectionTable.setMode("Delete");
+                butSingleSwitch.setVisible(false);
+                butMultiDelete.setVisible(false);
+                butMultiSwitch.setVisible(true);
+            },
+        }).addStyleClass("sapUiSizeCompact");
+
+        const butMultiDelete = new sap.m.Button({
+            text: "Delete Selected",
+            type: "Reject",
+            visible: false,
+            press: function (oEvent) {
+                const tabModel = sectionTable.getModel();
+                const selectedItems = sectionTable.getSelectedItems();
+
+                if (selectedItems) {
+                    selectedItems.forEach(function (item) {
+                        const context = item.getBindingContext();
+                        const data = context.getObject();
+                        data.delete = true;
+                    });
+                    ModelData.Delete(tabModel, "delete", true);
+                }
+
+                sectionTable.removeSelections();
+            },
+        }).addStyleClass("sapUiSizeCompact");
+
         sectionPanel.setHeaderToolbar(sectionToolbar);
 
         // Enable Delete
         if (section.enableDelete && FORMS.editable) {
             sectionTable.setMode("Delete");
+            sectionToolbar.addContent(butMultiDelete);
+            sectionToolbar.addContent(new sap.m.ToolbarSeparator());
+            sectionToolbar.addContent(butMultiSwitch);
+            sectionToolbar.addContent(butSingleSwitch);
         }
 
         if (section.enableCompact) sectionTable.addStyleClass("sapUiSizeCompact");
 
         const columListItem = new sap.m.ColumnListItem({
             highlight: "{highlight}",
+        });
+
+        columListItem.bindProperty("highlight", {
+            parts: ["highlight"],
+            formatter: function (highlight) {
+                if (typeof highlight === "undefined" || highlight === "" || highlight === null) {
+                    return null;
+                }
+                return highlight;
+            },
         });
 
         if (section.vAlign) columListItem.setVAlign(section.vAlign);
@@ -631,11 +698,14 @@ const FORMS = {
 
     buildParentTableChildren: function (parent, element, section, index, elementField) {
         const newColumn = new sap.m.Column({
-            demandPopin: true,
-            popinDisplay: "Block",
-            minScreenWidth: "Tablet",
             // visible: FORMS.buildVisibleCond(element)
         });
+
+        if (section.popin) {
+            newColumn.setDemandPopin(true);
+            newColumn.setPopinDisplay("Block");
+            newColumn.setImportance("Low");
+        }
 
         // elementField.bindProperty("visible", FORMS.buildVisibleCond(element));
 
@@ -739,7 +809,7 @@ const FORMS = {
                 break;
 
             case "Image":
-                elementField = FORMS.buildElementImage(element);
+                elementField = FORMS.buildElementImage(element, parent);
                 break;
 
             case "DateTimePicker":
@@ -1038,9 +1108,9 @@ const FORMS = {
                 newField.addItem(new sap.m.SegmentedButtonItem({ key: item.key, text: item.title, icon: item.icon }));
             });
 
-            // Set Default Item 1 as Selected
+            // Set Default Value
             const formModel = FORMS.formParent.getModel();
-            if (!formModel.oData[bindingField]) formModel.oData[bindingField] = element.items[0].key;
+            if (!formModel.oData[bindingField]) element.defaultValue ? (formModel.oData[bindingField] = element.defaultValue) : (formModel.oData[bindingField] = element.items[0].key);
         }
 
         return newField;
@@ -1053,16 +1123,17 @@ const FORMS = {
             selectedKey: "{" + FORMS.bindingPath + bindingField + "}",
             width: "100%",
             editable: FORMS.editable,
+            // showIcon: true,
         });
 
         // Override externally or combine
         if (element.itemsPath && FORMS.items[element.itemsPath]) {
             FORMS.items[element.itemsPath].forEach(function (item, i) {
-                newField.addItem(new sap.ui.core.Item({ key: item.key, text: item.title }));
+                newField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.title }));
             });
         } else {
             element.items.forEach(function (item, i) {
-                newField.addItem(new sap.ui.core.Item({ key: item.key, text: item.title }));
+                newField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.title }));
             });
         }
 
@@ -1126,10 +1197,11 @@ const FORMS = {
             selectedKeys: "{" + FORMS.bindingPath + bindingField + "}",
             width: "100%",
             editable: FORMS.editable,
+            showSelectAll: true,
         });
 
         element.items.forEach(function (item, i) {
-            newField.addItem(new sap.ui.core.Item({ key: item.key, text: item.title }));
+            newField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.title }));
         });
 
         return newField;
@@ -1198,7 +1270,8 @@ const FORMS = {
         return newField;
     },
 
-    buildElementImage: function (element) {
+    buildElementImage: function (element, parent) {
+        const meta = parent.getMetadata();
         const bindingField = element.fieldName ? element.fieldName : element.id;
 
         const newField = new sap.m.VBox(FORMS.buildElementFieldID(element), {
@@ -1210,15 +1283,41 @@ const FORMS = {
             text: element.text,
             enabled: FORMS.editable,
             press: function (oEvent) {
-                FORMS.elementUpload = element;
+                FORMS.uploadObject = {
+                    bindingField: bindingField,
+                    context: null,
+                };
+
+                if (meta._sClassName === "sap.m.Table") {
+                    const context = oEvent.oSource.getBindingContext();
+                    const data = context.getObject();
+                    FORMS.uploadObject.context = data;
+                    FORMS.uploadObject.model = parent.getModel();
+                }
+
                 $("#imageUploader").click();
             },
         }).addStyleClass("sapUiSizeCompact");
 
         const elementImage = new sap.m.Image({
-            height: "200px",
             src: "{" + FORMS.bindingPath + bindingField + "}",
         });
+
+        if (element.width) {
+            if (element.widthMetric) {
+                elementImage.setWidth(element.width + "%");
+            } else {
+                elementImage.setWidth(element.width + "px");
+            }
+        }
+
+        if (element.height) {
+            if (element.heightMetric) {
+                elementImage.setHeight(element.height + "%");
+            } else {
+                elementImage.setHeight(element.height + "px");
+            }
+        }
 
         newField.addItem(elementUploader);
         newField.addItem(elementImage);
@@ -1652,8 +1751,14 @@ const FORMS = {
                     formModel = FORMS.formParent.getModel();
                 }
 
-                formModel.oData[FORMS.elementUpload.fieldName ? FORMS.elementUpload.fieldName : FORMS.elementUpload.id] = fileLoadedEvent.target.result;
-                formModel.refresh();
+                if (FORMS.uploadObject.context) {
+                    FORMS.uploadObject.context[FORMS.uploadObject.bindingField] = fileLoadedEvent.target.result;
+                    FORMS.uploadObject.model.refresh();
+                } else {
+                    formModel.oData[FORMS.uploadObject.bindingField] = fileLoadedEvent.target.result;
+                    formModel.refresh();
+                }
+
                 document.getElementById("imageUploader").value = "";
             };
 

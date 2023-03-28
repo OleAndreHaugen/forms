@@ -21,7 +21,7 @@ const controller = {
         { icon: "sap-icon://fa-regular/check-square", text: "Check Box", type: "CheckBox", parent: false, table: true },
         { icon: "sap-icon://checklist", text: "Check List", type: "CheckList", parent: false, table: false, table: true },
         { icon: "sap-icon://request", text: "Input", type: "Input", parent: false, table: true },
-        { icon: "sap-icon://fa-regular/file-image", text: "Image Upload", type: "Image", parent: false, table: false },
+        { icon: "sap-icon://fa-regular/file-image", text: "Image Upload", type: "Image", parent: false, table: true },
         { icon: "sap-icon://message-information", text: "Message Strip", type: "MessageStrip", parent: false, table: true },
         { icon: "sap-icon://number-sign", text: "Numeric", type: "Numeric", parent: false, table: true },
         { icon: "sap-icon://picture", text: "Picture", type: "Picture", parent: false, table: false },
@@ -57,6 +57,7 @@ const controller = {
         }
 
         modellistElementTypes.setData(this.elementTypes);
+        modellistTypes.setData(this.elementTypes);
 
         treeOutline.getBinding("items").filter([new sap.ui.model.Filter("option", "NE", "I")]);
 
@@ -88,10 +89,6 @@ const controller = {
                     controller.selectObjectFromId(target.substring(0, 36));
                 }
             }
-        });
-
-        controller.elementTypes.forEach(function (item) {
-            elementToolbarType.addItem(new sap.ui.core.Item({ key: item.type, text: item.text }));
         });
 
         var binding = new sap.ui.model.Binding(modelpanTopProperties, "/", modelpanTopProperties.getContext("/"));
@@ -646,6 +643,8 @@ const controller = {
                 break;
 
             case "SegmentedButton":
+                newElement.width = 100;
+                newElement.widthMetric = "per";
                 newElement.items = [
                     { id: ModelData.genID(), title: "Option1", key: "key1", option: "I" },
                     { id: ModelData.genID(), title: "Option2", key: "key2", option: "I" },
@@ -738,6 +737,13 @@ const controller = {
         }
     },
 
+    openTypes: function () {
+        listTypesFilter.setValue();
+        listTypesFilter.fireLiveChange();
+
+        diaChangeType.open();
+    },
+
     pressOutlineItem: function () {
         const element = modelpanTopProperties.oData;
 
@@ -768,15 +774,6 @@ const controller = {
             modelpanTopProperties.refresh();
         }
 
-        // Do not change type on parents
-        if (element.elements) {
-            elementToolbarType.setVisible(false);
-            elementToolbarTypeText.setVisible(true);
-        } else {
-            elementToolbarType.setVisible(true);
-            elementToolbarTypeText.setVisible(false);
-        }
-
         const addConditionalField = function (element) {
             switch (element.type) {
                 case "Image":
@@ -800,6 +797,13 @@ const controller = {
                     break;
             }
         };
+
+        // Do not change type on parents
+        if (element.elements) {
+            elementToolbarChangeType.setVisible(false);
+        } else {
+            elementToolbarChangeType.setVisible(true);
+        }
 
         if (element.type === "ValueHelp") {
             controller.buildAdaptiveFields();
