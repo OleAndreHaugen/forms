@@ -129,8 +129,6 @@ const FORMS = {
             // Post processing
             switch (section.type) {
                 case "Table":
-                    sectionParent.bindAggregation("items", { path: "/", template: FORMS.columnTemplate, templateShareable: false });
-
                     const tabModel = new sap.ui.model.json.JSONModel();
                     sectionParent.setModel(tabModel);
 
@@ -164,6 +162,8 @@ const FORMS = {
 
                         tabModel.setData(modelData);
                     }
+
+                    sectionParent.bindAggregation("items", { path: "/", template: FORMS.columnTemplate, templateShareable: false });
                     break;
             }
         });
