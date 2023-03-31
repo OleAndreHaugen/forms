@@ -30,6 +30,7 @@ const controller = {
         { icon: "sap-icon://switch-views", text: "Switch", type: "Switch", parent: false, table: true },
         { icon: "sap-icon://activities", text: "Segmented Button", type: "SegmentedButton", parent: false, table: true },
         { icon: "sap-icon://fa-solid/signature", text: "Signature", type: "Signature", parent: false, table: false },
+        { icon: "sap-icon://fa-regular/circle", text: "Single Select Icon", type: "SingleSelectIcon", parent: false, table: true },
         { icon: "sap-icon://fa-regular/circle", text: "Single Select", type: "SingleSelect", parent: false, table: true },
         { icon: "sap-icon://fa-regular/circle", text: "Single Choice", type: "SingleChoice", parent: false, table: false },
         { icon: "sap-icon://multi-select", text: "Multiple Select", type: "MultipleSelect", parent: false, table: true },
@@ -241,7 +242,7 @@ const controller = {
         const newElement = JSON.parse(JSON.stringify(modelpanTopProperties.oData));
         let elementIndex = 0;
 
-        if (modelpanTopProperties.oData.option === "P") {
+        if (modelpanTopProperties.oData.type === "Form" || modelpanTopProperties.oData.type === "Table") {
             modeloPageDetail.oData.setup.forEach(function (section, i) {
                 if (section.id === modelpanTopProperties.oData.id) elementIndex = i + 1;
             });
@@ -526,7 +527,7 @@ const controller = {
         };
     },
 
-    addElement: function (elementData) {
+    addElement: function (elementData, copy) {
         let newElement = {
             id: ModelData.genID(),
             type: elementData.type,
@@ -621,6 +622,14 @@ const controller = {
                 ];
                 break;
 
+            case "SingleSelectIcon":
+                newElement.items = [
+                    { id: ModelData.genID(), title: "Option1", key: "key1", icon: "", option: "I" },
+                    { id: ModelData.genID(), title: "Option2", key: "key2", icon: "", option: "I" },
+                    { id: ModelData.genID(), title: "Option3", key: "key3", icon: "", option: "I" },
+                ];
+                break;
+
             case "MultipleChoice":
                 newElement.items = [
                     { id: ModelData.genID(), title: "Option1", key: "key1", option: "I" },
@@ -657,6 +666,10 @@ const controller = {
                 newElement.dialogWidth = 900;
 
                 break;
+        }
+
+        if (copy) {
+            return newElement;
         }
 
         if (controller.currentFilter === "Parent") {
@@ -766,6 +779,7 @@ const controller = {
 
                 if (existingWidth && existingWidth.width) newWidth.width = existingWidth.width;
                 if (existingWidth && existingWidth.widthMetric) newWidth.widthMetric = existingWidth.widthMetric;
+                if (existingWidth && existingWidth.minSize) newWidth.minSize = existingWidth.minSize;
 
                 newWidths.push(newWidth);
             });

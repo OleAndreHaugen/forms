@@ -591,7 +591,6 @@ const FORMS = {
                     break;
 
                 case "MultipleChoice":
-                    console.log("NOT IMplemented");
                     break;
 
                 case "MultipleSelect":
@@ -608,6 +607,7 @@ const FORMS = {
 
                 case "SegmentedButton":
                 case "SingleSelect":
+                case "SingleSelectIcon":
                     clone.setSelectedKey(rowData[fieldId]);
                     break;
 
@@ -704,7 +704,7 @@ const FORMS = {
         if (section.popin) {
             newColumn.setDemandPopin(true);
             newColumn.setPopinDisplay("Block");
-            newColumn.setImportance("Low");
+            newColumn.setImportance("Medium");
         }
 
         // elementField.bindProperty("visible", FORMS.buildVisibleCond(element));
@@ -712,12 +712,20 @@ const FORMS = {
         // Column Width
         if (section.widths) {
             const widths = section.widths[index];
-            if (widths && widths.width) {
-                if (widths.widthMetric) {
-                    newColumn.setWidth(widths.width + "%");
-                } else {
-                    newColumn.setWidth(widths.width + "px");
+            if (widths) {
+                if (widths.width) {
+                    if (widths.widthMetric) {
+                        newColumn.setWidth(widths.width + "%");
+                    } else {
+                        newColumn.setWidth(widths.width + "px");
+                    }
                 }
+
+                // if (widths.minSize) {
+                //     newColumn.setDemandPopin(true);
+                //     newColumn.setPopinDisplay("Block");
+                //     newColumn.setMinScreenWidth(widths.minSize);
+                // }
             }
         }
 
@@ -786,6 +794,10 @@ const FORMS = {
 
             case "Picture":
                 elementField = FORMS.buildElementPicture(element);
+                break;
+
+            case "SingleSelectIcon":
+                elementField = FORMS.buildElementSingleSelectIcon(element);
                 break;
 
             case "SingleSelect":
@@ -1116,6 +1128,30 @@ const FORMS = {
         return newField;
     },
 
+    buildElementSingleSelectIcon: function (element) {
+        const bindingField = element.fieldName ? element.fieldName : element.id;
+
+        const newField = new sap.m.Select(FORMS.buildElementFieldID(element), {
+            selectedKey: "{" + FORMS.bindingPath + bindingField + "}",
+            width: "100%",
+            editable: FORMS.editable,
+            showIcon: true,
+        });
+
+        // Override externally or combine
+        if (element.itemsPath && FORMS.items[element.itemsPath]) {
+            FORMS.items[element.itemsPath].forEach(function (item, i) {
+                newField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.title, icon: item.icon }));
+            });
+        } else {
+            element.items.forEach(function (item, i) {
+                newField.addItem(new sap.ui.core.ListItem({ key: item.key, text: item.title, icon: item.icon }));
+            });
+        }
+
+        return newField;
+    },
+
     buildElementSingleSelect: function (element) {
         const bindingField = element.fieldName ? element.fieldName : element.id;
 
@@ -1123,7 +1159,6 @@ const FORMS = {
             selectedKey: "{" + FORMS.bindingPath + bindingField + "}",
             width: "100%",
             editable: FORMS.editable,
-            // showIcon: true,
         });
 
         // Override externally or combine
