@@ -191,6 +191,8 @@ const FORMS = {
 
         if (section.enableCompact) sectionForm.addStyleClass("sapUiSizeCompact");
 
+        sectionForm.addStyleClass("FormsSimpleForm");
+
         sectionPanel.addContent(sectionForm);
 
         FORMS.formParent.addContent(sectionPanel);
@@ -318,19 +320,29 @@ const FORMS = {
         let visibleStatement = element.visibleInverse ? "false:true" : "true:false";
         let visibleValueSep = element.visibleValue === "true" || element.visibleValue === "false" ? "" : "'";
         let visibleFieldName = element.visibleFieldName;
+        let visibleCond;
 
         // Check if field have object attributes
         const checkElement = FORMS.getElementFromId(element.visibleFieldName);
         if (checkElement.fieldName) visibleFieldName = checkElement.fieldName;
 
-        let visibleCond = "{= ${" + bindingPath + visibleFieldName + "} " + element.visibleCondition + " " + visibleValueSep + element.visibleValue + visibleValueSep + " ? " + visibleStatement + " }";
+        if (checkElement.type === "Input" || checkElement.type === "TextArea") {
+            if (element.visibleValue === "empty") {
+                if (element.visibleCondition === "===") {
+                    visibleCond = "{= ${" + bindingPath + visibleFieldName + "} ? false:true }";
+                } else {
+                    visibleCond = "{= ${" + bindingPath + visibleFieldName + "} ? true:false }";
+                }
+            }
+        } else {
+            visibleCond = "{= ${" + bindingPath + visibleFieldName + "} " + element.visibleCondition + " " + visibleValueSep + element.visibleValue + visibleValueSep + " ? " + visibleStatement + " }";
+        }
 
         return visibleCond;
     },
 
     buildParentTable: function (section) {
         const sectionTable = new sap.m.Table(FORMS.buildElementFieldID(section), {
-            autoPopinMode: false,
             showSeparators: sap.m.ListSeparators.None,
             backgroundDesign: "Transparent",
             contextualWidth: "Auto",
@@ -343,11 +355,11 @@ const FORMS = {
             },
         });
 
+        sectionTable.addStyleClass("FormsTable");
+
         // Popin
-        if (section.popin) {
+        if (section.popin && sectionTable.setAutoPopinMode) {
             sectionTable.setAutoPopinMode(true);
-        } else {
-            sectionTable.setAutoPopinMode(false);
         }
 
         // Show Separators
@@ -845,6 +857,9 @@ const FORMS = {
         }
 
         if (!elementField) return;
+
+        // Custom CSS
+        if (elementField.addStyleClass) elementField.addStyleClass("FormsInput");
 
         switch (section.type) {
             case "Form":
@@ -1377,8 +1392,11 @@ const FORMS = {
             showSeparators: sap.m.ListSeparators.None,
             backgroundDesign: "Transparent",
             contextualWidth: "Auto",
-            autoPopinMode: true,
         });
+
+        if (tabCheckList.setAutoPopinMode) {
+            tabCheckList.setAutoPopinMode(true);
+        }
 
         // Columns
         const colQuestion = new sap.m.Column();
@@ -1614,13 +1632,14 @@ const FORMS = {
 
         const validateElement = function (element) {
             const field = sap.ui.getCore().byId("field" + element.id);
+            const bindingField = element.fieldName ? element.fieldName : element.id;
 
             if (element.required && !element.disabled && field.getDomRef()) {
-                const bindingField = element.fieldName ? element.fieldName : element.id;
-
                 fieldCompleted = formModel.oData[bindingField] ? true : false;
                 if (validForm) validForm = fieldCompleted;
                 FORMS.validateMarkField(element.id, fieldCompleted, process);
+            } else {
+                delete formModel.oData[bindingField];
             }
 
             // MultipleSelect/MultipleChoice

@@ -1650,6 +1650,95 @@
 											"data": []
 										},
 										{
+											"fieldNo": "37bf202d-a3b1-43d5-ac31-4a487624864a",
+											"fieldName": "butDetailExport",
+											"fieldParent": "ad225645-b1d6-454e-bfbb-df715f38e363",
+											"fieldType": "sap.m.Button",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "type",
+													"grouping": "Properties",
+													"value": "Transparent",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "text",
+													"grouping": "Properties",
+													"value": "Export",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "enableCompactMode",
+													"grouping": "Properties",
+													"value": "true",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "press",
+													"grouping": "Events",
+													"value": "controller.exportForm();",
+													"script": "controller.exportForm();",
+													"translation": []
+												}
+											],
+											"data": []
+										},
+										{
+											"fieldNo": "5a1d047c-6955-4ffa-aae0-6363027348f9",
+											"fieldName": "butDetailImport",
+											"fieldParent": "ad225645-b1d6-454e-bfbb-df715f38e363",
+											"fieldType": "sap.m.Button",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "visible",
+													"grouping": "Properties",
+													"value": "{appControl>/enableEdit}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "type",
+													"grouping": "Properties",
+													"value": "Transparent",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "text",
+													"grouping": "Properties",
+													"value": "Import",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "enableCompactMode",
+													"grouping": "Properties",
+													"value": "true",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "press",
+													"grouping": "Events",
+													"value": "$(\"#formsUploader\").click();",
+													"script": "$(\"#formsUploader\").click();",
+													"translation": []
+												}
+											],
+											"data": []
+										},
+										{
 											"fieldNo": "a805c6b6-ddf9-4203-e467-8ba0e4dd85af",
 											"fieldName": "butDetailDelete",
 											"fieldParent": "ad225645-b1d6-454e-bfbb-df715f38e363",
@@ -20960,6 +21049,31 @@
 							]
 						}
 					]
+				},
+				{
+					"fieldNo": "fefa4c16-62e8-43ea-8cdf-1fee2a249279",
+					"fieldName": "oHTMLUpload",
+					"fieldParent": "21f758ec-26a2-4351-97d2-1efd03f2d6a6",
+					"fieldType": "sap.ui.core.HTML",
+					"script": "",
+					"customComponent": false,
+					"request": [],
+					"response": [],
+					"attributes": [],
+					"data": [
+						{
+							"fieldNo": "f38ca05f-6847-45d0-a02b-91ac05a1d88c",
+							"fieldName": "oHTMLCode",
+							"fieldParent": "fefa4c16-62e8-43ea-8cdf-1fee2a249279",
+							"fieldType": "neptune.Html",
+							"script": "file://script/neptune.Html/oHTMLCode.script",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [],
+							"data": []
+						}
+					]
 				}
 			]
 		},
@@ -23305,7 +23419,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.3.31.1550",
+	"ver": "23.4.20.953",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
