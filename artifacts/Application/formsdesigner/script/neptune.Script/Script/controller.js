@@ -344,6 +344,18 @@ const controller = {
             return;
         }
 
+        // Cleanup if Something is wrong
+        if (modeloPageDetail.oData.setup && modeloPageDetail.oData.setup.forEach) {
+            modeloPageDetail.oData.setup.forEach(function (section, i) {
+                section.elements = section.elements.filter((obj) => obj && Object.keys(obj).length !== 0);
+                section.elements.forEach(function (element, i) {
+                    if (element.elements) {
+                        element.elements = element.elements.filter((obj) => obj && Object.keys(obj).length !== 0);
+                    }
+                });
+            });
+        }
+
         apiSave({
             data: modeloPageDetail.oData,
         }).then(function (req) {
@@ -593,7 +605,7 @@ const controller = {
                 newElement.text = "Upload";
                 newElement.buttonType = "Emphasized";
                 newElement.width = "200";
-                newElement.widthMetric = ""
+                newElement.widthMetric = "";
                 break;
 
             case "CheckList":
@@ -921,6 +933,7 @@ const controller = {
 
     exportForm: function () {
         var exportData = modeloPageDetail.getJSON();
+        exportData = encodeURIComponent(exportData);
         a = document.createElement("a");
         a.setAttribute("href", "data:application/text;charset=utf-8," + exportData);
         a.setAttribute("target", "_blank");

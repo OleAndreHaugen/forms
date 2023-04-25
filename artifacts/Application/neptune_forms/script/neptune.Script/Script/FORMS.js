@@ -54,6 +54,18 @@ const FORMS = {
             return;
         }
 
+        // Cleanup if Something is wrong
+        if (options.config.setup && options.config.setup.forEach) {
+            options.config.setup.forEach(function (section, i) {
+                section.elements = section.elements.filter((obj) => obj && Object.keys(obj).length !== 0);
+                section.elements.forEach(function (element, i) {
+                    if (element.elements) {
+                        element.elements = element.elements.filter((obj) => obj && Object.keys(obj).length !== 0);
+                    }
+                });
+            });
+        }
+
         FORMS.editable = true;
         FORMS.formTitleHide = [];
         FORMS.signatures = {};
@@ -328,6 +340,7 @@ const FORMS = {
     },
 
     buildVisibleCond: function (element) {
+        if (!element) return;
         if (!element.enableVisibleCond) return;
         if (!element.visibleFieldName) return;
         if (!element.visibleCondition) return;
@@ -341,6 +354,8 @@ const FORMS = {
 
         // Check if field have object attributes
         const checkElement = FORMS.getElementFromId(element.visibleFieldName);
+
+        if (!checkElement) return;
         if (checkElement.fieldName) visibleFieldName = checkElement.fieldName;
 
         if (checkElement.type === "Input" || checkElement.type === "TextArea") {
