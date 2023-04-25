@@ -23293,7 +23293,7 @@
 					"data": [
 						{
 							"fieldNo": "44fd8d64-f069-4ba3-8e81-91e0bcf61052",
-							"fieldName": "oforms",
+							"fieldName": "formsHandler",
 							"fieldParent": "9a908f5d-5422-474e-adc2-0b14d7e5d638",
 							"fieldType": "neptune_forms",
 							"script": "",
@@ -23361,7 +23361,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.4.25.926",
+	"ver": "23.4.25.1540",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",

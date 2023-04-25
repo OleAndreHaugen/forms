@@ -125,7 +125,9 @@ const FORMS = {
 
                 if (element.elements) {
                     element.elements.forEach(function (subElement, iSub) {
-                        FORMS.buildElement(sectionParent, subElement, section, iSub);
+                        if (subElement) {
+                            FORMS.buildElement(sectionParent, subElement, section, iSub);
+                        }
                     });
                 }
             });
@@ -539,7 +541,7 @@ const FORMS = {
 
         // Enable Add
         if (section.enableCreate && FORMS.editable) {
-            FORMS.formParent.addContent(
+            sectionPanel.addContent(
                 new sap.m.Button({
                     text: "Add",
                     type: "Transparent",
@@ -624,6 +626,7 @@ const FORMS = {
             draggable: true,
             contentHeight: "800px",
             contentWidth: "800px",
+            stretch: sap.ui.Device.system.phone,
             title: "Copy Data",
         }).addStyleClass("sapUiContentPadding");
 
@@ -1076,6 +1079,17 @@ const FORMS = {
             src: element.imageSrc,
         });
 
+        const elementImageLightBox = new sap.m.LightBox();
+
+        elementImageLightBox.addImageContent(
+            new sap.m.LightBoxItem({
+                imageSrc: element.imageSrc,
+                title: element.title,
+            })
+        );
+
+        newField.setDetailBox(elementImageLightBox);
+
         if (element.width) {
             if (element.widthMetric) {
                 newField.setWidth(element.width + "%");
@@ -1473,7 +1487,19 @@ const FORMS = {
 
         const elementImage = new sap.m.Image({
             src: "{" + FORMS.bindingPath + bindingField + "}",
+            visible: "{= ${" + FORMS.bindingPath + bindingField + "} ? true: false }",
         });
+
+        const elementImageLightBox = new sap.m.LightBox();
+
+        elementImageLightBox.addImageContent(
+            new sap.m.LightBoxItem({
+                imageSrc: "{" + FORMS.bindingPath + bindingField + "}",
+                title: element.title,
+            })
+        );
+
+        elementImage.setDetailBox(elementImageLightBox);
 
         if (element.width) {
             if (element.widthMetric) {
@@ -1496,15 +1522,23 @@ const FORMS = {
 
         elementHBox.addItem(
             new sap.m.Button({
-                type: "Transparent",
+                type: "Reject",
                 enabled: FORMS.editable,
-                icon: "sap-icon://clear-all",
+                icon: "sap-icon://delete",
                 tooltip: "Delete Image",
                 visible: "{= ${" + FORMS.bindingPath + bindingField + "} ? true:false}",
                 press: function (oEvent) {
-                    elementImage.setSrc();
+                    const context = oEvent.oSource.getBindingContext();
+
+                    if (context) {
+                        const data = context.getObject();
+                        data[bindingField] = "";
+                        this.getModel().refresh();
+                    } else {
+                        elementImage.setSrc();
+                    }
                 },
-            }).addStyleClass("sapUiSizeCompact")
+            }).addStyleClass("sapUiSizeCompact sapUiTinyMarginBegin")
         );
 
         newField.addItem(elementHBox);

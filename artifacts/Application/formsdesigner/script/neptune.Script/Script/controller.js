@@ -592,6 +592,8 @@ const controller = {
             case "Image":
                 newElement.text = "Upload";
                 newElement.buttonType = "Emphasized";
+                newElement.width = "200";
+                newElement.widthMetric = ""
                 break;
 
             case "CheckList":
