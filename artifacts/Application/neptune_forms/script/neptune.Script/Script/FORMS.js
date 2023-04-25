@@ -703,6 +703,10 @@ const FORMS = {
             backgroundDesign: "Transparent",
         });
 
+        if (tabCopy.setAutoPopinMode) {
+            tabCopy.setAutoPopinMode(true);
+        }
+
         const cells = columListItem.getCells();
 
         tabCopy.addColumn(new sap.m.Column({ width: "100px" }).setHeader(new sap.m.Label({ text: "Include", design: "Bold" })));
