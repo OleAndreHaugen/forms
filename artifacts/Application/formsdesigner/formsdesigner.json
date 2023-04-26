@@ -5124,6 +5124,40 @@
 																											"data": []
 																										},
 																										{
+																											"fieldNo": "5b47d4d8-54fc-4a4b-fcfa-b134cd458876",
+																											"fieldName": "insectionTablePagination",
+																											"fieldParent": "43729faf-7688-41bc-f77a-c0c906b44e82",
+																											"fieldType": "sap.m.CheckBox",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "text",
+																													"grouping": "Properties",
+																													"value": "Enable Pagination",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "selected",
+																													"grouping": "Properties",
+																													"value": "{/enablePagination}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": []
+																										},
+																										{
 																											"fieldNo": "1fed0ffe-6986-4f07-9851-b6e9858a83b6",
 																											"fieldName": "insectionTableDelete",
 																											"fieldParent": "43729faf-7688-41bc-f77a-c0c906b44e82",
@@ -12721,6 +12755,81 @@
 																													"data": []
 																												}
 																											]
+																										},
+																										{
+																											"fieldNo": "413e4db9-3b90-44e0-a61a-93a47edb7cb8",
+																											"fieldName": "lblElementTablePagination",
+																											"fieldParent": "2f85efa5-c4af-4db2-a82e-e2bd523a9a5d",
+																											"fieldType": "sap.m.Label",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "text",
+																													"grouping": "Properties",
+																													"value": "Items per Page",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": []
+																										},
+																										{
+																											"fieldNo": "932fe5ee-d108-476f-e33e-7ded1537d53f",
+																											"fieldName": "inElementTablePagination",
+																											"fieldParent": "2f85efa5-c4af-4db2-a82e-e2bd523a9a5d",
+																											"fieldType": "sap.m.StepInput",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "visible",
+																													"grouping": "Properties",
+																													"value": "{= ${/enablePagination} ? true:false }",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "value",
+																													"grouping": "Properties",
+																													"value": "{/paginationTake}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "min",
+																													"grouping": "Properties",
+																													"value": "2",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "max",
+																													"grouping": "Properties",
+																													"value": "50",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "change",
+																													"grouping": "Events",
+																													"value": "Anonymous Function",
+																													"script": "file://event/sap.m.StepInput/inElementTablePagination/change.script",
+																													"translation": []
+																												}
+																											],
+																											"data": []
 																										}
 																									]
 																								},
@@ -23368,7 +23477,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.4.25.1640",
+	"ver": "23.4.25.1955",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",

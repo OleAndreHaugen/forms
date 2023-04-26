@@ -22,6 +22,19 @@
   overflow: hidden !important;
 }
 
+.maxWidth {
+  max-width: 230px;
+}
+
+.sapMTB.sapMTBStandard {
+  border-bottom: 1px solid #e5e5e5 !important;
+}
+
+.sapUiTheme-sap_horizon_dark .sapMTB.sapMTBStandard,
+.sapUiTheme-sap_fiori_3_dark .sapMTB.sapMTBStandard {
+  border-bottom: 1px solid #2e3742 !important;
+}
+
 .sapUiRespGridMedia-Std-Phone.sapUiFormResGridCont > .sapUiFormElementLbl:not(.sapUiRespGridSpanS12) > .nepLabelLeftAlign,
 .sapUiRespGridMedia-Std-Tablet.sapUiFormResGridCont > .sapUiFormElementLbl:not(.sapUiRespGridSpanM12) > .nepLabelLeftAlign,
 .sapUiRespGridMedia-Std-Desktop.sapUiFormResGridCont > .sapUiFormElementLbl:not(.sapUiRespGridSpanL12) > .nepLabelLeftAlign,

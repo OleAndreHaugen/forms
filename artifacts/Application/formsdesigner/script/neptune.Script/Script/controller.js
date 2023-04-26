@@ -567,6 +567,7 @@ const controller = {
                 newElement.elements = [];
                 newElement.widths = [];
                 newElement.rows = 5;
+                newElement.paginationTake = 2;
                 break;
 
             case "Form":
