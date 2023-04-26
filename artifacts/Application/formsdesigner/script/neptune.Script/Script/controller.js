@@ -11,6 +11,7 @@ const controller = {
     },
     pressedPreview: false,
     dragElement: null,
+    tableReset: false,
 
     elementTypes: [
         { icon: "sap-icon://form", text: "Form", type: "Form", parent: true, descripton: "Present the data in Form layout" },
@@ -527,12 +528,19 @@ const controller = {
         controller.previewData = modeloPageDetail.getJSON();
 
         const formData = FORMS.getData(null, true);
+        let previewData = null;
+
+        if (!controller.tableReset) {
+            previewData = formData ? formData.data : null;
+        }
 
         FORMS.build(panPreview, {
             id: modeloPageDetail.oData.id,
-            data: formData ? formData.data : null,
+            data: previewData,
             config: modeloPageDetail.oData,
         });
+
+        controller.tableReset = false;
 
         panPreview.onAfterRendering = function (oEvent) {
             controller.markElement();

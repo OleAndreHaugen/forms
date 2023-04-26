@@ -170,7 +170,7 @@ const FORMS = {
                     // Pagination
                     if (section.enablePagination) {
                         FORMS.paginationSetup[section.id] = {
-                            take: section.paginationTake,
+                            take: section.paginationTake || 2,
                             index: 0,
                             count: 0,
                             filter: "",
