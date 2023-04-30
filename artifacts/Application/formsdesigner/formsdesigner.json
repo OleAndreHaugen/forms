@@ -20838,27 +20838,34 @@
 																									"data": []
 																								},
 																								{
-																									"fieldNo": "e7de51f3-28f7-42f3-803a-dc647c06eac2",
+																									"fieldNo": "99e12f0e-e26f-464b-81a6-58ca9d1d969e",
 																									"fieldName": "inElementFormVisibleField",
 																									"fieldParent": "411706a4-5046-4f1e-8a9a-bd24d66e9ed5",
-																									"fieldType": "sap.m.Select",
+																									"fieldType": "sap.m.Input",
 																									"script": "",
 																									"customComponent": false,
 																									"request": [],
 																									"response": [],
 																									"attributes": [
 																										{
-																											"attribute": "selectedKey",
+																											"attribute": "valueHelpOnly",
+																											"grouping": "Properties",
+																											"value": "true",
+																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "value",
 																											"grouping": "Properties",
 																											"value": "{/visibleFieldName}",
 																											"script": "",
 																											"translation": []
 																										},
 																										{
-																											"attribute": "change",
-																											"grouping": "Events",
-																											"value": "controller.visibleCondValue();",
-																											"script": "controller.visibleCondValue();",
+																											"attribute": "showValueHelp",
+																											"grouping": "Properties",
+																											"value": "true",
+																											"script": "",
 																											"translation": []
 																										},
 																										{
@@ -20866,6 +20873,20 @@
 																											"grouping": "Properties",
 																											"value": "{appControl>/enableEdit}",
 																											"script": "",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "value",
+																											"grouping": "Formatter",
+																											"value": "Anonymous Function",
+																											"script": "file://event/sap.m.Input/inElementFormVisibleField/value.script",
+																											"translation": []
+																										},
+																										{
+																											"attribute": "valueHelpRequest",
+																											"grouping": "Events",
+																											"value": "diaVisibility.open();",
+																											"script": "diaVisibility.open();",
 																											"translation": []
 																										}
 																									],
@@ -21211,6 +21232,210 @@
 					"attributes": [],
 					"data": [
 						{
+							"fieldNo": "c95a3f59-b33c-4449-bb6f-33bc694e00c8",
+							"fieldName": "diaVisibilityClose",
+							"fieldParent": "d62c1c7e-da1b-426d-e178-73a78781e887",
+							"fieldType": "sap.m.Button",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "type",
+									"grouping": "Properties",
+									"value": "Transparent",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "Close",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "enableCompactMode",
+									"grouping": "Properties",
+									"value": "true",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "press",
+									"grouping": "Events",
+									"value": "diaVisibility.close();",
+									"script": "diaVisibility.close();",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
+							"fieldNo": "0e8cdd6e-2e85-4f8a-985d-149c685151ef",
+							"fieldName": "diaVisibility",
+							"fieldParent": "d62c1c7e-da1b-426d-e178-73a78781e887",
+							"fieldType": "sap.m.Dialog",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "title",
+									"grouping": "Properties",
+									"value": "Conditional Visibility",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "draggable",
+									"grouping": "Properties",
+									"value": "true",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "contentWidth",
+									"grouping": "Properties",
+									"value": "400px",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "contentHeight",
+									"grouping": "Properties",
+									"value": "600px",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "beforeOpen",
+									"grouping": "Events",
+									"value": "Anonymous Function",
+									"script": "file://event/sap.m.Dialog/diaVisibility/beforeOpen.js",
+									"language": "javascript",
+									"translation": []
+								},
+								{
+									"attribute": "afterOpen",
+									"grouping": "Events",
+									"value": "listVisibilityFilter.focus();",
+									"script": "listVisibilityFilter.focus();",
+									"translation": []
+								},
+								{
+									"attribute": "endButton",
+									"grouping": "Associations",
+									"value": "diaVisibilityClose",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": [
+								{
+									"fieldNo": "b10c34c5-ef37-493f-b9fa-88947b507d64",
+									"fieldName": "listVisibility",
+									"fieldParent": "0e8cdd6e-2e85-4f8a-985d-149c685151ef",
+									"fieldType": "sap.m.List",
+									"script": "",
+									"customComponent": false,
+									"bindingValue": "Generic Array",
+									"bindingType": "h",
+									"bindingSource": "P9",
+									"request": [],
+									"response": [],
+									"attributes": [
+										{
+											"attribute": "sticky",
+											"grouping": "Properties",
+											"value": "[\"ColumnHeaders\",\"HeaderToolbar\"]",
+											"script": "",
+											"translation": []
+										}
+									],
+									"data": [
+										{
+											"fieldNo": "f36ac197-9ccc-4c5f-fed6-10cb6fdbdcd6",
+											"fieldName": "listVisibilityToolbar",
+											"fieldParent": "b10c34c5-ef37-493f-b9fa-88947b507d64",
+											"fieldType": "sap.m.Toolbar",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "position",
+													"grouping": "Parent",
+													"value": "HeaderToolbar",
+													"script": "",
+													"translation": []
+												}
+											],
+											"data": [
+												{
+													"fieldNo": "b7356a65-2557-4360-d8ce-655b5a079413",
+													"fieldName": "listVisibilityFilter",
+													"fieldParent": "f36ac197-9ccc-4c5f-fed6-10cb6fdbdcd6",
+													"fieldType": "sap.m.SearchField",
+													"script": "",
+													"customComponent": false,
+													"request": [],
+													"response": [],
+													"attributes": [
+														{
+															"attribute": "liveChange",
+															"grouping": "Events",
+															"value": "Anonymous Function",
+															"script": "file://event/sap.m.SearchField/listVisibilityFilter/liveChange.script",
+															"translation": []
+														}
+													],
+													"data": []
+												}
+											]
+										},
+										{
+											"fieldNo": "5fcffb9c-92b7-4f2c-9bf7-663614bde78d",
+											"fieldName": "listVisibilityItem",
+											"fieldParent": "b10c34c5-ef37-493f-b9fa-88947b507d64",
+											"fieldType": "sap.m.StandardListItem",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "type",
+													"grouping": "Properties",
+													"value": "Active",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "title",
+													"grouping": "Properties",
+													"value": "{text}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "press",
+													"grouping": "Events",
+													"value": "Anonymous Function",
+													"script": "file://event/sap.m.StandardListItem/listVisibilityItem/press.script",
+													"translation": []
+												}
+											],
+											"data": []
+										}
+									]
+								}
+							]
+						},
+						{
 							"fieldNo": "debfb0ae-ead1-44c6-b63d-4cb703c48004",
 							"fieldName": "diaChangeTypeClose",
 							"fieldParent": "d62c1c7e-da1b-426d-e178-73a78781e887",
@@ -21317,7 +21542,15 @@
 									"bindingSource": "P9",
 									"request": [],
 									"response": [],
-									"attributes": [],
+									"attributes": [
+										{
+											"attribute": "sticky",
+											"grouping": "Properties",
+											"value": "[\"ColumnHeaders\",\"HeaderToolbar\"]",
+											"script": "",
+											"translation": []
+										}
+									],
 									"data": [
 										{
 											"fieldNo": "ca5fbdd9-b63b-42d8-8c90-45b9cf09320f",
@@ -23477,7 +23710,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.4.26.814",
+	"ver": "23.4.30.832",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",

@@ -811,26 +811,31 @@ const controller = {
             modelpanTopProperties.refresh();
         }
 
+        let visibilityFields = [];
+
         const addConditionalField = function (element) {
+            if (element.id === modelpanTopProperties.oData.id) return;
+
             switch (element.type) {
                 case "Image":
                 case "MultipleChoice":
                 case "MultipleSelect":
                 case "MessageStrip":
-                // case "TextArea":
-                // case "Input":
                 case "Text":
                 case "FormTitle":
                 case "Date":
                     break;
 
                 default:
-                    inElementFormVisibleField.addItem(
-                        new sap.ui.core.Item({
-                            key: element.id,
-                            text: element.title,
-                        })
-                    );
+                    const parent = controller.getParentFromId(element.id);
+
+                    visibilityFields.push({
+                        id: element.id,
+                        text: element.title,
+                        parent: parent.title,
+                        index: visibilityFields.length + 1,
+                    });
+
                     break;
             }
         };
@@ -847,9 +852,6 @@ const controller = {
         }
 
         // Conditional Access
-        inElementFormVisibleField.destroyItems();
-        inElementFormVisibleField.addItem(new sap.ui.core.Item());
-
         modeloPageDetail.oData.setup.forEach(function (section) {
             section.elements.forEach(function (element) {
                 addConditionalField(element);
@@ -861,17 +863,19 @@ const controller = {
             });
         });
 
+        modellistVisibility.setData(visibilityFields);
+
         controller.visibleCondValue();
     },
 
     visibleCondValue: function () {
-        if (!inElementFormVisibleField.getSelectedKey()) return;
+        if (!inElementFormVisibleField.getValue()) return;
 
         inElementFormVisibleValue.destroyItems();
         inElementFormVisibleValue.addItem(new sap.ui.core.Item());
 
         // Get visibleField
-        const visibleField = controller.getObjectFromId(inElementFormVisibleField.getSelectedKey());
+        const visibleField = controller.getObjectFromId(modelpanTopProperties.oData.visibleFieldName);
 
         if (!visibleField) return;
 

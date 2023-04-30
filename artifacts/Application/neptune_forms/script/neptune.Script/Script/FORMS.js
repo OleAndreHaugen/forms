@@ -741,7 +741,7 @@ const FORMS = {
                 },
             }).addStyleClass("sapUiHideOnPhone");
 
-            toolPaginationShowItems.addItem(new sap.ui.core.ListItem({ text: "Default", key: section.paginationTake }));
+            toolPaginationShowItems.addItem(new sap.ui.core.ListItem({ text: "Default", key: section.paginationTake || 2 }));
             toolPaginationShowItems.addItem(new sap.ui.core.ListItem({ text: 5, key: 5 }));
             toolPaginationShowItems.addItem(new sap.ui.core.ListItem({ text: 10, key: 10 }));
             toolPaginationShowItems.addItem(new sap.ui.core.ListItem({ text: 15, key: 15 }));
@@ -1062,6 +1062,12 @@ const FORMS = {
 
                 case "Switch":
                     clone.setState(rowData[fieldId]);
+                    break;
+
+                case "Image":
+                    clone.getItems()[1].setVisible(false);
+                    clone.getItems()[0].getItems()[0].setEnabled(false);
+                    clone.getItems()[0].getItems()[1].setVisible(false);
                     break;
 
                 case "CheckBox":
