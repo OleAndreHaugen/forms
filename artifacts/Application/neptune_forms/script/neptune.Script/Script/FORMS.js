@@ -67,6 +67,8 @@ const FORMS = {
             });
         }
 
+        modeloPageDetail.oData.setup = options.config.setup;
+
         FORMS.editable = true;
         FORMS.formTitleHide = [];
         FORMS.signatures = {};
@@ -1174,6 +1176,8 @@ const FORMS = {
                     } else {
                         newColumn.setWidth(widths.width + "px");
                     }
+                } else {
+                    newColumn.setWidth("150px");
                 }
             }
         }
