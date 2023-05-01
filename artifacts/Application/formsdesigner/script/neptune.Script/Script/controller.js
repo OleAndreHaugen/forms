@@ -782,6 +782,7 @@ const controller = {
 
     pressOutlineItem: function () {
         const element = modelpanTopProperties.oData;
+        const elementParent = controller.getParentFromId(element.id);
 
         controller.markElement();
 
@@ -829,6 +830,16 @@ const controller = {
                 default:
                     const parent = controller.getParentFromId(element.id);
 
+                    switch (elementParent.type) {
+                        case "Table":
+                            if (elementParent.id !== parent.id) return;
+                            break;
+
+                        default:
+                            if (parent.type === "Table") return;
+                            break;
+                    }
+
                     visibilityFields.push({
                         id: element.id,
                         text: element.title,
@@ -847,6 +858,7 @@ const controller = {
             elementToolbarChangeType.setVisible(true);
         }
 
+        // ValueHelp -> Get Adaptive Fields
         if (element.type === "ValueHelp") {
             controller.buildAdaptiveFields();
         }

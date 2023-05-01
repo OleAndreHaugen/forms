@@ -21232,6 +21232,48 @@
 					"attributes": [],
 					"data": [
 						{
+							"fieldNo": "3e617615-03f1-498c-9db2-bf36db3fc045",
+							"fieldName": "diaVisibilityClear",
+							"fieldParent": "d62c1c7e-da1b-426d-e178-73a78781e887",
+							"fieldType": "sap.m.Button",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "type",
+									"grouping": "Properties",
+									"value": "Emphasized",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "text",
+									"grouping": "Properties",
+									"value": "Clear",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "enableCompactMode",
+									"grouping": "Properties",
+									"value": "true",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "press",
+									"grouping": "Events",
+									"value": "Anonymous Function",
+									"script": "file://event/sap.m.Button/diaVisibilityClear/press.js",
+									"language": "javascript",
+									"translation": []
+								}
+							],
+							"data": []
+						},
+						{
 							"fieldNo": "c95a3f59-b33c-4449-bb6f-33bc694e00c8",
 							"fieldName": "diaVisibilityClose",
 							"fieldParent": "d62c1c7e-da1b-426d-e178-73a78781e887",
@@ -21329,6 +21371,13 @@
 									"attribute": "endButton",
 									"grouping": "Associations",
 									"value": "diaVisibilityClose",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "beginButton",
+									"grouping": "Associations",
+									"value": "diaVisibilityClear",
 									"script": "",
 									"translation": []
 								}
@@ -23710,7 +23759,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.4.30.832",
+	"ver": "23.5.1.823",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",

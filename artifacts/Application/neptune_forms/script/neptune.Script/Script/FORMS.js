@@ -478,7 +478,8 @@ const FORMS = {
         if (!element.visibleCondition) return;
         if (!element.visibleValue) return;
 
-        let bindingPath = "/"; //element.type === "Table" ? "/" : FORMS.bindingPath;
+        // let bindingPath = "/"; //element.type === "Table" ? "/" : FORMS.bindingPath;
+        let bindingPath = FORMS.bindingPath;
         let visibleStatement = element.visibleInverse ? "false:true" : "true:false";
         let visibleValueSep = element.visibleValue === "true" || element.visibleValue === "false" ? "" : "'";
         let visibleFieldName = element.visibleFieldName;
@@ -1204,6 +1205,10 @@ const FORMS = {
 
         FORMS.setColumnSorting(section, parent, newColumn, element);
         FORMS.columnTemplate.addCell(elementField);
+
+        // if (element.enableVisibleCond) {
+        //     elementField.setVisible(FORMS.buildVisibleCond(element));
+        // }
     },
 
     buildElement: function (parent, element, section, index) {
@@ -1336,6 +1341,7 @@ const FORMS = {
             text: element.text,
             showIcon: element.messageIcon,
             type: element.messageType || "Information",
+            visible: FORMS.buildVisibleCond(element),
         });
     },
 
@@ -1358,6 +1364,7 @@ const FORMS = {
             value: "{" + FORMS.bindingPath + bindingField + "}",
             editable: FORMS.editable,
             placeholder: element.placeholder,
+            visible: FORMS.buildVisibleCond(element),
         });
 
         return newField;
@@ -1372,6 +1379,7 @@ const FORMS = {
             placeholder: element.placeholder,
             valueHelpOnly: true,
             showValueHelp: true,
+            visible: FORMS.buildVisibleCond(element),
             valueHelpRequest: function (oEvent) {
                 if (!element.adaptiveApp) return;
 
@@ -1404,6 +1412,7 @@ const FORMS = {
     buildElementPicture: function (element) {
         const newField = new sap.m.Image(FORMS.buildElementFieldID(element), {
             src: element.imageSrc,
+            visible: FORMS.buildVisibleCond(element),
         });
 
         const elementImageLightBox = new sap.m.LightBox();
@@ -1477,6 +1486,7 @@ const FORMS = {
             text: element.text,
             titleStyle: element.titleStyle,
             wrapping: true,
+            visible: FORMS.buildVisibleCond(element),
         });
 
         return newField;
@@ -1492,6 +1502,7 @@ const FORMS = {
             growing: element.growing,
             rows: parseInt(element.rows),
             width: "100%",
+            visible: FORMS.buildVisibleCond(element),
         });
         if (element.rows) newField.setRows(parseInt(element.rows));
 
@@ -1505,6 +1516,7 @@ const FORMS = {
             value: "{" + FORMS.bindingPath + bindingField + "}",
             editable: FORMS.editable,
             maxValue: element.maxValue,
+            visible: FORMS.buildVisibleCond(element),
         });
 
         if (element.iconSelected) {
@@ -1528,6 +1540,7 @@ const FORMS = {
             change: function (oEvent) {
                 this.setValue(parseFloat(this.getValue()).toFixed(element.decimals));
             },
+            visible: FORMS.buildVisibleCond(element),
         });
 
         return newField;
@@ -1540,6 +1553,7 @@ const FORMS = {
             value: "{" + FORMS.bindingPath + bindingField + "}",
             placeholder: element.placeholder,
             editable: FORMS.editable,
+            visible: FORMS.buildVisibleCond(element),
         });
 
         if (element.min) newField.setMin(parseInt(element.min));
@@ -1556,6 +1570,7 @@ const FORMS = {
             enabled: FORMS.editable,
             customTextOff: element.customTextOff,
             customTextOn: element.customTextOn,
+            visible: FORMS.buildVisibleCond(element),
         });
 
         if (element.approveSwitch) {
@@ -1572,6 +1587,7 @@ const FORMS = {
             selected: "{" + FORMS.bindingPath + bindingField + "}",
             editable: FORMS.editable,
             text: element.text,
+            visible: FORMS.buildVisibleCond(element),
         });
 
         return newField;
@@ -1583,6 +1599,7 @@ const FORMS = {
         const newField = new sap.m.SegmentedButton(FORMS.buildElementFieldID(element), {
             selectedKey: "{" + FORMS.bindingPath + bindingField + "}",
             enabled: FORMS.editable,
+            visible: FORMS.buildVisibleCond(element),
         });
 
         if (element.width) {
@@ -1613,7 +1630,7 @@ const FORMS = {
             selectedKey: "{" + FORMS.bindingPath + bindingField + "}",
             width: "100%",
             editable: FORMS.editable,
-            // showIcon: true,
+            visible: FORMS.buildVisibleCond(element),
         });
 
         // Override externally or combine
@@ -1637,6 +1654,7 @@ const FORMS = {
             selectedKey: "{" + FORMS.bindingPath + bindingField + "}",
             width: "100%",
             editable: FORMS.editable,
+            visible: FORMS.buildVisibleCond(element),
         });
 
         // Override externally or combine
@@ -1660,6 +1678,7 @@ const FORMS = {
 
         newField = new sap.m.RadioButtonGroup(FORMS.buildElementFieldID(element), {
             selectedIndex: null,
+            visible: FORMS.buildVisibleCond(element),
         });
 
         if (element.horizontal) newField.setColumns(10);
@@ -1711,6 +1730,7 @@ const FORMS = {
             width: "100%",
             editable: FORMS.editable,
             showSelectAll: true,
+            visible: FORMS.buildVisibleCond(element),
         });
 
         element.items.forEach(function (item, i) {
@@ -1729,11 +1749,13 @@ const FORMS = {
             newField = new sap.m.HBox(FORMS.buildElementFieldID(element), {
                 wrap: "Wrap",
                 renderType: "Bare",
+                visible: FORMS.buildVisibleCond(element),
             });
         } else {
             newField = new sap.m.VBox(FORMS.buildElementFieldID(element), {
                 wrap: "Wrap",
                 renderType: "Bare",
+                visible: FORMS.buildVisibleCond(element),
             });
         }
 
@@ -1778,6 +1800,7 @@ const FORMS = {
             value: "{" + FORMS.bindingPath + bindingField + "}",
             displayFormat: element.displayFormat ? element.displayFormat : "dd.MM.yyyy",
             editable: FORMS.editable,
+            visible: FORMS.buildVisibleCond(element),
         });
 
         return newField;
@@ -1789,6 +1812,7 @@ const FORMS = {
 
         const newField = new sap.m.VBox(FORMS.buildElementFieldID(element), {
             width: "100%",
+            visible: FORMS.buildVisibleCond(element),
         });
 
         const elementUploader = new sap.m.Button({
@@ -1881,6 +1905,7 @@ const FORMS = {
             value: "{" + FORMS.bindingPath + bindingField + "}",
             displayFormat: element.displayFormat ? element.displayFormat : "dd.MM.yyyy HH:mm",
             editable: FORMS.editable,
+            visible: FORMS.buildVisibleCond(element),
         });
 
         return newField;
@@ -1891,6 +1916,7 @@ const FORMS = {
             showSeparators: sap.m.ListSeparators.None,
             backgroundDesign: "Transparent",
             contextualWidth: "Auto",
+            visible: FORMS.buildVisibleCond(element),
         });
 
         if (tabCheckList.setAutoPopinMode) {
