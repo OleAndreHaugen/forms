@@ -688,7 +688,7 @@ const FORMS = {
 
         // Enable Copy
         if (section.enableCopy && FORMS.editable) {
-            const newColumn = new sap.m.Column({ width: "40px" });
+            const newColumn = new sap.m.Column({ width: "50px" });
 
             sectionTable.addColumn(newColumn);
 
@@ -727,6 +727,7 @@ const FORMS = {
         if (section.layout === "form") {
             FORMS.formTemplate = new sap.ui.layout.form.SimpleForm({
                 layout: "ResponsiveGridLayout",
+                backgroundDesign: "Transparent",
                 editable: true,
                 labelSpanL: parseInt(section.labelSpan) || 4,
                 labelSpanM: parseInt(section.labelSpan) || 4,
@@ -1035,7 +1036,7 @@ const FORMS = {
             tabCopy.setAutoPopinMode(true);
         }
 
-        const cells = columListItem.getCells();
+        const cells = section.layout === "form" ? columListItem.getCells()[1].getContent() : columListItem.getCells();
 
         tabCopy.addColumn(new sap.m.Column({ width: "100px" }).setHeader(new sap.m.Label({ text: "Include", design: "Bold" })));
         tabCopy.addColumn(new sap.m.Column({ width: "200px" }).setHeader(new sap.m.Label({ text: "Field", design: "Bold" })));
