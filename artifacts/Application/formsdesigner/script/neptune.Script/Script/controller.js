@@ -794,7 +794,9 @@ const controller = {
 
     pressOutlineItem: function () {
         const element = modelpanTopProperties.oData;
-        const elementParent = controller.getParentFromId(element.id);
+        let elementParent = controller.getParentFromId(element.id);
+
+        if (element.id === elementParent.id) elementParent = {};
 
         controller.markElement();
 
@@ -816,6 +818,7 @@ const controller = {
                 if (existingWidth && existingWidth.width) newWidth.width = existingWidth.width;
                 if (existingWidth && existingWidth.widthMetric) newWidth.widthMetric = existingWidth.widthMetric;
                 if (existingWidth && existingWidth.minSize) newWidth.minSize = existingWidth.minSize;
+                if (existingWidth && existingWidth.columnTitle) newWidth.columnTitle = existingWidth.columnTitle;
 
                 newWidths.push(newWidth);
             });

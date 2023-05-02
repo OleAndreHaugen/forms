@@ -9,6 +9,7 @@ const FORMS = {
     editable: true,
     bindingPath: "",
     columnTemplate: null,
+    formTemplate: null,
     sessionid: null,
     validationCheck: false,
     signatures: {},
@@ -229,6 +230,7 @@ const FORMS = {
     paginationHandle: function (section) {
         const tabObject = sap.ui.getCore().byId("field" + section.id);
         const tabModel = tabObject.getModel();
+        const take = parseInt(FORMS.paginationSetup[section.id].take);
 
         const tableData = FORMS.paginationSetup[section.id].data;
         let filterData = FORMS.paginationSetup[section.id].filter ? FORMS.filterArray(tableData, FORMS.paginationSetup[section.id].filter) : tableData;
@@ -248,21 +250,21 @@ const FORMS = {
         if (counter) counter.setNumber("(" + FORMS.paginationSetup[section.id].count + ")");
 
         // Set Table Data
-        let startIndex = FORMS.paginationSetup[section.id].take * FORMS.paginationSetup[section.id].index;
+        let startIndex = take * FORMS.paginationSetup[section.id].index;
 
         if (startIndex === FORMS.paginationSetup[section.id].count) {
-            startIndex = startIndex - FORMS.paginationSetup[section.id].take;
+            startIndex = startIndex - take;
             FORMS.paginationSetup[section.id].index--;
         }
 
-        tabModel.setData(filterData.slice(startIndex, startIndex + FORMS.paginationSetup[section.id].take));
+        tabModel.setData(filterData.slice(startIndex, startIndex + take));
         tabModel.refresh();
 
         // UI Setup
-        let maxIndex = filterData.length / FORMS.paginationSetup[section.id].take;
+        let maxIndex = filterData.length / take;
         maxIndex = Math.ceil(maxIndex);
 
-        if (filterData.length <= FORMS.paginationSetup[section.id].take) maxIndex = 1;
+        if (filterData.length <= take) maxIndex = 1;
 
         toolPaginationFirst = sap.ui.getCore().byId("paginationFirst" + section.id);
         toolPaginationPrev = sap.ui.getCore().byId("paginationPrev" + section.id);
@@ -338,7 +340,7 @@ const FORMS = {
             headerText: section.title,
             backgroundDesign: "Solid",
             visible: FORMS.buildVisibleCond(section),
-        }).addStyleClass("sapUiSmallMarginTopBottom");
+        }).addStyleClass("sapUiSmallMarginTopBottom sapUiNoContentPadding");
 
         const sectionForm = new sap.ui.layout.form.SimpleForm({
             layout: "ResponsiveGridLayout",
@@ -348,7 +350,7 @@ const FORMS = {
             labelSpanS: 12,
             columnsL: parseInt(section.columns) || 2,
             columnsM: parseInt(section.columns) || 2,
-        });
+        }).addStyleClass("sapUiNoContentPadding");
 
         if (section.enableCompact) sectionForm.addStyleClass("sapUiSizeCompact");
 
@@ -478,7 +480,7 @@ const FORMS = {
         if (!element.visibleCondition) return;
         if (!element.visibleValue) return;
 
-        let bindingPath = FORMS.bindingPath;
+        let bindingPath = element.type === "Table" ? "/" : FORMS.bindingPath;
 
         let visibleStatement = element.visibleInverse ? "false:true" : "true:false";
         let visibleValueSep = element.visibleValue === "true" || element.visibleValue === "false" ? "" : "'";
@@ -542,11 +544,6 @@ const FORMS = {
 
         sectionTable.addStyleClass("FormsTable");
 
-        // Popin
-        if (section.popin && sectionTable.setAutoPopinMode) {
-            sectionTable.setAutoPopinMode(true);
-        }
-
         // Show Separators
         if (section.enableSeparators) {
             sectionTable.setShowSeparators(sap.m.ListSeparators.Inner);
@@ -582,7 +579,6 @@ const FORMS = {
                     },
                 }).addStyleClass("maxWidth")
             );
-            sectionToolbar.addContent(new sap.m.ToolbarSeparator());
         }
 
         // Enable Add
@@ -643,13 +639,19 @@ const FORMS = {
                 if (selectedItems) {
                     selectedItems.forEach(function (item) {
                         const context = item.getBindingContext();
-                        const data = context.getObject();
-                        data.delete = true;
+                        if (context) {
+                            const data = context.getObject();
+                            data.delete = true;
+                        }
                     });
                     ModelData.Delete(tabData, "delete", true);
                 }
 
-                if (section.enablePagination) FORMS.paginationHandle(section);
+                if (section.enablePagination) {
+                    FORMS.paginationHandle(section);
+                } else {
+                    sectionTable.getModel().refresh();
+                }
 
                 sectionTable.removeSelections();
             },
@@ -660,8 +662,8 @@ const FORMS = {
         // Enable Delete
         if (section.enableDelete && FORMS.editable) {
             sectionTable.setMode("Delete");
-            sectionToolbar.addContent(butMultiDelete);
             sectionToolbar.addContent(new sap.m.ToolbarSeparator());
+            sectionToolbar.addContent(butMultiDelete);
             sectionToolbar.addContent(butMultiSwitch);
             sectionToolbar.addContent(butSingleSwitch);
         }
@@ -721,6 +723,28 @@ const FORMS = {
         FORMS.formParent.addContent(sectionPanel);
         FORMS.columnTemplate = columListItem;
 
+        // Table Layout
+        if (section.layout === "form") {
+            FORMS.formTemplate = new sap.ui.layout.form.SimpleForm({
+                layout: "ResponsiveGridLayout",
+                editable: true,
+                labelSpanL: parseInt(section.labelSpan) || 4,
+                labelSpanM: parseInt(section.labelSpan) || 4,
+                labelSpanS: 12,
+                columnsL: parseInt(section.columns) || 2,
+                columnsM: parseInt(section.columns) || 2,
+            }).addStyleClass("sapUiNoContentPadding");
+
+            const colForm = new sap.m.Column();
+            sectionTable.addColumn(colForm);
+            columListItem.addCell(FORMS.formTemplate);
+        } else {
+            // Popin
+            if (section.popin && sectionTable.setAutoPopinMode) {
+                sectionTable.setAutoPopinMode(true);
+            }
+        }
+
         // Pagination
         if (section.enablePagination) {
             const toolPagination = new sap.m.Toolbar({ width: "100%", design: "Transparent" }).addStyleClass("sapUiSizeCompact ");
@@ -743,6 +767,7 @@ const FORMS = {
             }).addStyleClass("sapUiHideOnPhone");
 
             toolPaginationShowItems.addItem(new sap.ui.core.ListItem({ text: "Default", key: section.paginationTake || 2 }));
+            toolPaginationShowItems.addItem(new sap.ui.core.ListItem({ text: 1, key: 1 }));
             toolPaginationShowItems.addItem(new sap.ui.core.ListItem({ text: 5, key: 5 }));
             toolPaginationShowItems.addItem(new sap.ui.core.ListItem({ text: 10, key: 10 }));
             toolPaginationShowItems.addItem(new sap.ui.core.ListItem({ text: 15, key: 15 }));
@@ -803,7 +828,7 @@ const FORMS = {
                 new sap.m.Button("paginationLast" + section.id, {
                     icon: "sap-icon://fa-solid/angle-double-right",
                     press: function (oEvent) {
-                        let maxIndex = FORMS.paginationSetup[section.id].count / FORMS.paginationSetup[section.id].take;
+                        let maxIndex = FORMS.paginationSetup[section.id].count / parseInt(FORMS.paginationSetup[section.id].take);
                         maxIndex = Math.ceil(maxIndex);
 
                         FORMS.paginationSetup[section.id].index = maxIndex - 1;
@@ -1157,39 +1182,58 @@ const FORMS = {
     },
 
     buildParentTableChildren: function (parent, element, section, index, elementField) {
-        const newColumn = new sap.m.Column({});
-
-        if (section.popin) {
-            newColumn.setDemandPopin(true);
-            newColumn.setPopinDisplay("Block");
-        }
-
-        // Column Width
-        if (section.widths) {
-            const widths = section.widths[index];
-            if (widths) {
-                if (widths.width) {
-                    if (widths.widthMetric) {
-                        newColumn.setWidth(widths.width + "%");
-                    } else {
-                        newColumn.setWidth(widths.width + "px");
-                    }
-                } else {
-                    newColumn.setWidth("150px");
+        if (section.layout === "form") {
+            // Column Title
+            if (section.widths) {
+                const widths = section.widths[index];
+                if (widths && widths.columnTitle) {
+                    FORMS.formTemplate.addContent(new sap.ui.core.Title({ text: widths.columnTitle }));
                 }
             }
+
+            const elementLabel = new sap.m.Label({ text: element.title });
+            if (section.labelLeftAlign) elementLabel.addStyleClass("nepLabelLeftAlign");
+
+            FORMS.formTemplate.addContent(elementLabel);
+            FORMS.formTemplate.addContent(elementField);
+        } else {
+            const newColumn = new sap.m.Column({});
+
+            if (section.popin) {
+                newColumn.setDemandPopin(true);
+                newColumn.setPopinDisplay("Block");
+            }
+
+            // Column Width
+            if (section.widths) {
+                const widths = section.widths[index];
+                if (widths) {
+                    if (widths.width) {
+                        if (widths.widthMetric) {
+                            newColumn.setWidth(widths.width + "%");
+                        } else {
+                            newColumn.setWidth(widths.width + "px");
+                        }
+                    } else {
+                        newColumn.setWidth("150px");
+                    }
+                }
+            }
+
+            // Column Header
+            newColumn.setHeader(
+                new sap.m.Label(FORMS.buildElementFieldID(element), {
+                    text: element.title,
+                    required: element.required,
+                    design: "Bold",
+                })
+            );
+
+            parent.addColumn(newColumn);
+            FORMS.columnTemplate.addCell(elementField);
+
+            FORMS.setColumnSorting(section, parent, newColumn, element);
         }
-
-        // Column Header
-        newColumn.setHeader(
-            new sap.m.Label(FORMS.buildElementFieldID(element), {
-                text: element.title,
-                required: element.required,
-                design: "Bold",
-            })
-        );
-
-        parent.addColumn(newColumn);
 
         // Filter
         switch (element.type) {
@@ -1204,13 +1248,6 @@ const FORMS = {
                 FORMS.colSorting[parent.sId].push(element);
                 break;
         }
-
-        FORMS.setColumnSorting(section, parent, newColumn, element);
-        FORMS.columnTemplate.addCell(elementField);
-
-        // if (element.enableVisibleCond) {
-        //     elementField.setVisible(FORMS.buildVisibleCond(element));
-        // }
     },
 
     buildElement: function (parent, element, section, index) {

@@ -26,20 +26,9 @@
     max-width: 230px;
 }
 
-// .toolPagination {
-//     height: 3rem;
-//     border: 1px solid #e5e5e5;
-//     border-radius: 0.75rem;
+// .sapMTB.sapMTBStandard {
+//     border-bottom: 1px solid #e5e5e5 !important;
 // }
-
-// .sapUiTheme-sap_horizon_dark .toolPagination,
-// .sapUiTheme-sap_fiori_3_dark .toolPagination {
-//     border: 1px solid #2e3742;
-// }
-
-.sapMTB.sapMTBStandard {
-    border-bottom: 1px solid #e5e5e5 !important;
-}
 
 .sapUiTheme-sap_horizon_dark .sapMTB.sapMTBStandard,
 .sapUiTheme-sap_fiori_3_dark .sapMTB.sapMTBStandard  {
