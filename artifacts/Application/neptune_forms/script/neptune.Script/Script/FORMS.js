@@ -67,8 +67,6 @@ const FORMS = {
             });
         }
 
-        modeloPageDetail.oData.setup = options.config.setup;
-
         FORMS.editable = true;
         FORMS.formTitleHide = [];
         FORMS.signatures = {};
@@ -433,8 +431,8 @@ const FORMS = {
                             let data = FORMS.getData();
                             data.completed = false;
 
-                            let parentData = ModelData.FindFirst(data.config.setup, "id", section.id);
-                            if (parentData) parentData.elements.splice(index, 1);
+                            let parent = FORMS.getDuplicateParentFromId(element.id, data);
+                            parent.elements.splice(index, 1);
 
                             FORMS.build(FORMS.customerParent, data);
                         },
@@ -460,8 +458,8 @@ const FORMS = {
                                 });
                             }
 
-                            let parentData = ModelData.FindFirst(data.config.setup, "id", section.id);
-                            if (parentData) parentData.elements.splice(index + 1, 0, newElement);
+                            let parent = FORMS.getDuplicateParentFromId(element.id, data);
+                            parent.elements.splice(index + 1, 0, newElement);
 
                             FORMS.build(FORMS.customerParent, data);
                         },
@@ -480,8 +478,8 @@ const FORMS = {
         if (!element.visibleCondition) return;
         if (!element.visibleValue) return;
 
-        // let bindingPath = "/"; //element.type === "Table" ? "/" : FORMS.bindingPath;
         let bindingPath = FORMS.bindingPath;
+
         let visibleStatement = element.visibleInverse ? "false:true" : "true:false";
         let visibleValueSep = element.visibleValue === "true" || element.visibleValue === "false" ? "" : "'";
         let visibleFieldName = element.visibleFieldName;
@@ -2307,6 +2305,27 @@ const FORMS = {
         });
 
         return elementFound;
+    },
+
+    getDuplicateParentFromId: function (id, data) {
+        let parentData = null;
+
+        data.config.setup.forEach(function (section) {
+            if (section.id === id) parentData = section;
+
+            section.elements.forEach(function (element) {
+                if (element.id === id) parentData = section;
+
+                if (element.elements) {
+                    if (!parentData && element.id === id) parentData = element;
+                    element.elements.forEach(function (subElement) {
+                        if (subElement.id === id) parentData = element;
+                    });
+                }
+            });
+        });
+
+        return parentData;
     },
 
     apiGetForm: function (id) {

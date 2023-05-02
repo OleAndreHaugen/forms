@@ -2,12 +2,10 @@ const context = oEvent.oSource.getBindingContext();
 const data = context.getObject();
 
 modelpanTopProperties.oData.visibleFieldName = data.id;
-delete modelpanTopProperties.oData.visibleCondition;
-delete modelpanTopProperties.oData.visibleValue;
+modelpanTopProperties.oData.visibleCondition = "";
+modelpanTopProperties.oData.visibleValue = "";
 modelpanTopProperties.refresh();
 
 controller.visibleCondValue();
 
 diaVisibility.close();
-
-

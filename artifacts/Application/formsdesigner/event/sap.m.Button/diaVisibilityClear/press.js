@@ -1,6 +1,6 @@
-delete modelpanTopProperties.oData.visibleFieldName;
-delete modelpanTopProperties.oData.visibleCondition;
-delete modelpanTopProperties.oData.visibleValue;
+modelpanTopProperties.oData.visibleFieldName = "";
+modelpanTopProperties.oData.visibleCondition = "";
+modelpanTopProperties.oData.visibleValue = "";
 
 modelpanTopProperties.refresh();
 diaVisibility.close();

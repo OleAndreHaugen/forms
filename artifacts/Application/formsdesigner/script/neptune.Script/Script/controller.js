@@ -319,6 +319,18 @@ const controller = {
                 id: id,
             },
         }).then(function (req) {
+            // Check for undefined elements
+            if (req.setup && req.setup.forEach) {
+                req.setup.forEach(function (section, i) {
+                    section.elements = section.elements.filter((obj) => obj && Object.keys(obj).length !== 0);
+                    section.elements.forEach(function (element, i) {
+                        if (element.elements) {
+                            element.elements = element.elements.filter((obj) => obj && Object.keys(obj).length !== 0);
+                        }
+                    });
+                });
+            }
+
             modeloPageDetail.setData(req);
             modelpanTopProperties.setData({});
             controller.preview();
