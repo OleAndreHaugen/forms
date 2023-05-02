@@ -732,7 +732,7 @@ const FORMS = {
                 labelSpanM: parseInt(section.labelSpan) || 4,
                 labelSpanS: 12,
                 columnsL: parseInt(section.columns) || 2,
-                columnsM: parseInt(section.columns) || 2,
+                columnsM: 2,
             }).addStyleClass("sapUiNoContentPadding");
 
             const colForm = new sap.m.Column();
