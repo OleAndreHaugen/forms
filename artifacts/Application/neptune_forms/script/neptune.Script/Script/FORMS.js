@@ -349,7 +349,7 @@ const FORMS = {
             labelSpanM: parseInt(section.labelSpan) || 4,
             labelSpanS: 12,
             columnsL: parseInt(section.columns) || 2,
-            columnsM: parseInt(section.columns) || 2,
+            columnsM: 2,
         }).addStyleClass("sapUiNoContentPadding");
 
         if (section.enableCompact) sectionForm.addStyleClass("sapUiSizeCompact");
@@ -511,7 +511,7 @@ const FORMS = {
     buildParentTable: function (section) {
         const sectionTable = new sap.m.Table(FORMS.buildElementFieldID(section), {
             showSeparators: sap.m.ListSeparators.None,
-            backgroundDesign: "Transparent",
+            backgroundDesign: "Solid",
             contextualWidth: "Auto",
             showNoData: false,
             delete: function (oEvent) {
@@ -547,6 +547,11 @@ const FORMS = {
         // Show Separators
         if (section.enableSeparators) {
             sectionTable.setShowSeparators(sap.m.ListSeparators.Inner);
+        }
+
+        // Show Alternate Row Colors
+        if (section.enableAlternate) {
+            sectionTable.setAlternateRowColors(true);
         }
 
         // Table Parent
@@ -865,7 +870,7 @@ const FORMS = {
                             model.refresh();
                         }
                     },
-                }).addStyleClass("sapUiSizeCompact sapUiSmallMarginBegin")
+                }).addStyleClass("sapUiSizeCompact sapUiSmallMargin")
             );
         }
 
