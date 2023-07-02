@@ -203,7 +203,7 @@ const FORMS = {
             switch (element.type) {
                 case "SingleChoice":
                 case "SegmentedButton":
-                    if (element.items) {
+                    if (element.items && !element.noDefault) {
                         const firstItem = element.items[0];
                         newRec[bindingField] = firstItem.key;
                     }
@@ -266,12 +266,12 @@ const FORMS = {
 
         if (filterData.length <= take) maxIndex = 1;
 
-        toolPaginationFirst = sap.ui.getCore().byId("paginationFirst" + section.id);
-        toolPaginationPrev = sap.ui.getCore().byId("paginationPrev" + section.id);
-        toolPaginationNext = sap.ui.getCore().byId("paginationNext" + section.id);
-        toolPaginationLast = sap.ui.getCore().byId("paginationLast" + section.id);
-        toolPaginationPages = sap.ui.getCore().byId("paginationPages" + section.id);
-        toolPaginationTitle = sap.ui.getCore().byId("paginationTitle" + section.id);
+        let toolPaginationFirst = sap.ui.getCore().byId("paginationFirst" + section.id);
+        let toolPaginationPrev = sap.ui.getCore().byId("paginationPrev" + section.id);
+        let toolPaginationNext = sap.ui.getCore().byId("paginationNext" + section.id);
+        let toolPaginationLast = sap.ui.getCore().byId("paginationLast" + section.id);
+        let toolPaginationPages = sap.ui.getCore().byId("paginationPages" + section.id);
+        let toolPaginationTitle = sap.ui.getCore().byId("paginationTitle" + section.id);
 
         toolPaginationFirst.setEnabled(true);
         toolPaginationPrev.setEnabled(true);
@@ -513,6 +513,7 @@ const FORMS = {
             showSeparators: sap.m.ListSeparators.None,
             backgroundDesign: "Solid",
             contextualWidth: "Auto",
+            sticky: ["ColumnHeaders", "HeaderToolbar"],
             showNoData: false,
             delete: function (oEvent) {
                 const context = oEvent.mParameters.listItem.getBindingContext();
@@ -558,6 +559,11 @@ const FORMS = {
         const sectionPanel = new sap.m.Panel("section" + section.id, {
             visible: FORMS.buildVisibleCond(section),
         }).addStyleClass("sapUiNoContentPadding sapUiSmallMarginTopBottom");
+
+        // Height
+        if (section.height) {
+            sectionPanel.setHeight(section.height + "px");
+        }
 
         const sectionToolbar = new sap.m.Toolbar().addStyleClass("sapUiSizeCompact");
 
@@ -971,6 +977,14 @@ const FORMS = {
             contentWidth: "800px",
             stretch: sap.ui.Device.system.phone,
             title: "Copy Data",
+            afterOpen: function (oEvent) {
+                document.addEventListener("click", function closeDialog(oEvent) {
+                    if (oEvent.target.id === "sap-ui-blocklayer-popup") {
+                        diaCopy.close();
+                        document.removeEventListener("click", closeDialog);
+                    }
+                });
+            },
         }).addStyleClass("sapUiContentPadding");
 
         diaCopy.setEndButton(
@@ -1024,6 +1038,15 @@ const FORMS = {
         const panCopies = new sap.m.Panel();
         panCopies.addContent(new sap.m.Title({ text: "Number of copies" }));
         const numCopy = new sap.m.StepInput({ width: "100%", min: 1, max: 1000 }).addStyleClass("sapUiSmallMarginBottom");
+
+        numCopy.onAfterRendering = function () {
+            let elem = this.getDomRef();
+            if (elem) {
+                let input = elem.childNodes[0].childNodes[0].childNodes[1];
+                if (input) input.setAttribute("type", "number");
+            }
+        };
+
         panCopies.addContent(numCopy);
         diaCopy.addContent(panCopies);
 
@@ -1041,7 +1064,13 @@ const FORMS = {
             tabCopy.setAutoPopinMode(true);
         }
 
-        const cells = section.layout === "form" ? columListItem.getCells()[1].getContent() : columListItem.getCells();
+        let cells;
+
+        if (section.layout === "form") {
+            cells = section.enableRowNumber ? columListItem.getCells()[2].getContent() : columListItem.getCells()[1].getContent();
+        } else {
+            cells = columListItem.getCells();
+        }
 
         tabCopy.addColumn(new sap.m.Column({ width: "100px" }).setHeader(new sap.m.Label({ text: "Include", design: "Bold" })));
         tabCopy.addColumn(new sap.m.Column({ width: "200px" }).setHeader(new sap.m.Label({ text: "Field", design: "Bold" })));
@@ -1131,6 +1160,14 @@ const FORMS = {
             contentHeight: "800px",
             contentWidth: "800px",
             title: "Log History",
+            afterOpen: function (oEvent) {
+                document.addEventListener("click", function closeDialog(oEvent) {
+                    if (oEvent.target.id === "sap-ui-blocklayer-popup") {
+                        diaLog.close();
+                        document.removeEventListener("click", closeDialog);
+                    }
+                });
+            },
         }).addStyleClass("sapUiContentPadding");
 
         diaLog.setEndButton(
@@ -1601,6 +1638,14 @@ const FORMS = {
             visible: FORMS.buildVisibleCond(element),
         });
 
+        newField.onAfterRendering = function () {
+            let elem = this.getDomRef();
+            if (elem) {
+                let input = elem.childNodes[0].childNodes[0].childNodes[1];
+                if (input) input.setAttribute("type", "number");
+            }
+        };
+
         if (element.min) newField.setMin(parseInt(element.min));
         if (element.max) newField.setMax(parseInt(element.max));
 
@@ -1647,22 +1692,41 @@ const FORMS = {
             visible: FORMS.buildVisibleCond(element),
         });
 
+        let widthItems = 0;
+
         if (element.width) {
             if (element.widthMetric) {
                 newField.setWidth(element.width + "%");
             } else {
                 newField.setWidth(element.width + "px");
             }
+
+            widthItems = element.width / element.items.length;
         }
 
         if (element.items) {
-            element.items.forEach(function (item, i) {
-                newField.addItem(new sap.m.SegmentedButtonItem({ key: item.key, text: item.title, icon: item.icon }));
-            });
+            if (element.noDefault) {
+                newField.addItem(new sap.m.SegmentedButtonItem({ key: "", text: "", width: "0px" }));
+                newField.addStyleClass("segmentedNoDefault");
+            } else {
+                const formModel = FORMS.formParent.getModel();
+                if (!formModel.oData[bindingField]) element.defaultValue ? (formModel.oData[bindingField] = element.defaultValue) : (formModel.oData[bindingField] = element.items[0].key);
+            }
 
-            // Set Default Value
-            const formModel = FORMS.formParent.getModel();
-            if (!formModel.oData[bindingField]) element.defaultValue ? (formModel.oData[bindingField] = element.defaultValue) : (formModel.oData[bindingField] = element.items[0].key);
+            element.items.forEach(function (item, i) {
+                const newItem = new sap.m.SegmentedButtonItem({ key: item.key, text: item.title, icon: item.icon });
+
+                // Element Width
+                if (element.width && element.noDefault) {
+                    if (element.widthMetric) {
+                        newItem.setWidth(widthItems + "%");
+                    } else {
+                        newItem.setWidth(widthItems + "px");
+                    }
+                }
+
+                newField.addItem(newItem);
+            });
         }
 
         return newField;
