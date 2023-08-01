@@ -403,7 +403,7 @@ const FORMS = {
         if (element.enableLog) {
             elementParent.addItem(
                 new sap.m.Button({
-                    text: element.logButtonText,
+                    text: element.logButtonText || "Log",
                     type: element.logButtonType,
                     icon: element.logButtonIcon,
                     press: function (oEvent) {
@@ -1203,8 +1203,14 @@ const FORMS = {
             formModel.setData(element.data);
             formParent.setModel(formModel);
 
+            // Change Element Properties for Log
             delete element.config.enableLog;
-            const updatedAt = oDateFormat.format(new Date(element.updatedAt));
+            element.config._inDialog = true;
+
+            let updatedAtValue = element.updatedAt;
+            if (typeof updatedAtValue === "string") updatedAtValue = parseInt(updatedAtValue);
+
+            const updatedAt = oDateFormat.format(new Date(updatedAtValue));
 
             FORMS.formParent = formParent;
             FORMS.buildElement(formParent, element.config, { type: "Form" }, i);
@@ -1415,7 +1421,11 @@ const FORMS = {
     },
 
     buildElementFieldID: function (element) {
-        return "field" + element.id;
+        if (element._inDialog) {
+            return "log" + ModelData.genID();
+        } else {
+            return "field" + element.id;
+        }
     },
 
     buildElementMessageStrip: function (element) {

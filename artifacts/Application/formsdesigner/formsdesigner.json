@@ -11407,7 +11407,7 @@
 																										{
 																											"attribute": "placeholder",
 																											"grouping": "Properties",
-																											"value": "Text",
+																											"value": "Log",
 																											"script": "",
 																											"translation": []
 																										},
@@ -18278,6 +18278,13 @@
 																											"response": [],
 																											"attributes": [
 																												{
+																													"attribute": "visible",
+																													"grouping": "Properties",
+																													"value": "{= ${/enableWidth} ? true:false }",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
 																													"attribute": "renderType",
 																													"grouping": "Properties",
 																													"value": "Bare",
@@ -24909,7 +24916,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.7.2.920",
+	"ver": "23.8.1.942",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
@@ -24948,6 +24955,8 @@
 	"compilerTarget": 3,
 	"tabWidth": null,
 	"printWidth": 200,
+	"generateVersionOnActivation": false,
+	"activationHistoryCount": 0,
 	"apis": [
 		{
 			"id": "d5bc31e5-8726-409e-8987-65088dc3a2d1",

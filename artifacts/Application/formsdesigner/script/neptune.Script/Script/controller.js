@@ -321,7 +321,6 @@ const controller = {
         element.visibleFieldName = "";
         element.visibleCondition = "";
         element.visibleValue = "";
-        console.log("Cleared")
     },
 
     list: function () {
