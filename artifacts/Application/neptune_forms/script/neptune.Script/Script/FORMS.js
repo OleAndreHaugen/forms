@@ -1224,6 +1224,7 @@ const FORMS = {
             diaLog.addContent(panel);
         }
 
+        FORMS.bindingPath = "/";
         FORMS.editable = currentEditable;
         FORMS.formParent = currentFormParent;
 
