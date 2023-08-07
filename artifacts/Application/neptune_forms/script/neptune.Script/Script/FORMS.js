@@ -2540,9 +2540,8 @@ const FORMS = {
                     canvas.width = image.width / resizeRate;
                     canvas.height = image.height / resizeRate;
                     context.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvas.width, canvas.height);
-
+                    
                     const resizedImage = canvas.toDataURL();
-                    console.log(imageData.length + " after " + resizedImage.length);
                     resolve(resizedImage);
                 };
 
