@@ -454,6 +454,9 @@ const FORMS = {
                             newElement.id = ModelData.genID();
                             newElement.isDuplicate = true;
 
+                            // Object Attribute
+                            if (newElement.fieldName) newElement.fieldName = newElement.fieldName + "_" + ModelData.genID();
+
                             if (newElement.items) {
                                 newElement.items.forEach(function (item) {
                                     item.id = ModelData.genID();
@@ -1715,7 +1718,7 @@ const FORMS = {
             widthItems = element.width / element.items.length;
         }
 
-        if (element.items) {
+        if (element.items?.length) {
             if (element.noDefault) {
                 newField.addItem(new sap.m.SegmentedButtonItem({ key: "", text: "", width: "0px" }));
                 newField.addStyleClass("segmentedNoDefault");
@@ -2178,14 +2181,24 @@ const FORMS = {
                 const tabData = section.enablePagination ? FORMS.paginationSetup[section.id].data : tabObject.getModel().oData;
 
                 if (tabData) {
-                    outputData[section.id] = tabData;
+                    const bindingField = section.fieldName ? section.fieldName : section.id;
 
-                    if (outputData[section.id] && outputData[section.id].forEach) {
-                        outputData[section.id].forEach(function (data) {
+                    outputData[bindingField] = tabData;
+
+                    if (outputData[bindingField] && outputData[bindingField].forEach) {
+                        outputData[bindingField].forEach(function (data) {
                             delete data.highlight;
                             delete data.rowNumber;
                         });
                     }
+                    // outputData[section.id] = tabData;
+
+                    // if (outputData[section.id] && outputData[section.id].forEach) {
+                    //     outputData[section.id].forEach(function (data) {
+                    //         delete data.highlight;
+                    //         delete data.rowNumber;
+                    //     });
+                    // }
                 }
                 return;
             }
