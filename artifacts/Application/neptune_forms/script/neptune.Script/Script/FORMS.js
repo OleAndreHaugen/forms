@@ -1944,6 +1944,7 @@ const FORMS = {
             enabled: FORMS.editable,
             press: function (oEvent) {
                 FORMS.uploadObject = {
+                    element,
                     bindingField: bindingField,
                     context: null,
                 };
@@ -2305,7 +2306,7 @@ const FORMS = {
             }
 
             // Field not visible -> Do not show value
-            if (!field.getDomRef()) {
+            if (!field?.getDomRef()) {
                 delete formModel.oData[bindingField];
                 return;
             }
@@ -2494,8 +2495,9 @@ const FORMS = {
             const file = oEvent.target.files[0];
             const fileReader = new FileReader();
 
-            fileReader.onload = function (fileLoadedEvent) {
+            fileReader.onload = async function (fileLoadedEvent) {
                 let formModel;
+                let imageData = await FORMS.imageResize(fileLoadedEvent.target.result, FORMS.uploadObject.element);
 
                 if (!FORMS.formParent) {
                     const formParent = sap.ui.getCore().byId("_nepFormParent");
@@ -2505,10 +2507,10 @@ const FORMS = {
                 }
 
                 if (FORMS.uploadObject.context) {
-                    FORMS.uploadObject.context[FORMS.uploadObject.bindingField] = fileLoadedEvent.target.result;
+                    FORMS.uploadObject.context[FORMS.uploadObject.bindingField] = imageData;
                     FORMS.uploadObject.model.refresh();
                 } else {
-                    formModel.oData[FORMS.uploadObject.bindingField] = fileLoadedEvent.target.result;
+                    formModel.oData[FORMS.uploadObject.bindingField] = imageData;
                     formModel.refresh();
                 }
 
@@ -2519,6 +2521,36 @@ const FORMS = {
         } catch (e) {
             console.log(e);
         }
+    },
+
+    imageResize: function (imageData, element) {
+        return new Promise(function (resolve) {
+            let resizeRate = 2;
+            const imageDataLength = imageData?.length;
+
+            if (imageDataLength > 1000000) resizeRate = 3;
+            if (imageDataLength > 2000000) resizeRate = 4;
+
+            if (imageDataLength > 250000 && element.enableResize) {
+                let image = new Image();
+
+                image.onload = function () {
+                    let canvas = document.createElement("canvas");
+                    let context = canvas.getContext("2d");
+                    canvas.width = image.width / resizeRate;
+                    canvas.height = image.height / resizeRate;
+                    context.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvas.width, canvas.height);
+
+                    const resizedImage = canvas.toDataURL();
+                    console.log(imageData.length + " after " + resizedImage.length);
+                    resolve(resizedImage);
+                };
+
+                image.src = imageData;
+            } else {
+                resolve(imageData);
+            }
+        });
     },
 
     getObjectFromId: function (id) {

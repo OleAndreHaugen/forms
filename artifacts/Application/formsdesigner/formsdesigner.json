@@ -8362,6 +8362,40 @@
 																												}
 																											],
 																											"data": []
+																										},
+																										{
+																											"fieldNo": "083f2586-d315-4c63-9ef7-b78153325f30",
+																											"fieldName": "inElementImageEnableResize",
+																											"fieldParent": "01ea8586-f321-4e12-ae38-ba89b4916dcd",
+																											"fieldType": "sap.m.CheckBox",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "text",
+																													"grouping": "Properties",
+																													"value": "Enable Image Resize",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "selected",
+																													"grouping": "Properties",
+																													"value": "{/enableResize}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": []
 																										}
 																									]
 																								}
@@ -9496,6 +9530,40 @@
 																													"attribute": "selected",
 																													"grouping": "Properties",
 																													"value": "{/enableVisibleCond}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": []
+																										},
+																										{
+																											"fieldNo": "2f0c9762-6d86-4e1a-d6e8-7ae3d0bbe3ee",
+																											"fieldName": "inElementPictureEnableResize1",
+																											"fieldParent": "b1303c18-cad6-4a41-be01-a6b920a78285",
+																											"fieldType": "sap.m.CheckBox",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "text",
+																													"grouping": "Properties",
+																													"value": "Enable Image Resize",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "selected",
+																													"grouping": "Properties",
+																													"value": "{/enableResize}",
 																													"script": "",
 																													"translation": []
 																												},
@@ -24916,7 +24984,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.8.7.650",
+	"ver": "23.8.7.811",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
