@@ -155,8 +155,10 @@ const FORMS = {
 
                     sectionParent.setModel(tabModel);
 
-                    if (options.data && options.data[section.id] && options.data[section.id].length) {
-                        modelData = options.data[section.id];
+                    const bindingField = section.fieldName ? section.fieldName : section.id;
+
+                    if (options.data && options.data[bindingField] && options.data[bindingField].length) {
+                        modelData = options.data[bindingField];
                     } else {
                         let rows = section.rows || 1;
 
@@ -2540,7 +2542,7 @@ const FORMS = {
                     canvas.width = image.width / resizeRate;
                     canvas.height = image.height / resizeRate;
                     context.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvas.width, canvas.height);
-                    
+
                     const resizedImage = canvas.toDataURL();
                     resolve(resizedImage);
                 };
