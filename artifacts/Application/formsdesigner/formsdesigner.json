@@ -14533,6 +14533,13 @@
 																													"translation": []
 																												},
 																												{
+																													"attribute": "showValueHelp",
+																													"grouping": "Properties",
+																													"value": "true",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
 																													"attribute": "placeholder",
 																													"grouping": "Properties",
 																													"value": "dd.MM.yyyy",
@@ -14544,6 +14551,14 @@
 																													"grouping": "Properties",
 																													"value": "{appControl>/enableEdit}",
 																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "valueHelpRequest",
+																													"grouping": "Events",
+																													"value": "Anonymous Function",
+																													"script": "file://event/sap.m.Input/inElementFormDatePickerFormat/valueHelpRequest.js",
+																													"language": "javascript",
 																													"translation": []
 																												}
 																											],
@@ -14678,6 +14693,13 @@
 																													"translation": []
 																												},
 																												{
+																													"attribute": "showValueHelp",
+																													"grouping": "Properties",
+																													"value": "true",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
 																													"attribute": "placeholder",
 																													"grouping": "Properties",
 																													"value": "dd.MM.yyyy HH:mm",
@@ -14689,6 +14711,13 @@
 																													"grouping": "Properties",
 																													"value": "{appControl>/enableEdit}",
 																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "valueHelpRequest",
+																													"grouping": "Events",
+																													"value": "Anonymous Function",
+																													"script": "file://event/sap.m.Input/inElementFormDateTimePickerFormat/valueHelpRequest.script",
 																													"translation": []
 																												}
 																											],
@@ -24825,6 +24854,91 @@
 									]
 								}
 							]
+						},
+						{
+							"fieldNo": "451fb1ee-206c-4108-b21b-93468e98b35f",
+							"fieldName": "popFormat",
+							"fieldParent": "d62c1c7e-da1b-426d-e178-73a78781e887",
+							"fieldType": "sap.m.Popover",
+							"script": "",
+							"customComponent": false,
+							"request": [],
+							"response": [],
+							"attributes": [
+								{
+									"attribute": "showHeader",
+									"grouping": "Properties",
+									"value": "false",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "placement",
+									"grouping": "Properties",
+									"value": "PreferredBottomOrFlip",
+									"script": "",
+									"translation": []
+								},
+								{
+									"attribute": "contentWidth",
+									"grouping": "Properties",
+									"value": "400px",
+									"script": "",
+									"translation": []
+								}
+							],
+							"data": [
+								{
+									"fieldNo": "a2cb68fa-54a0-4f93-8c98-9358629c2e22",
+									"fieldName": "listFormatTypes",
+									"fieldParent": "451fb1ee-206c-4108-b21b-93468e98b35f",
+									"fieldType": "sap.m.List",
+									"script": "",
+									"customComponent": false,
+									"bindingValue": "Generic Array",
+									"bindingType": "h",
+									"bindingSource": "P9",
+									"request": [],
+									"response": [],
+									"attributes": [],
+									"data": [
+										{
+											"fieldNo": "b530256f-ad78-4324-902a-b6812aa1d477",
+											"fieldName": "itemFormatTypes",
+											"fieldParent": "a2cb68fa-54a0-4f93-8c98-9358629c2e22",
+											"fieldType": "sap.m.StandardListItem",
+											"script": "",
+											"customComponent": false,
+											"request": [],
+											"response": [],
+											"attributes": [
+												{
+													"attribute": "type",
+													"grouping": "Properties",
+													"value": "Active",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "title",
+													"grouping": "Properties",
+													"value": "{title}",
+													"script": "",
+													"translation": []
+												},
+												{
+													"attribute": "press",
+													"grouping": "Events",
+													"value": "Anonymous Function",
+													"script": "file://event/sap.m.StandardListItem/itemFormatTypes/press.script",
+													"translation": []
+												}
+											],
+											"data": []
+										}
+									]
+								}
+							]
 						}
 					]
 				},
@@ -24984,7 +25098,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.8.7.811",
+	"ver": "23.8.14.1431",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
