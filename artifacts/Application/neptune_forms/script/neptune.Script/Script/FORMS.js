@@ -1055,9 +1055,9 @@ const FORMS = {
         panCopies.addContent(numCopy);
         diaCopy.addContent(panCopies);
 
+        const bindingField = section.fieldName ? section.fieldName : section.id;
         const table = sap.ui.getCore().byId("field" + tableId);
-
-        const tableData = FORMS.getData().data[tableId];
+        const tableData = FORMS.getData().data[bindingField];
         const rowData = ModelData.FindFirst(tableData, "id", rowId);
 
         const tabCopy = new sap.m.Table({
