@@ -1083,7 +1083,6 @@ const FORMS = {
 
         for (let i = 1; i < cells.length; i++) {
             const fieldId = cells[i].sId.split("field")[1];
-
             if (!fieldId) continue;
 
             const columListItem = new sap.m.ColumnListItem();
@@ -1097,6 +1096,9 @@ const FORMS = {
             } else if (clone.setEnabled) {
                 clone.setEnabled(false);
             }
+
+            // If Object Attribute -> Change to fieldname
+            if (element.fieldName) fieldId = element.fieldName;
 
             columListItem.addCell(new sap.m.CheckBox("include-" + fieldId, { selected: true }));
             columListItem.addCell(new sap.m.Text({ text: element.title }));
