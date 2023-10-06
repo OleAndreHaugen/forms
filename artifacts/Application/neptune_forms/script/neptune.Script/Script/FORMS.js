@@ -17,6 +17,7 @@ const FORMS = {
     colHeaders: {},
     colSorting: {},
     paginationSetup: {},
+    enhancement: {},
 
     build: function (parent, options) {
         let formOptions;
@@ -651,15 +652,22 @@ const FORMS = {
             press: function (oEvent) {
                 const tabData = section.enablePagination ? FORMS.paginationSetup[section.id].data : sectionTable.getModel().oData;
                 const selectedItems = sectionTable.getSelectedItems();
+                const items = [];
 
                 if (selectedItems) {
                     selectedItems.forEach(function (item) {
                         const context = item.getBindingContext();
                         if (context) {
                             const data = context.getObject();
+                            items.push(data);
                             data.delete = true;
                         }
                     });
+
+                    if (FORMS.enhancement.multiDelete) {
+                        FORMS.enhancement.multiDelete(items);
+                    }
+
                     ModelData.Delete(tabData, "delete", true);
                 }
 
@@ -1002,14 +1010,29 @@ const FORMS = {
             }).addStyleClass("sapUiSizeCompact")
         );
 
+        const maxEntries = 10;
+
         diaCopy.setBeginButton(
             new sap.m.Button({
                 type: "Emphasized",
                 text: "OK",
                 press: function (oEvent) {
+                    let numEntriesCopy = numCopy.getValue();
+
+                    if (numEntriesCopy > maxEntries) {
+                        sap.m.MessageToast.show("Max total entries are ", maxEntries);
+                        return;
+                    }
+
                     let newData = section.enablePagination ? FORMS.paginationSetup[section.id].data : tableData;
 
-                    for (let i = 0; i < numCopy.getValue(); i++) {
+                    let totEntriesAfterCopy = newData.length + numEntriesCopy;
+
+                    if (totEntriesAfterCopy > maxEntries) {
+                        numEntriesCopy = maxEntries - newData.length;
+                    }
+
+                    for (let i = 0; i < numEntriesCopy; i++) {
                         let newRow = {
                             id: ModelData.genID(),
                         };
@@ -1042,7 +1065,7 @@ const FORMS = {
 
         const panCopies = new sap.m.Panel();
         panCopies.addContent(new sap.m.Title({ text: "Number of copies" }));
-        const numCopy = new sap.m.StepInput({ width: "100%", min: 1, max: 1000 }).addStyleClass("sapUiSmallMarginBottom");
+        const numCopy = new sap.m.StepInput({ width: "100%", min: 1, max: maxEntries, value: 1 }).addStyleClass("sapUiSmallMarginBottom");
 
         numCopy.onAfterRendering = function () {
             let elem = this.getDomRef();
@@ -1082,7 +1105,7 @@ const FORMS = {
         tabCopy.addColumn(new sap.m.Column({ width: "100%" }).setHeader(new sap.m.Label({ text: "Content", design: "Bold" })));
 
         for (let i = 1; i < cells.length; i++) {
-            const fieldId = cells[i].sId.split("field")[1];
+            let fieldId = cells[i].sId.split("field")[1];
             if (!fieldId) continue;
 
             const columListItem = new sap.m.ColumnListItem();
