@@ -645,6 +645,8 @@ const FORMS = {
             },
         }).addStyleClass("sapUiSizeCompact");
 
+        const fieldID = section.fieldName ? section.fieldName : section.id;
+
         const butMultiDelete = new sap.m.Button({
             icon: "sap-icon://delete",
             type: "Reject",
@@ -665,7 +667,7 @@ const FORMS = {
                     });
 
                     if (FORMS.enhancement.multiDelete) {
-                        FORMS.enhancement.multiDelete(items);
+                        FORMS.enhancement.multiDelete(fieldID, items);
                     }
 
                     ModelData.Delete(tabData, "delete", true);
@@ -1010,7 +1012,14 @@ const FORMS = {
             }).addStyleClass("sapUiSizeCompact")
         );
 
-        const maxEntries = 10;
+        const bindingField = section.fieldName ? section.fieldName : section.id;
+        const table = sap.ui.getCore().byId("field" + tableId);
+        const tableData = FORMS.getData().data[bindingField];
+        const rowData = ModelData.FindFirst(tableData, "id", rowId);
+
+        const maxEntries = 1000;
+        const newData = section.enablePagination ? FORMS.paginationSetup[section.id].data : tableData;
+        const maxCopyEntries = maxEntries - newData.length;
 
         diaCopy.setBeginButton(
             new sap.m.Button({
@@ -1019,17 +1028,8 @@ const FORMS = {
                 press: function (oEvent) {
                     let numEntriesCopy = numCopy.getValue();
 
-                    if (numEntriesCopy > maxEntries) {
-                        sap.m.MessageToast.show("Max total entries are ", maxEntries);
-                        return;
-                    }
-
-                    let newData = section.enablePagination ? FORMS.paginationSetup[section.id].data : tableData;
-
-                    let totEntriesAfterCopy = newData.length + numEntriesCopy;
-
-                    if (totEntriesAfterCopy > maxEntries) {
-                        numEntriesCopy = maxEntries - newData.length;
+                    if (numEntriesCopy > maxCopyEntries) {
+                        numEntriesCopy = maxCopyEntries;
                     }
 
                     for (let i = 0; i < numEntriesCopy; i++) {
@@ -1065,7 +1065,8 @@ const FORMS = {
 
         const panCopies = new sap.m.Panel();
         panCopies.addContent(new sap.m.Title({ text: "Number of copies" }));
-        const numCopy = new sap.m.StepInput({ width: "100%", min: 1, max: maxEntries, value: 1 }).addStyleClass("sapUiSmallMarginBottom");
+        const numCopy = new sap.m.StepInput({ width: "100%", min: 1, max: maxCopyEntries, value: 1 }).addStyleClass("sapUiSmallMarginBottom");
+        const numInfo = new sap.m.MessageStrip({ text: "Max entries to copy is: " + maxCopyEntries });
 
         numCopy.onAfterRendering = function () {
             let elem = this.getDomRef();
@@ -1076,12 +1077,8 @@ const FORMS = {
         };
 
         panCopies.addContent(numCopy);
+        panCopies.addContent(numInfo);
         diaCopy.addContent(panCopies);
-
-        const bindingField = section.fieldName ? section.fieldName : section.id;
-        const table = sap.ui.getCore().byId("field" + tableId);
-        const tableData = FORMS.getData().data[bindingField];
-        const rowData = ModelData.FindFirst(tableData, "id", rowId);
 
         const tabCopy = new sap.m.Table({
             showSeparators: sap.m.ListSeparators.Inner,
@@ -1951,6 +1948,24 @@ const FORMS = {
             displayFormat: element.displayFormat ? element.displayFormat : "dd.MM.yyyy",
             editable: FORMS.editable,
             visible: FORMS.buildVisibleCond(element),
+        });
+
+        const fieldName = FORMS.bindingPath + bindingField;
+
+        newField.bindProperty("dateValue", {
+            parts: [fieldName],
+            formatter: function (fieldName) {
+                if (typeof fieldName === "undefined" || fieldName === "" || fieldName === null) {
+                    return null;
+                }
+
+                if (fieldName.indexOf("/") > -1) {
+                    return new Date(fieldName);
+                } else {
+                    const [day, month, year] = fieldName.split(".");
+                    return new Date(year, month - 1, day);
+                }
+            },
         });
 
         return newField;
