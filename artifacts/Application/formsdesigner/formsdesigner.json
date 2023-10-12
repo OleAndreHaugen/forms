@@ -8396,6 +8396,40 @@
 																												}
 																											],
 																											"data": []
+																										},
+																										{
+																											"fieldNo": "94359240-ba46-4fdb-b20d-41f670307fee",
+																											"fieldName": "inElementImageEnableMulti",
+																											"fieldParent": "01ea8586-f321-4e12-ae38-ba89b4916dcd",
+																											"fieldType": "sap.m.CheckBox",
+																											"script": "",
+																											"customComponent": false,
+																											"request": [],
+																											"response": [],
+																											"attributes": [
+																												{
+																													"attribute": "text",
+																													"grouping": "Properties",
+																													"value": "Enable Multi Images",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "selected",
+																													"grouping": "Properties",
+																													"value": "{/enableMulti}",
+																													"script": "",
+																													"translation": []
+																												},
+																												{
+																													"attribute": "editable",
+																													"grouping": "Properties",
+																													"value": "{appControl>/enableEdit}",
+																													"script": "",
+																													"translation": []
+																												}
+																											],
+																											"data": []
 																										}
 																									]
 																								}
@@ -25098,7 +25132,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "23.9.29.1030",
+	"ver": "23.10.12.84",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",

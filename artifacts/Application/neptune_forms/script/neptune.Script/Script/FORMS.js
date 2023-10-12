@@ -1974,6 +1974,7 @@ const FORMS = {
     buildElementImage: function (element, parent) {
         const meta = parent.getMetadata();
         const bindingField = element.fieldName ? element.fieldName : element.id;
+        const bindingPath = element.enableMulti ? "" : FORMS.bindingPath;
 
         const newField = new sap.m.VBox(FORMS.buildElementFieldID(element), {
             width: "100%",
@@ -1998,20 +1999,24 @@ const FORMS = {
                     FORMS.uploadObject.model = parent.getModel();
                 }
 
-                $("#imageUploader").click();
+                if (element.enableMulti) {
+                    $("#imagesUploader").click();
+                } else {
+                    $("#imageUploader").click();
+                }
             },
         }).addStyleClass("sapUiSizeCompact");
 
         const elementImage = new sap.m.Image({
-            src: "{" + FORMS.bindingPath + bindingField + "}",
-            visible: "{= ${" + FORMS.bindingPath + bindingField + "} ? true: false }",
+            src: "{" + bindingPath + bindingField + "}",
+            visible: "{= ${" + bindingPath + bindingField + "} ? true: false }",
         });
 
         const elementImageLightBox = new sap.m.LightBox();
 
         elementImageLightBox.addImageContent(
             new sap.m.LightBoxItem({
-                imageSrc: "{" + FORMS.bindingPath + bindingField + "}",
+                imageSrc: "{" + bindingPath + bindingField + "}",
                 title: element.title,
             })
         );
@@ -2037,29 +2042,71 @@ const FORMS = {
         const elementHBox = new sap.m.HBox();
         elementHBox.addItem(elementUploader);
 
-        elementHBox.addItem(
-            new sap.m.Button({
-                type: "Reject",
-                enabled: FORMS.editable,
-                icon: "sap-icon://delete",
-                tooltip: "Delete Image",
-                visible: "{= ${" + FORMS.bindingPath + bindingField + "} ? true:false}",
-                press: function (oEvent) {
-                    const context = oEvent.oSource.getBindingContext();
-
-                    if (context) {
-                        const data = context.getObject();
-                        data[bindingField] = "";
-                        this.getModel().refresh();
+        if (element.enableMulti) {
+            const tabImages = new sap.m.Table({
+                mode: "Delete",
+                showNoData: false,
+                delete: function (oEvent) {
+                    const deleteItem = oEvent.getParameter("listItem");
+                    const context = deleteItem.getBindingContext();
+                    const data = context.getObject();
+                    if (meta._sClassName === "sap.m.Table") {
+                        const tabData = oEvent.oSource.getBindingContext().getObject()[bindingField];
+                        ModelData.Delete(tabData, "id", data.id);
                     } else {
-                        elementImage.setSrc();
+                        const rowData = this.getModel().oData[bindingField];
+                        ModelData.Delete(rowData, "id", data.id);
                     }
+                    this.getModel().refresh();
                 },
-            }).addStyleClass("sapUiSizeCompact sapUiTinyMarginBegin")
-        );
+            });
 
-        newField.addItem(elementHBox);
-        newField.addItem(elementImage);
+            const Column = new sap.m.Column();
+            const ColumnListItem = new sap.m.ColumnListItem();
+
+            tabImages.addColumn(Column);
+            ColumnListItem.addCell(elementImage);
+
+            if (meta._sClassName === "sap.m.Table") {
+                tabImages.bindAggregation("items", { path: bindingField + "/", template: ColumnListItem, templateShareable: false });
+            } else {
+                tabImages.bindAggregation("items", { path: "/" + bindingField, template: ColumnListItem, templateShareable: false });
+            }
+
+            // Toolbar
+            const Toolbar = new sap.m.Toolbar({
+                design: "Transparent",
+            }).addStyleClass("sapUiSizeCompact noBorder");
+
+            tabImages.setHeaderToolbar(Toolbar);
+            Toolbar.addContent(elementUploader);
+
+            newField.addItem(tabImages);
+        } else {
+            newField.addItem(elementHBox);
+            newField.addItem(elementImage);
+
+            elementHBox.addItem(
+                new sap.m.Button({
+                    type: "Reject",
+                    enabled: FORMS.editable,
+                    icon: "sap-icon://delete",
+                    tooltip: "Delete Image",
+                    visible: "{= ${" + FORMS.bindingPath + bindingField + "} ? true:false}",
+                    press: function (oEvent) {
+                        const context = oEvent.oSource.getBindingContext();
+
+                        if (context) {
+                            const data = context.getObject();
+                            data[bindingField] = "";
+                            this.getModel().refresh();
+                        } else {
+                            elementImage.setSrc();
+                        }
+                    },
+                }).addStyleClass("sapUiSizeCompact sapUiTinyMarginBegin")
+            );
+        }
 
         return newField;
     },
@@ -2305,9 +2352,22 @@ const FORMS = {
                     const newData = [];
 
                     for (let i = 0; i < oldData.length; i++) {
-                        newData.push({
+                        let newRow = {
                             id: oldData[i].id,
-                        });
+                        };
+
+                        // // Haugen
+                        // element.elements.forEach(function (child) {
+                        //     const fieldName = child.fieldName ? child.fieldName : child.id;
+
+                        //     switch (child.type) {
+                        //         case "Image":
+                        //             newRow[fieldName] = [];
+                        //             break;
+                        //     }
+                        // });
+
+                        newData.push(newRow);
                     }
 
                     model.setData(newData);
@@ -2532,34 +2592,58 @@ const FORMS = {
         });
     },
 
-    importImage: function (oEvent) {
+    importImages: function (oEvent) {
         try {
-            const file = oEvent.target.files[0];
-            const fileReader = new FileReader();
+            for (let i = 0; i < oEvent.target.files.length; i++) {
+                const file = oEvent.target.files[i];
+                const fileReader = new FileReader();
 
-            fileReader.onload = async function (fileLoadedEvent) {
-                let formModel;
-                let imageData = await FORMS.imageResize(fileLoadedEvent.target.result, FORMS.uploadObject.element);
+                fileReader.onload = async function (fileLoadedEvent) {
+                    let formModel;
+                    let imageData = await FORMS.imageResize(fileLoadedEvent.target.result, FORMS.uploadObject.element);
 
-                if (!FORMS.formParent) {
-                    const formParent = sap.ui.getCore().byId("_nepFormParent");
-                    formModel = formParent.getModel();
-                } else {
-                    formModel = FORMS.formParent.getModel();
-                }
+                    if (!FORMS.formParent) {
+                        const formParent = sap.ui.getCore().byId("_nepFormParent");
+                        formModel = formParent.getModel();
+                    } else {
+                        formModel = FORMS.formParent.getModel();
+                    }
 
-                if (FORMS.uploadObject.context) {
-                    FORMS.uploadObject.context[FORMS.uploadObject.bindingField] = imageData;
-                    FORMS.uploadObject.model.refresh();
-                } else {
-                    formModel.oData[FORMS.uploadObject.bindingField] = imageData;
-                    formModel.refresh();
-                }
+                    if (FORMS.uploadObject.context) {
+                        if (FORMS.uploadObject.element.enableMulti) {
+                            if (!FORMS.uploadObject.context[FORMS.uploadObject.bindingField]) FORMS.uploadObject.context[FORMS.uploadObject.bindingField] = [];
+                            let newImageRow = {
+                                id: ModelData.genID(),
+                            };
+                            newImageRow[FORMS.uploadObject.bindingField] = imageData;
+                            FORMS.uploadObject.context[FORMS.uploadObject.bindingField].push(newImageRow);
+                        } else {
+                            FORMS.uploadObject.context[FORMS.uploadObject.bindingField] = imageData;
+                        }
 
-                document.getElementById("imageUploader").value = "";
-            };
+                        FORMS.uploadObject.model.refresh();
+                    } else {
+                        if (FORMS.uploadObject.element.enableMulti) {
+                            if (!formModel.oData[FORMS.uploadObject.bindingField]) formModel.oData[FORMS.uploadObject.bindingField] = [];
+                            let newImageRow = {
+                                id: ModelData.genID(),
+                            };
+                            newImageRow[FORMS.uploadObject.bindingField] = imageData;
+                            formModel.oData[FORMS.uploadObject.bindingField].push(newImageRow);
+                            formModel.refresh();
+                            console.log(formModel.oData);
+                        } else {
+                            formModel.oData[FORMS.uploadObject.bindingField] = imageData;
+                            formModel.refresh();
+                        }
+                    }
 
-            fileReader.readAsDataURL(file);
+                    document.getElementById("imageUploader").value = "";
+                    document.getElementById("imagesUploader").value = "";
+                };
+
+                fileReader.readAsDataURL(file);
+            }
         } catch (e) {
             console.log(e);
         }
@@ -2616,3 +2700,4 @@ const FORMS = {
 };
 
 window.importImage = FORMS.importImage;
+window.importImages = FORMS.importImages;
