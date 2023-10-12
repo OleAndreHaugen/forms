@@ -1153,9 +1153,13 @@ const FORMS = {
                     break;
 
                 case "Image":
-                    clone.getItems()[1].setVisible(false);
-                    clone.getItems()[0].getItems()[0].setEnabled(false);
-                    clone.getItems()[0].getItems()[1].setVisible(false);
+                    if (element.enableMulti) {
+                        clone.getItems()[0].getHeaderToolbar().getContent()[0].setEnabled(false);
+                    } else {
+                        clone.getItems()[1].setVisible(false);
+                        clone.getItems()[0].getItems()[0].setEnabled(false);
+                        clone.getItems()[0].getItems()[1].setVisible(false);
+                    }
                     break;
 
                 case "CheckBox":
@@ -2043,8 +2047,9 @@ const FORMS = {
         elementHBox.addItem(elementUploader);
 
         if (element.enableMulti) {
-            const tabImages = new sap.m.Table({
+            const tabImages = new sap.f.GridList({
                 mode: "Delete",
+                showSeparators: "None",
                 showNoData: false,
                 delete: function (oEvent) {
                     const deleteItem = oEvent.getParameter("listItem");
@@ -2061,16 +2066,16 @@ const FORMS = {
                 },
             });
 
-            const Column = new sap.m.Column();
-            const ColumnListItem = new sap.m.ColumnListItem();
-
-            tabImages.addColumn(Column);
-            ColumnListItem.addCell(elementImage);
+            // const Column = new sap.m.Column();
+            const GridListItem = new sap.f.GridListItem();
+            const imagePanel = new sap.m.Panel();
+            GridListItem.addContent(imagePanel);
+            imagePanel.addContent(elementImage)
 
             if (meta._sClassName === "sap.m.Table") {
-                tabImages.bindAggregation("items", { path: bindingField + "/", template: ColumnListItem, templateShareable: false });
+                tabImages.bindAggregation("items", { path: bindingField + "/", template: GridListItem, templateShareable: false });
             } else {
-                tabImages.bindAggregation("items", { path: "/" + bindingField, template: ColumnListItem, templateShareable: false });
+                tabImages.bindAggregation("items", { path: "/" + bindingField, template: GridListItem, templateShareable: false });
             }
 
             // Toolbar
