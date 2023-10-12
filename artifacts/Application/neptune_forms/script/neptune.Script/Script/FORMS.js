@@ -2636,7 +2636,6 @@ const FORMS = {
                             newImageRow[FORMS.uploadObject.bindingField] = imageData;
                             formModel.oData[FORMS.uploadObject.bindingField].push(newImageRow);
                             formModel.refresh();
-                            console.log(formModel.oData);
                         } else {
                             formModel.oData[FORMS.uploadObject.bindingField] = imageData;
                             formModel.refresh();
