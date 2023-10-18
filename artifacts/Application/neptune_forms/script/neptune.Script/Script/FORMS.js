@@ -114,6 +114,7 @@ const FORMS = {
         }
 
         FORMS.formParent.setModel(formModel);
+        if (!options.data) FORMS.setDefaultValues();
         formModel.refresh(true);
 
         let sectionParent;
@@ -195,6 +196,37 @@ const FORMS = {
 
         if (parent.addContent) parent.addContent(FORMS.formParent);
         if (parent.addItem) parent.addItem(FORMS.formParent);
+    },
+
+    setDefaultValues: function () {
+        const formModel = FORMS.formParent.getModel();
+
+        const setValue = function (element) {
+            const bindingField = element.fieldName ? element.fieldName : element.id;
+
+            switch (element.type) {
+                case "CheckBox":
+                case "Switch":
+                    formModel.oData[bindingField] = false;
+                    break;
+
+                default:
+                    break;
+            }
+        };
+
+        // Set Default Values
+        FORMS.config.setup.forEach(function (section) {
+            setValue(section);
+            section.elements.forEach(function (element) {
+                setValue(element);
+                if (element.elements) {
+                    element.elements.forEach(function (subElement) {
+                        setValue(subElement);
+                    });
+                }
+            });
+        });
     },
 
     buildRowTemplate: function (elements) {
@@ -1489,6 +1521,9 @@ const FORMS = {
             editable: FORMS.editable,
             placeholder: element.placeholder,
             visible: FORMS.buildVisibleCond(element),
+            liveChange: function (oEvent) {
+                this.setValueState();
+            },
         });
 
         return newField;
@@ -1627,6 +1662,9 @@ const FORMS = {
             rows: parseInt(element.rows),
             width: "100%",
             visible: FORMS.buildVisibleCond(element),
+            liveChange: function (oEvent) {
+                this.setValueState();
+            },
         });
         if (element.rows) newField.setRows(parseInt(element.rows));
 
@@ -1641,6 +1679,9 @@ const FORMS = {
             editable: FORMS.editable,
             maxValue: element.maxValue,
             visible: FORMS.buildVisibleCond(element),
+            change: function (oEvent) {
+                this.removeStyleClass("notValid");
+            },
         });
 
         if (element.iconSelected) {
@@ -1664,6 +1705,9 @@ const FORMS = {
             change: function (oEvent) {
                 this.setValue(parseFloat(this.getValue()).toFixed(element.decimals));
             },
+            liveChange: function (oEvent) {
+                this.setValueState();
+            },
             visible: FORMS.buildVisibleCond(element),
         });
 
@@ -1678,6 +1722,9 @@ const FORMS = {
             placeholder: element.placeholder,
             editable: FORMS.editable,
             visible: FORMS.buildVisibleCond(element),
+            change: function (oEvent) {
+                this.setValueState();
+            },
         });
 
         newField.onAfterRendering = function () {
@@ -1703,6 +1750,9 @@ const FORMS = {
             customTextOff: element.customTextOff,
             customTextOn: element.customTextOn,
             visible: FORMS.buildVisibleCond(element),
+            change: function (oEvent) {
+                this.removeStyleClass("notValid");
+            },
         });
 
         if (element.approveSwitch) {
@@ -1720,6 +1770,9 @@ const FORMS = {
             editable: FORMS.editable,
             text: element.text,
             visible: FORMS.buildVisibleCond(element),
+            select: function (oEvent) {
+                this.setValueState();
+            },
         });
 
         return newField;
@@ -1782,6 +1835,9 @@ const FORMS = {
             width: "100%",
             editable: FORMS.editable,
             visible: FORMS.buildVisibleCond(element),
+            change: function (oEvent) {
+                this.setValueState();
+            },
         });
 
         // Override externally or combine
@@ -1806,6 +1862,9 @@ const FORMS = {
             width: "100%",
             editable: FORMS.editable,
             visible: FORMS.buildVisibleCond(element),
+            change: function (oEvent) {
+                this.setValueState();
+            },
         });
 
         // Override externally or combine
@@ -1882,6 +1941,9 @@ const FORMS = {
             editable: FORMS.editable,
             showSelectAll: true,
             visible: FORMS.buildVisibleCond(element),
+            change: function (oEvent) {
+                this.setValueState();
+            },
         });
 
         element.items.forEach(function (item, i) {
@@ -1917,6 +1979,8 @@ const FORMS = {
                 text: item.title,
                 editable: FORMS.editable,
                 select: function (oEvent) {
+                    this.getParent().removeStyleClass("notValid");
+
                     if (!formModel.oData[bindingField]) formModel.oData[bindingField] = [];
 
                     if (this.getSelected()) {
@@ -1952,6 +2016,12 @@ const FORMS = {
             displayFormat: element.displayFormat ? element.displayFormat : "dd.MM.yyyy",
             editable: FORMS.editable,
             visible: FORMS.buildVisibleCond(element),
+            liveChange: function (oEvent) {
+                this.setValueState();
+            },
+            change: function (oEvent) {
+                this.setValueState();
+            },
         });
 
         const fieldName = FORMS.bindingPath + bindingField;
@@ -2064,13 +2134,12 @@ const FORMS = {
                     }
                     this.getModel().refresh();
                 },
-            });
+            }).addStyleClass("sapUiSizeCompact");
 
-            // const Column = new sap.m.Column();
             const GridListItem = new sap.f.GridListItem();
             const imagePanel = new sap.m.Panel();
             GridListItem.addContent(imagePanel);
-            imagePanel.addContent(elementImage)
+            imagePanel.addContent(elementImage);
 
             if (meta._sClassName === "sap.m.Table") {
                 tabImages.bindAggregation("items", { path: bindingField + "/", template: GridListItem, templateShareable: false });
@@ -2081,6 +2150,7 @@ const FORMS = {
             // Toolbar
             const Toolbar = new sap.m.Toolbar({
                 design: "Transparent",
+                height: "2rem",
             }).addStyleClass("sapUiSizeCompact noBorder");
 
             tabImages.setHeaderToolbar(Toolbar);
@@ -2124,6 +2194,12 @@ const FORMS = {
             displayFormat: element.displayFormat ? element.displayFormat : "dd.MM.yyyy HH:mm",
             editable: FORMS.editable,
             visible: FORMS.buildVisibleCond(element),
+            liveChange: function (oEvent) {
+                this.setValueState();
+            },
+            change: function (oEvent) {
+                this.setValueState();
+            },
         });
 
         return newField;
@@ -2286,14 +2362,6 @@ const FORMS = {
                             delete data.rowNumber;
                         });
                     }
-                    // outputData[section.id] = tabData;
-
-                    // if (outputData[section.id] && outputData[section.id].forEach) {
-                    //     outputData[section.id].forEach(function (data) {
-                    //         delete data.highlight;
-                    //         delete data.rowNumber;
-                    //     });
-                    // }
                 }
                 return;
             }
@@ -2325,7 +2393,6 @@ const FORMS = {
         // Model
         const formModel = FORMS.formParent.getModel();
         formModel.setData({});
-        formModel.refresh();
 
         // Fields
         FORMS.validate("Reset");
@@ -2361,17 +2428,6 @@ const FORMS = {
                             id: oldData[i].id,
                         };
 
-                        // // Haugen
-                        // element.elements.forEach(function (child) {
-                        //     const fieldName = child.fieldName ? child.fieldName : child.id;
-
-                        //     switch (child.type) {
-                        //         case "Image":
-                        //             newRow[fieldName] = [];
-                        //             break;
-                        //     }
-                        // });
-
                         newData.push(newRow);
                     }
 
@@ -2396,6 +2452,9 @@ const FORMS = {
                 }
             });
         });
+
+        FORMS.setDefaultValues();
+        formModel.refresh();
     },
 
     validate: function (process) {

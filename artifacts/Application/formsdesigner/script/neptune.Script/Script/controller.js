@@ -355,9 +355,9 @@ const controller = {
                 });
             }
 
+            controller.tableReset = true;
             modeloPageDetail.setData(req);
             modelpanTopProperties.setData({});
-            controller.preview();
 
             if (oApp.getCurrentPage() === oPageStart) {
                 tabDetail.setSelectedItem(tabDetailInfo);
