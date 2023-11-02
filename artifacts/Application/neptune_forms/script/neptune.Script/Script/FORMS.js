@@ -375,6 +375,8 @@ const FORMS = {
             headerText: section.title,
             backgroundDesign: "Solid",
             visible: FORMS.buildVisibleCond(section),
+            expandable: section.expandable || false,
+            expanded: section.expanded || false,
         }).addStyleClass("sapUiSmallMarginTopBottom sapUiNoContentPadding");
 
         const sectionForm = new sap.ui.layout.form.SimpleForm({
