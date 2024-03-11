@@ -38,6 +38,15 @@
 			}
 		},
 		{
+			"id": "909da185-ed42-4ccd-9603-df19b93aa64a",
+			"application": "demo_ai1",
+			"title": "Neptune FORMS",
+			"description": "Neptune FORMS",
+			"package": {
+				"id": "a313322e-f024-45f1-960f-b90081757b85"
+			}
+		},
+		{
 			"id": "74bff3f5-b8ae-4250-aed3-6ebfe904b23e",
 			"application": "formsdesigner",
 			"title": "Neptune FORMS",
