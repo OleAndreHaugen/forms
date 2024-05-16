@@ -143,7 +143,7 @@
 			"sap.m.Panel"
 		]
 	},
-	"ver": "23.12.14.724",
+	"ver": "24.05.16.0640",
 	"application": "neptune_forms",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",
@@ -168,7 +168,7 @@
 	"ui5_url": "",
 	"cus_theme": "",
 	"css": "file:///css.css",
-	"compiledCss": "file://script/undefined/undefined.script",
+	"compiledCss": "file:///compiledCss.css",
 	"header": "",
 	"manifest": "",
 	"globalScript": null,

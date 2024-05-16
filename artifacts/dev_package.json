@@ -9,6 +9,7 @@
 	"description": "Neptune FORMS Solution",
 	"ver": "23.3.26.851",
 	"enableCICD": true,
+	"excludeTemplateFiles": false,
 	"apps": [
 		{
 			"id": "bbdfe2ca-c704-487a-bb87-b1656d571f3a",

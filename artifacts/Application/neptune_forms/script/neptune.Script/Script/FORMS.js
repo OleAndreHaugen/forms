@@ -1401,7 +1401,6 @@ const FORMS = {
 
             parent.addColumn(newColumn);
             FORMS.columnTemplate.addCell(elementField);
-
             FORMS.setColumnSorting(section, parent, newColumn, element);
         }
 
@@ -2362,6 +2361,7 @@ const FORMS = {
                 new sap.m.Label({
                     text: item.question,
                     required: item.required,
+                    wrapping: true
                 })
             );
 
