@@ -2320,7 +2320,7 @@
 																		{
 																			"attribute": "text",
 																			"grouping": "Properties",
-																			"value": "Enable Reporting",
+																			"value": "Enable Reporting and Log",
 																			"script": "",
 																			"translation": []
 																		},
@@ -2328,6 +2328,41 @@
 																			"attribute": "selected",
 																			"grouping": "Properties",
 																			"value": "{/savedata}",
+																			"script": "",
+																			"translation": []
+																		},
+																		{
+																			"attribute": "editable",
+																			"grouping": "Properties",
+																			"value": "{appControl>/enableEdit}",
+																			"script": "",
+																			"translation": []
+																		}
+																	],
+																	"data": []
+																},
+																{
+																	"fieldNo": "fc0bdad0-b0dd-46bb-e4bf-abc81f2ebe95",
+																	"fieldName": "informDetailReportSession",
+																	"fieldParent": "bb4af5a2-b9d6-4555-bc27-8ec08d504fca",
+																	"fieldType": "sap.m.CheckBox",
+																	"script": "",
+																	"customComponent": false,
+																	"bindingType": "h",
+																	"request": [],
+																	"response": [],
+																	"attributes": [
+																		{
+																			"attribute": "text",
+																			"grouping": "Properties",
+																			"value": "Show Log per Session",
+																			"script": "",
+																			"translation": []
+																		},
+																		{
+																			"attribute": "selected",
+																			"grouping": "Properties",
+																			"value": "{/enablesession}",
 																			"script": "",
 																			"translation": []
 																		},
@@ -25277,7 +25312,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "24.03.11.0813",
+	"ver": "24.05.23.1441",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",

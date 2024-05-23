@@ -461,12 +461,16 @@ const FORMS = {
                     type: element.logButtonType,
                     icon: element.logButtonIcon,
                     press: function (oEvent) {
-                        const options = {
+                        let options = {
                             parameters: {
                                 formid: FORMS.config.id,
                                 elementid: element.id,
                             },
                         };
+
+                        if (FORMS.config.enablesession) {
+                            options.parameters.sessionid = FORMS.sessionid;
+                        }
 
                         apiElementLog(options).then(function (res) {
                             FORMS.buildLogDialog(res);
@@ -1325,6 +1329,8 @@ const FORMS = {
 
             // Change Element Properties for Log
             delete element.config.enableLog;
+            delete element.config.visibleFieldName;
+
             element.config._inDialog = true;
 
             let updatedAtValue = element.updatedAt;
@@ -2361,7 +2367,7 @@ const FORMS = {
                 new sap.m.Label({
                     text: item.question,
                     required: item.required,
-                    wrapping: true
+                    wrapping: true,
                 })
             );
 
