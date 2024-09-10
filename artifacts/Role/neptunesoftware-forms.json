@@ -5,8 +5,13 @@
 	"name": "neptunesoftware-forms",
 	"description": "Neptune FORMS",
 	"ver": "23.2.21.916",
+	"isGlobalAdmin": false,
 	"package": "a313322e-f024-45f1-960f-b90081757b85",
 	"acl": [
+		{
+			"id": "developmentcockpit_D",
+			"name": "Cockpit"
+		},
 		{
 			"id": "developmentadaptivedesigner_E",
 			"name": "Adaptive Designer"

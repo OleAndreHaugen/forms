@@ -1,0 +1,7 @@
+
+
+modelpanTopProperties.oData.visibility.push({
+    id: ModelData.genID(),
+});
+
+modelpanTopProperties.refresh();

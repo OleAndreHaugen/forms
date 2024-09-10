@@ -210,12 +210,18 @@ const FORMS = {
             const bindingField = element.fieldName ? element.fieldName : element.id;
 
             switch (element.type) {
+                case "MultipleSelect":
+                case "MultipleChoice":
+                    formModel.oData[bindingField] = [];
+                    break;
+
                 case "CheckBox":
                 case "Switch":
                     formModel.oData[bindingField] = false;
                     break;
 
                 default:
+                    formModel.oData[bindingField] = "";
                     break;
             }
         };
@@ -537,36 +543,98 @@ const FORMS = {
     buildVisibleCond: function (element) {
         if (!element) return;
         if (!element.enableVisibleCond) return;
-        if (!element.visibleFieldName) return;
-        if (!element.visibleCondition) return;
-        if (!element.visibleValue) return;
 
-        let bindingPath = element.type === "Table" ? "/" : FORMS.bindingPath;
-
-        let visibleStatement = element.visibleInverse ? "false:true" : "true:false";
-        let visibleValueSep = element.visibleValue === "true" || element.visibleValue === "false" ? "" : "'";
-        let visibleFieldName = element.visibleFieldName;
-        let visibleCond;
-
-        // Check if field have object attributes
-        const checkElement = FORMS.getElementFromId(element.visibleFieldName);
-
-        if (!checkElement) return;
-        if (checkElement.fieldName) visibleFieldName = checkElement.fieldName;
-
-        if (checkElement.type === "Input" || checkElement.type === "TextArea") {
-            if (element.visibleValue === "empty") {
-                if (element.visibleCondition === "===") {
-                    visibleCond = "{= ${" + bindingPath + visibleFieldName + "} ? false:true }";
-                } else {
-                    visibleCond = "{= ${" + bindingPath + visibleFieldName + "} ? true:false }";
-                }
-            }
-        } else {
-            visibleCond = "{= ${" + bindingPath + visibleFieldName + "} " + element.visibleCondition + " " + visibleValueSep + element.visibleValue + visibleValueSep + " ? " + visibleStatement + " }";
+        // Migrate Old->New
+        if (element.visibleFieldName && element.visibleCondition && element.visibleValue) {
+            element.visibility = [
+                {
+                    visibleFieldName: element.visibleFieldName,
+                    visibleCondition: element.visibleCondition,
+                    visibleValue: [element.visibleValue],
+                },
+            ];
         }
 
-        return visibleCond;
+        if (!element.visibility && !element.visibility.length) return;
+
+        // Top Parameters
+        let bindingPath = element.type === "Table" ? "/" : FORMS.bindingPath;
+        let visibleStatement = element.visibleInverse ? "false:true" : "true:false";
+
+        let visibleWhere = "";
+        let visibleWhereSep = "";
+        let expression;
+
+        element.visibility.forEach(function (condition, index) {
+            if (!condition.visibleFieldName) return;
+            if (!condition.visibleCondition) return;
+            if (!condition.visibleValue?.length) return;
+
+            let visibleValueSep = condition.visibleValue === "true" || condition.visibleValue === "false" ? "" : "'";
+            let visibleFieldName = condition.visibleFieldName;
+
+            // Check if field have object attributes
+            const checkElement = FORMS.getElementFromId(condition.visibleFieldName);
+            if (!checkElement) return;
+
+            // Object Attributes vs Field ID
+            if (checkElement.fieldName) visibleFieldName = checkElement.fieldName;
+
+            let visibleFieldOptions = "";
+            let visibleFieldOptionsSep = "";
+
+            condition.visibleValue.forEach(function (value) {
+                switch (checkElement.type) {
+                    case "Switch":
+                    case "CheckBox":
+                        if (value === "true") {
+                            visibleFieldOptions += visibleFieldOptionsSep + "${" + bindingPath + visibleFieldName + "}" + condition.visibleCondition + "true";
+                        } else if (value === "false") {
+                            visibleFieldOptions += visibleFieldOptionsSep + "${" + bindingPath + visibleFieldName + "}" + condition.visibleCondition + "false";
+                        }
+                        break;
+
+                    case "Input":
+                    case "TextArea":
+                        if (condition.visibleCondition === "===") {
+                            visibleFieldOptions += visibleFieldOptionsSep + "!${" + bindingPath + visibleFieldName + "}";
+                        } else {
+                            visibleFieldOptions += visibleFieldOptionsSep + "${" + bindingPath + visibleFieldName + "} !== ''";
+                        }
+                        break;
+
+                    default:
+                        visibleFieldOptions += visibleFieldOptionsSep + "${" + bindingPath + visibleFieldName + "}.includes('" + value + "')";
+                        break;
+                }
+
+                switch (condition.visibleCondition) {
+                    case "any":
+                        visibleFieldOptionsSep = " || ";
+                        break;
+
+                    default:
+                        visibleFieldOptionsSep = "  && ";
+                        break;
+                }
+            });
+
+            if (index !== 0) {
+                visibleWhereSep = condition.visibleSep === "or" ? " || " : " && ";
+            }
+
+            if (visibleFieldOptions) {
+                visibleWhere += visibleWhereSep + "(" + visibleFieldOptions + ")";
+            }
+        });
+
+        if (visibleWhere) {
+            expression = `{= ${visibleWhere} ? ${visibleStatement} }`;
+        } else {
+            expression = true;
+        }
+
+        return expression;
     },
 
     buildParentTable: function (section) {
@@ -1623,7 +1691,8 @@ const FORMS = {
                     navigation.dialogHeader = true;
                 }
 
-                sap.n.Adaptive.navigation(navigation, null, events);
+                const adaptiveNavigation = sap.n.Adaptive ? sap.n.Adaptive.navigation : neptune.Adaptive.navigation;
+                adaptiveNavigation(navigation, null, events);
             },
         });
 
@@ -2127,6 +2196,10 @@ const FORMS = {
 
             newField.addItem(elementCheckBox);
         });
+
+        // if (!formModel.oData[bindingField]) {
+        //     formModel.oData[bindingField] = [];
+        // }
 
         return newField;
     },
