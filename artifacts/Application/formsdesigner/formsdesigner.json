@@ -23171,14 +23171,14 @@
 								{
 									"attribute": "contentWidth",
 									"grouping": "Properties",
-									"value": "400px",
+									"value": "1024px",
 									"script": "",
 									"translation": []
 								},
 								{
 									"attribute": "contentHeight",
 									"grouping": "Properties",
-									"value": "600px",
+									"value": "800px",
 									"script": "",
 									"translation": []
 								},
@@ -25861,7 +25861,7 @@
 		}
 	],
 	"componentInterface": [],
-	"ver": "24.09.11.1032",
+	"ver": "24.09.11.1417",
 	"application": "formsdesigner",
 	"title": "Neptune FORMS",
 	"description": "Neptune FORMS",

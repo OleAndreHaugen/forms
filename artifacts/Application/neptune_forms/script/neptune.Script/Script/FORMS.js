@@ -555,7 +555,7 @@ const FORMS = {
             ];
         }
 
-        if (!element.visibility && !element.visibility.length) return;
+        if (!element.visibility?.length) return;
 
         // Top Parameters
         let bindingPath = element.type === "Table" ? "/" : FORMS.bindingPath;
