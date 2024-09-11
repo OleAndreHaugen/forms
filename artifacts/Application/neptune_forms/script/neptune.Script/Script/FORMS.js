@@ -559,7 +559,7 @@ const FORMS = {
 
         // Top Parameters
         let bindingPath = element.type === "Table" ? "/" : FORMS.bindingPath;
-        let visibleStatement = element.visibleInverse ? "false:true" : "true:false";
+        let visibleStatement = element.visibleInverse === "hide" ? "false:true" : "true:false";
 
         let visibleWhere = "";
         let visibleWhereSep = "";
