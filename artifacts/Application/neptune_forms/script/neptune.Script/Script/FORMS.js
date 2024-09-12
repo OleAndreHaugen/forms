@@ -545,7 +545,7 @@ const FORMS = {
         if (!element.enableVisibleCond) return;
 
         // Migrate Old->New
-        if (element.visibleFieldName && element.visibleCondition && element.visibleValue) {
+        if (element.visibleFieldName && element.visibleCondition && element.visibleValue && !element.visibility?.length) {
             element.visibility = [
                 {
                     visibleFieldName: element.visibleFieldName,
@@ -634,6 +634,7 @@ const FORMS = {
             expression = true;
         }
 
+        console.log(expression);
         return expression;
     },
 
